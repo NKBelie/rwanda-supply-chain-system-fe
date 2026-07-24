@@ -14,7 +14,7 @@ import {
   type RwandaLocation,
 } from "@/lib/auth/onboarding";
 import { ROLE_META } from "@/lib/auth/roles";
-import { completeProfileSetup, initSession, useSession } from "@/lib/auth/session";
+import { completeProfileSetup, initSession, useSession, signOut } from "@/lib/auth/session";
 import { useT } from "@/lib/i18n";
 
 const locationFieldNames = new Set(["province", "district", "sector", "cell", "village"]);
@@ -70,7 +70,8 @@ export default function ProfileSetupPage() {
     setBusy(true);
     setErr(null);
     try {
-      const result = await completeProfileSetup({ fields: { ...fields, ...location }, documents, recommendations });
+      if (!session?.claims.email) throw new Error("Session expired. Please sign in again.");
+      const result = await completeProfileSetup(session.claims.email, { fields: { ...fields, ...location }, documents, recommendations });
       router.push(result.nextPath);
     } catch (error) {
       setErr(error instanceof Error ? error.message : "Profile setup failed.");
