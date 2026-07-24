@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Building2, Package, PackageOpen, PackageCheck, ClipboardList, Plus } from "lucide-react";
+import { Building2, Package, PackageOpen, PackageCheck, ClipboardList, Plus, ArrowDownCircle, ArrowUpCircle, TrendingUp, Clock, CheckCircle2, AlertCircle } from "lucide-react";
 import { PageHeader, PageBody } from "@/components/app/PageChrome";
 import { KpiCard, StatusBadge, EmptyState } from "@/components/common/ui";
 import { warehouseService, batchService, storageRequestService, reservationService } from "@/services/data.service";
@@ -33,35 +33,244 @@ export default function WarehouseDashboardPage() {
   const storedBatches = batches.filter(b => b.status === "Stored").length;
   const reservations = reservationService.getAll().filter(r => warehouses.some(w => w.id === r.warehouseId));
 
+  // Mock data for incoming/outgoing flow
+  const incomingGoods = [
+    { id: "IN-001", supplier: "Green Valley Farms", product: "Maize", quantity: 500, unit: "kg", eta: "Today 2:00 PM", status: "In Transit" as const },
+    { id: "IN-002", supplier: "Fresh Harvest Co.", product: "Tomatoes", quantity: 200, unit: "kg", eta: "Today 4:30 PM", status: "Scheduled" as const },
+    { id: "IN-003", supplier: "Dairy Best", product: "Milk", quantity: 300, unit: "liters", eta: "Tomorrow 9:00 AM", status: "Scheduled" as const },
+  ];
+
+  const outgoingGoods = [
+    { id: "OUT-001", customer: "City Mart", product: "Rice", quantity: 400, unit: "kg", delivery: "In Progress", status: "Dispatched" as const },
+    { id: "OUT-002", customer: "Premium Hotels", product: "Coffee", quantity: 150, unit: "kg", delivery: "Preparing", status: "Packing" as const },
+    { id: "OUT-003", customer: "Export Global", product: "Beans", quantity: 600, unit: "kg", delivery: "Completed", status: "Delivered" as const },
+  ];
+
   return (
     <>
       <PageHeader
         title={`Warehouse Control — ${session?.claims.name?.split(" ")[0] ?? "Manager"}`}
-        description="Capacity, inbound and outbound flow."
+        description="Real-time capacity and logistics flow management."
         actions={
           <div className="flex gap-2">
             <button onClick={() => router.push("/warehouse/facilities")} className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-primary px-3 text-sm font-medium text-primary-foreground hover:bg-primary-hover">
               <Plus className="h-4 w-4" /> Add Warehouse
             </button>
             <button onClick={() => router.push("/warehouse/requests")} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border bg-background px-3 text-sm hover:bg-surface">
-              <ClipboardList className="h-4 w-4" /> Storage Requests {pendingRequests > 0 && <span className="ml-1 rounded-full bg-warning px-1.5 text-[10px] font-semibold text-white">{pendingRequests}</span>}
+              <ClipboardList className="h-4 w-4" /> Requests {pendingRequests > 0 && <span className="ml-1 rounded-full bg-warning px-1.5 text-[10px] font-semibold text-white">{pendingRequests}</span>}
             </button>
           </div>
         }
       />
       <PageBody>
+        {/* Enhanced KPI Cards with gradients */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <KpiCard label="Total Warehouses" value={warehouses.length} icon={Building2} />
-          <KpiCard label="Total Capacity" value={`${totalCapacity.toLocaleString()} tons`} icon={Package} />
-          <KpiCard label="Available Space" value={`${totalAvailable.toLocaleString()} tons`} icon={PackageOpen} tone="success" />
-          <KpiCard label="Occupied Space" value={`${occupied.toLocaleString()} tons`} icon={PackageCheck} tone={occupied / (totalCapacity || 1) > 0.8 ? "danger" : "default"} />
+          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-indigo-500/10 via-indigo-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Total Warehouses</p>
+                <p className="mt-2 text-3xl font-bold text-foreground">{warehouses.length}</p>
+                <p className="mt-1 text-xs text-muted-foreground">Active facilities</p>
+              </div>
+              <div className="rounded-lg bg-indigo-500/10 p-2.5">
+                <Building2 className="h-5 w-5 text-indigo-600" />
+              </div>
+            </div>
+            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-indigo-500/5 transition-transform group-hover:scale-110" />
+          </div>
+
+          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-blue-500/10 via-blue-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Total Capacity</p>
+                <p className="mt-2 text-3xl font-bold text-foreground">{totalCapacity.toLocaleString()}</p>
+                <p className="mt-1 text-xs text-muted-foreground">tons storage</p>
+              </div>
+              <div className="rounded-lg bg-blue-500/10 p-2.5">
+                <Package className="h-5 w-5 text-blue-600" />
+              </div>
+            </div>
+            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-blue-500/5 transition-transform group-hover:scale-110" />
+          </div>
+
+          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Available Space</p>
+                <p className="mt-2 text-3xl font-bold text-foreground">{totalAvailable.toLocaleString()}</p>
+                <p className="mt-1 text-xs text-muted-foreground">tons remaining</p>
+              </div>
+              <div className="rounded-lg bg-emerald-500/10 p-2.5">
+                <PackageOpen className="h-5 w-5 text-emerald-600" />
+              </div>
+            </div>
+            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-emerald-500/5 transition-transform group-hover:scale-110" />
+          </div>
+
+          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Occupancy Rate</p>
+                <p className="mt-2 text-3xl font-bold text-foreground">{totalCapacity > 0 ? Math.round((occupied / totalCapacity) * 100) : 0}%</p>
+                <p className="mt-1 text-xs text-muted-foreground">{occupied.toLocaleString()} tons used</p>
+              </div>
+              <div className="rounded-lg bg-amber-500/10 p-2.5">
+                <PackageCheck className="h-5 w-5 text-amber-600" />
+              </div>
+            </div>
+            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-amber-500/5 transition-transform group-hover:scale-110" />
+          </div>
         </div>
 
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <KpiCard label="Stored Batches" value={storedBatches} />
-          <KpiCard label="Pending Requests" value={pendingRequests} tone={pendingRequests > 0 ? "warning" : "default"} />
-          <KpiCard label="Active Reservations" value={reservations.filter(r => r.status === "Active" || r.status === "Confirmed").length} />
-          <KpiCard label="Occupancy Rate" value={`${totalCapacity > 0 ? Math.round((occupied / totalCapacity) * 100) : 0}%`} tone={occupied / (totalCapacity || 1) > 0.8 ? "danger" : "success"} />
+        {/* Incoming/Outgoing Flow Section - New Design */}
+        <div className="mt-6 grid gap-4 lg:grid-cols-2">
+          {/* Incoming Goods */}
+          <div className="rounded-xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/5 to-transparent p-6 shadow-sm">
+            <div className="mb-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="rounded-lg bg-emerald-500/10 p-2">
+                  <ArrowDownCircle className="h-5 w-5 text-emerald-600" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-foreground">Incoming Goods</h2>
+                  <p className="text-sm text-muted-foreground">Expected arrivals</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => router.push("/warehouse/incoming")}
+                className="text-sm font-medium text-emerald-600 hover:underline"
+              >
+                View all →
+              </button>
+            </div>
+            <div className="space-y-3">
+              {incomingGoods.map((item) => (
+                <div key={item.id} className="flex items-center gap-3 rounded-lg border border-border bg-background p-3 transition-all hover:border-emerald-500/30 hover:shadow-sm">
+                  <div className={`rounded-full p-2 ${item.status === "In Transit" ? "bg-orange-500/10" : "bg-blue-500/10"}`}>
+                    {item.status === "In Transit" ? (
+                      <TrendingUp className="h-4 w-4 text-orange-600" />
+                    ) : (
+                      <Clock className="h-4 w-4 text-blue-600" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-foreground truncate">{item.product}</p>
+                        <p className="text-xs text-muted-foreground">{item.supplier}</p>
+                      </div>
+                      <span className={`shrink-0 text-xs font-semibold ${item.status === "In Transit" ? "text-orange-600" : "text-blue-600"}`}>
+                        {item.status}
+                      </span>
+                    </div>
+                    <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                      <span className="font-medium">{item.quantity} {item.unit}</span>
+                      <span>•</span>
+                      <span>ETA: {item.eta}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Outgoing Goods */}
+          <div className="rounded-xl border border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-transparent p-6 shadow-sm">
+            <div className="mb-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="rounded-lg bg-blue-500/10 p-2">
+                  <ArrowUpCircle className="h-5 w-5 text-blue-600" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-foreground">Outgoing Goods</h2>
+                  <p className="text-sm text-muted-foreground">Active deliveries</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => router.push("/warehouse/outgoing")}
+                className="text-sm font-medium text-blue-600 hover:underline"
+              >
+                View all →
+              </button>
+            </div>
+            <div className="space-y-3">
+              {outgoingGoods.map((item) => (
+                <div key={item.id} className="flex items-center gap-3 rounded-lg border border-border bg-background p-3 transition-all hover:border-blue-500/30 hover:shadow-sm">
+                  <div className={`rounded-full p-2 ${
+                    item.status === "Delivered" ? "bg-emerald-500/10" : 
+                    item.status === "Dispatched" ? "bg-orange-500/10" : "bg-yellow-500/10"
+                  }`}>
+                    {item.status === "Delivered" ? (
+                      <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                    ) : item.status === "Dispatched" ? (
+                      <TrendingUp className="h-4 w-4 text-orange-600" />
+                    ) : (
+                      <Clock className="h-4 w-4 text-yellow-600" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-foreground truncate">{item.product}</p>
+                        <p className="text-xs text-muted-foreground">{item.customer}</p>
+                      </div>
+                      <span className={`shrink-0 text-xs font-semibold ${
+                        item.status === "Delivered" ? "text-emerald-600" : 
+                        item.status === "Dispatched" ? "text-orange-600" : "text-yellow-600"
+                      }`}>
+                        {item.status}
+                      </span>
+                    </div>
+                    <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                      <span className="font-medium">{item.quantity} {item.unit}</span>
+                      <span>•</span>
+                      <span>{item.delivery}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Stats */}
+        <div className="mt-4 grid gap-4 sm:grid-cols-4">
+          <div className="flex items-center gap-3 rounded-lg border border-border bg-background p-4">
+            <div className="rounded-lg bg-purple-500/10 p-2.5">
+              <Package className="h-5 w-5 text-purple-600" />
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Stored Batches</p>
+              <p className="text-xl font-bold text-foreground">{storedBatches}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 rounded-lg border border-border bg-background p-4">
+            <div className="rounded-lg bg-amber-500/10 p-2.5">
+              <AlertCircle className="h-5 w-5 text-amber-600" />
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Pending Requests</p>
+              <p className="text-xl font-bold text-foreground">{pendingRequests}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 rounded-lg border border-border bg-background p-4">
+            <div className="rounded-lg bg-blue-500/10 p-2.5">
+              <CheckCircle2 className="h-5 w-5 text-blue-600" />
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Active Reservations</p>
+              <p className="text-xl font-bold text-foreground">{reservations.filter(r => r.status === "Active" || r.status === "Confirmed").length}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 rounded-lg border border-border bg-background p-4">
+            <div className="rounded-lg bg-emerald-500/10 p-2.5">
+              <PackageOpen className="h-5 w-5 text-emerald-600" />
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Free Capacity</p>
+              <p className="text-xl font-bold text-foreground">{((totalAvailable / (totalCapacity || 1)) * 100).toFixed(0)}%</p>
+            </div>
+          </div>
         </div>
 
         {/* Warehouses overview */}

@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Package, Boxes, ShoppingCart, TrendingUp, Warehouse, Truck, AlertTriangle, Plus } from "lucide-react";
+import { Package, Boxes, ShoppingCart, TrendingUp, TrendingDown, Warehouse, Truck, AlertTriangle, Plus } from "lucide-react";
 import { PageHeader, PageBody } from "@/components/app/PageChrome";
 import { KpiCard, StatusBadge, EmptyState } from "@/components/common/ui";
 import { productService, orderService, transportService, batchService, storageRequestService } from "@/services/data.service";
 import { useSession } from "@/lib/auth/session";
 import type { Product, Order, TransportRequest } from "@/lib/storage";
+import MarketPriceWidget from "./MarketPriceWidget";
 
 export default function FarmerDashboardPage() {
   const session = useSession();
@@ -52,18 +53,99 @@ export default function FarmerDashboardPage() {
         }
       />
       <PageBody>
-        {/* KPI Cards */}
+        {/* KPI Cards with gradient backgrounds */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <KpiCard label="Total Products" value={products.length} sub={`${totalStock} units in stock`} icon={Package} />
-          <KpiCard label="Active Orders" value={activeOrders} sub={`${orders.length} total orders`} icon={ShoppingCart} tone={activeOrders > 0 ? "success" : "default"} />
-          <KpiCard label="Revenue (Completed)" value={`RWF ${revenue.toLocaleString()}`} icon={TrendingUp} tone="success" />
-          <KpiCard label="Warehouse Batches" value={batches.length} sub={`${storageReqs.filter(r => r.status === "Pending").length} pending requests`} icon={Warehouse} />
+          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-blue-500/10 via-blue-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Total Products</p>
+                <p className="mt-2 text-3xl font-bold text-foreground">{products.length}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{totalStock} units in stock</p>
+              </div>
+              <div className="rounded-lg bg-blue-500/10 p-2.5">
+                <Package className="h-5 w-5 text-blue-600" />
+              </div>
+            </div>
+            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-blue-500/5 transition-transform group-hover:scale-110" />
+          </div>
+
+          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Active Orders</p>
+                <p className="mt-2 text-3xl font-bold text-foreground">{activeOrders}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{orders.length} total orders</p>
+              </div>
+              <div className="rounded-lg bg-emerald-500/10 p-2.5">
+                <ShoppingCart className="h-5 w-5 text-emerald-600" />
+              </div>
+            </div>
+            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-emerald-500/5 transition-transform group-hover:scale-110" />
+          </div>
+
+          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-purple-500/10 via-purple-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Revenue</p>
+                <p className="mt-2 text-3xl font-bold text-foreground">RWF {(revenue / 1000).toFixed(1)}K</p>
+                <p className="mt-1 text-xs text-muted-foreground">Completed orders</p>
+              </div>
+              <div className="rounded-lg bg-purple-500/10 p-2.5">
+                <TrendingUp className="h-5 w-5 text-purple-600" />
+              </div>
+            </div>
+            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-purple-500/5 transition-transform group-hover:scale-110" />
+          </div>
+
+          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Storage</p>
+                <p className="mt-2 text-3xl font-bold text-foreground">{batches.length}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{storageReqs.filter(r => r.status === "Pending").length} pending requests</p>
+              </div>
+              <div className="rounded-lg bg-amber-500/10 p-2.5">
+                <Warehouse className="h-5 w-5 text-amber-600" />
+              </div>
+            </div>
+            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-amber-500/5 transition-transform group-hover:scale-110" />
+          </div>
         </div>
 
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <KpiCard label="Pending Transport" value={pendingTransport} sub={`${transport.length} total requests`} icon={Truck} tone={pendingTransport > 0 ? "warning" : "default"} />
-          <KpiCard label="Available Stock" value={`${totalStock} units`} sub={`${products.filter(p => p.status === "Available").length} available products`} icon={Boxes} />
-          <KpiCard label="Low Stock Alerts" value={lowStock} sub="Products below 50 units" icon={AlertTriangle} tone={lowStock > 0 ? "danger" : "default"} />
+        {/* Market Price Trends - Enhanced Widget */}
+        <div className="mt-6">
+          <MarketPriceWidget />
+        </div>
+
+        {/* Quick Stats Row */}
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          <div className="flex items-center gap-4 rounded-lg border border-border bg-background p-4">
+            <div className="rounded-lg bg-orange-500/10 p-3">
+              <Truck className="h-6 w-6 text-orange-600" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Transport Pending</p>
+              <p className="text-2xl font-bold text-foreground">{pendingTransport}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4 rounded-lg border border-border bg-background p-4">
+            <div className="rounded-lg bg-blue-500/10 p-3">
+              <Boxes className="h-6 w-6 text-blue-600" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Available Stock</p>
+              <p className="text-2xl font-bold text-foreground">{totalStock}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4 rounded-lg border border-border bg-background p-4">
+            <div className={`rounded-lg p-3 ${lowStock > 0 ? "bg-red-500/10" : "bg-emerald-500/10"}`}>
+              <AlertTriangle className={`h-6 w-6 ${lowStock > 0 ? "text-red-600" : "text-emerald-600"}`} />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Low Stock Alerts</p>
+              <p className="text-2xl font-bold text-foreground">{lowStock}</p>
+            </div>
+          </div>
         </div>
 
         {/* Recent Products + Orders */}

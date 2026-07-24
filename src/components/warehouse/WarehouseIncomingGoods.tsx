@@ -18,6 +18,7 @@ import {
   ArrowUpDown,
   Filter,
   RefreshCw,
+  Thermometer,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -367,7 +368,7 @@ export default function WarehouseIncomingGoodsPage() {
                   </div>
                   {selectedShipment.temperature && (
                     <div className="flex items-start gap-3 rounded-lg border border-border bg-surface/30 p-3">
-                      <div className="text-primary text-lg mt-0.5">🌡️</div>
+                      <Thermometer className="h-5 w-5 text-primary" />
                       <div>
                         <p className="text-xs text-muted-foreground">Temperature</p>
                         <p className="font-semibold text-foreground">{selectedShipment.temperature}</p>
