@@ -375,28 +375,43 @@ export default function FarmerAnalyticsPage() {
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-3">
-              <p className="text-sm font-medium text-emerald-700">
-                📈 Revenue increased by 12.5% compared to last period
-              </p>
+              <div className="flex items-start gap-2">
+                <TrendingUp className="h-4 w-4 text-emerald-700 shrink-0" />
+                <div>
+                  <p className="text-sm font-medium text-emerald-700">
+                    Revenue increased by 12.5% compared to last period
+                  </p>
               <p className="mt-1 text-xs text-muted-foreground">
                 Strong performance driven by increased orders and higher average order value.
               </p>
+                </div>
+              </div>
             </div>
             <div className="rounded-lg border border-sky-500/20 bg-sky-500/5 p-3">
-              <p className="text-sm font-medium text-sky-700">
-                🌟 Premium Maize is your best-selling product
-              </p>
+              <div className="flex items-start gap-2">
+                <Package className="h-4 w-4 text-sky-700 shrink-0" />
+                <div>
+                  <p className="text-sm font-medium text-sky-700">
+                    Premium Maize is your best-selling product
+                  </p>
               <p className="mt-1 text-xs text-muted-foreground">
                 Generating RWF 2M in revenue with 2,500 units sold across 25 orders.
               </p>
+                </div>
+              </div>
             </div>
             <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-3">
-              <p className="text-sm font-medium text-amber-700">
-                💡 Cereals category dominates your revenue (51.1%)
-              </p>
+              <div className="flex items-start gap-2">
+                <PieChart className="h-4 w-4 text-amber-700 shrink-0" />
+                <div>
+                  <p className="text-sm font-medium text-amber-700">
+                    Cereals category dominates your revenue (51.1%)
+                  </p>
               <p className="mt-1 text-xs text-muted-foreground">
                 Consider diversifying into high-margin categories like cash crops.
               </p>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Bell, BellOff, CheckCheck, Filter } from "lucide-react";
+import { Bell, BellOff, CheckCheck, Filter, Package, Warehouse, CreditCard, Truck, ShoppingCart, Settings } from "lucide-react";
 import { PageBody, PageHeader } from "@/components/app/PageChrome";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -13,6 +13,8 @@ import {
   type State,
   type Tone,
 } from "@/lib/comms-store";
+
+import type { LucideIcon } from "lucide-react";
 
 const TONE_STYLES: Record<Tone, string> = {
   success: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
@@ -30,13 +32,13 @@ const TONE_DOT: Record<Tone, string> = {
   muted: "bg-slate-400",
 };
 
-const CATEGORY_ICON: Record<NotificationCategory, string> = {
-  Order: "📦",
-  Warehouse: "🏭",
-  Payment: "💳",
-  Transport: "🚛",
-  Marketplace: "🛒",
-  System: "⚙️",
+const CATEGORY_ICON: Record<NotificationCategory, LucideIcon> = {
+  Order: Package,
+  Warehouse: Warehouse,
+  Payment: CreditCard,
+  Transport: Truck,
+  Marketplace: ShoppingCart,
+  System: Settings,
 };
 
 const CATEGORIES = ["All", "Order", "Payment", "Transport", "Marketplace", "System"] as const;
@@ -87,21 +89,24 @@ export function BuyerNotificationsPage() {
         <div className="mb-5 flex flex-wrap items-center gap-3">
           <div className="flex flex-wrap gap-1.5">
             <Filter className="h-4 w-4 text-muted-foreground self-center" />
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setCatFilter(cat)}
-                className={cn(
-                  "rounded-full border px-3 py-1 text-xs font-medium transition",
-                  catFilter === cat
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-border text-muted-foreground hover:bg-surface"
-                )}
-              >
-                {cat !== "All" && <span className="mr-1">{CATEGORY_ICON[cat as NotificationCategory]}</span>}
-                {cat}
-              </button>
-            ))}
+            {CATEGORIES.map((cat) => {
+              const Icon = cat !== "All" ? CATEGORY_ICON[cat as NotificationCategory] : null;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setCatFilter(cat)}
+                  className={cn(
+                    "rounded-full border px-3 py-1 text-xs font-medium transition flex items-center gap-1.5",
+                    catFilter === cat
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "border-border text-muted-foreground hover:bg-surface"
+                  )}
+                >
+                  {Icon && <Icon className="h-3 w-3" />}
+                  {cat}
+                </button>
+              );
+            })}
           </div>
           <button
             onClick={() => setShowUnreadOnly((v) => !v)}
@@ -139,6 +144,8 @@ export function BuyerNotificationsPage() {
 }
 
 function NotifRow({ n, onRead }: { n: Notification; onRead: () => void }) {
+  const IconComponent = CATEGORY_ICON[n.category];
+  
   return (
     <div
       className={cn(
@@ -150,8 +157,8 @@ function NotifRow({ n, onRead }: { n: Notification; onRead: () => void }) {
       onClick={() => { if (!n.read) onRead(); }}
     >
       {/* Category icon */}
-      <div className={cn("flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-lg", TONE_STYLES[n.tone])}>
-        {CATEGORY_ICON[n.category]}
+      <div className={cn("flex h-9 w-9 shrink-0 items-center justify-center rounded-full", TONE_STYLES[n.tone])}>
+        <IconComponent className="h-4 w-4" />
       </div>
 
       <div className="flex-1 min-w-0">

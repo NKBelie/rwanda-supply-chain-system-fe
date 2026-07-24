@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { AlertTriangle, Package, Warehouse, X } from "lucide-react";
+import { AlertTriangle, Package, Warehouse, X, MapPin } from "lucide-react";
 import { PageBody, PageHeader } from "@/components/app/PageChrome";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -110,7 +110,7 @@ export function WarehousesPage() {
                   <span className={cn("shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold", statusStyle[wh.status])}>{wh.status}</span>
                 </div>
                 <div className="text-xs text-muted-foreground space-y-0.5">
-                  <p>📍 {wh.location}</p>
+                  <p className="flex items-center gap-1.5"><MapPin className="h-3 w-3" /> {wh.location}</p>
                   <p>Type: {wh.type}</p>
                   <p>Manager: {wh.manager}</p>
                   {wh.temperature && <p>Temp: {wh.temperature}</p>}

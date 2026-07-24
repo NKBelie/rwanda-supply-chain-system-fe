@@ -114,7 +114,7 @@ import {
         <div className="p-6 border-b border-slate-200 dark:border-slate-800">
             <div className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">📦</span>
+                <Package className="h-5 w-5 text-white" />
             </div>
             <div>
                 <h1 className="font-bold text-lg text-slate-900 dark:text-white">RSCN</h1>
