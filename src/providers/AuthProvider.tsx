@@ -14,7 +14,7 @@ type AuthContextValue = {
   can: (permission: Permission) => boolean;
 };
 
-const AuthContext = createContext<AuthContextValue | null>(null);
+export const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const session = useSession();

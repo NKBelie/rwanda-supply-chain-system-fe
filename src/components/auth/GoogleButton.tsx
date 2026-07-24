@@ -1,16 +1,25 @@
-﻿"use client";
+"use client";
 
-export function GoogleButton({ label = "Continue with Google", onClick, disabled = false }: { label?: string; onClick?: () => void; disabled?: boolean }) {
+export function GoogleButton({ disabled = false }: { label?: string; onClick?: () => void; disabled?: boolean }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      className="inline-flex h-11 w-full items-center justify-center gap-3 rounded-lg border border-border bg-background px-4 text-sm font-semibold hover:bg-surface disabled:cursor-not-allowed disabled:opacity-60"
-    >
-      <GoogleIcon className="h-5 w-5" />
-      {label}
-    </button>
+    <div className="relative">
+      <button
+        type="button"
+        disabled
+        title="Google login requires backend integration"
+        className="inline-flex h-11 w-full items-center justify-center gap-3 rounded-lg border border-border bg-background px-4 text-sm font-semibold cursor-not-allowed opacity-50"
+        aria-disabled="true"
+      >
+        <GoogleIcon className="h-5 w-5" />
+        Continue with Google
+        <span className="ml-auto rounded-full bg-surface px-2 py-0.5 text-[10px] font-medium text-muted-foreground border border-border">
+          Coming Soon
+        </span>
+      </button>
+      {!disabled && (
+        <p className="mt-1 text-center text-[10px] text-muted-foreground">Backend integration pending</p>
+      )}
+    </div>
   );
 }
 
