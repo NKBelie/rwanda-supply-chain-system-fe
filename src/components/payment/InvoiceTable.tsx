@@ -10,9 +10,9 @@ export function InvoiceTable({ filter, onViewInvoice, onPayNow }: { filter: stri
       <CardHeader>
         <CardTitle className="text-lg">Invoices</CardTitle>
       </CardHeader>
-      <CardContent className="overflow-x-auto">
+      <CardContent className="overflow-x-auto px-4 pb-4">
         <table className="min-w-full text-sm">
-          <thead className="text-left text-xs uppercase tracking-wider text-muted-foreground">
+          <thead className="border-b border-border text-left text-xs uppercase tracking-wider text-muted-foreground">
             <tr>
               <th className="px-3 py-2">Invoice</th>
               <th className="px-3 py-2">Supplier</th>

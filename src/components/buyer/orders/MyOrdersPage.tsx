@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import { Download, Eye, MapPin, Plus, Search, X } from "lucide-react";
+import { Download, Eye, MapPin, Plus, Search, ShoppingCart, X } from "lucide-react";
 import { PageBody, PageHeader } from "@/components/app/PageChrome";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -219,7 +219,7 @@ export function MyOrdersPage() {
               </div>
               {viewOrder.notes && (
                 <div className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800 dark:bg-amber-900/20 dark:text-amber-300">
-                  📝 {viewOrder.notes}
+                  <span className="font-semibold">Note:</span> {viewOrder.notes}
                 </div>
               )}
             </div>
@@ -234,7 +234,7 @@ export function MyOrdersPage() {
                   <Button className="w-full"><MapPin className="mr-1.5 h-4 w-4" />Track Shipment</Button>
                 </a>
               )}
-              <Button variant={viewOrder.status === "Pending" ? "default" : "outline"} className="flex-1" onClick={() => setViewOrder(null)}>Close</Button>
+              <Button variant={viewOrder.status === "Pending" ? "primary" : "outline"} className="flex-1" onClick={() => setViewOrder(null)}>Close</Button>
             </div>
           </div>
         </div>
@@ -262,7 +262,9 @@ export function MyOrdersPage() {
       {newOrderOpen && (
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4" onClick={() => setNewOrderOpen(false)}>
           <div className="w-full max-w-sm rounded-2xl border border-border bg-background p-6 shadow-pop text-center" onClick={(e) => e.stopPropagation()}>
-            <div className="text-4xl mb-3">🛒</div>
+            <div className="text-4xl mb-3 flex items-center justify-center">
+              <ShoppingCart className="h-10 w-10 text-primary/40" />
+            </div>
             <h2 className="text-lg font-semibold text-foreground">Start a new order</h2>
             <p className="mt-2 text-sm text-muted-foreground">Browse the marketplace to discover products and place orders from verified suppliers.</p>
             <div className="mt-5 flex gap-2">

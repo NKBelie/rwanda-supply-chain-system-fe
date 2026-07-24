@@ -37,10 +37,10 @@ export type PaymentRecord = {
 };
 
 export const products: Product[] = [
-  { id: 1, name: "Premium Rice", category: "Grains", supplier: "Kigali Grain Hub", price: "RWF 2,300/kg", stock: "540 kg", rating: 4.8, verified: true, location: "Kigali", image: "🌾" },
-  { id: 2, name: "Arabica Coffee", category: "Beverages", supplier: "Musanze Cooperative", price: "RWF 3,500/kg", stock: "240 kg", rating: 4.7, verified: true, location: "Musanze", image: "☕" },
-  { id: 3, name: "Fresh Tomatoes", category: "Vegetables", supplier: "Gasabo Produce", price: "RWF 800/kg", stock: "310 kg", rating: 4.9, verified: true, location: "Gasabo", image: "🍅" },
-  { id: 4, name: "Maize Flour", category: "Processed", supplier: "Rwanda Foods", price: "RWF 1,650/kg", stock: "180 kg", rating: 4.6, verified: true, location: "Rubavu", image: "🌽" },
+  { id: 1, name: "Premium Rice", category: "Grains", supplier: "Kigali Grain Hub", price: "RWF 2,300/kg", stock: "540 kg", rating: 4.8, verified: true, location: "Kigali", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&q=80&fit=crop" },
+  { id: 2, name: "Arabica Coffee", category: "Beverages", supplier: "Musanze Cooperative", price: "RWF 3,500/kg", stock: "240 kg", rating: 4.7, verified: true, location: "Musanze", image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=400&q=80&fit=crop" },
+  { id: 3, name: "Fresh Tomatoes", category: "Vegetables", supplier: "Gasabo Produce", price: "RWF 800/kg", stock: "310 kg", rating: 4.9, verified: true, location: "Gasabo", image: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=400&q=80&fit=crop" },
+  { id: 4, name: "Maize Flour", category: "Processed", supplier: "Rwanda Foods", price: "RWF 1,650/kg", stock: "180 kg", rating: 4.6, verified: true, location: "Rubavu", image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&q=80&fit=crop" },
 ];
 
 export const orders: Order[] = [

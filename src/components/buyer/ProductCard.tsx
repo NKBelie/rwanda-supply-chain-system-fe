@@ -5,8 +5,19 @@ import type { Product } from "./data";
 export function ProductCard({ product, onWishlist, wishlist }: { product: Product; onWishlist: (id: number) => void; wishlist: number[] }) {
   return (
     <Card className="border-border/80 bg-background shadow-sm transition-all duration-200 hover:-translate-y-1">
-      <div className="flex h-32 items-center justify-center border-b border-border bg-linear-to-br from-emerald-50 to-sky-50 text-5xl dark:from-emerald-950/40 dark:to-sky-950/40">
-        {product.image}
+      <div className="h-32 overflow-hidden rounded-t-xl border-b border-border bg-surface">
+        {product.image.startsWith("http") ? (
+          <img
+            src={product.image}
+            alt={product.name}
+            className="h-full w-full object-cover"
+            loading="lazy"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-emerald-50 to-sky-50 text-5xl dark:from-emerald-950/40 dark:to-sky-950/40">
+            {product.image}
+          </div>
+        )}
       </div>
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-2">

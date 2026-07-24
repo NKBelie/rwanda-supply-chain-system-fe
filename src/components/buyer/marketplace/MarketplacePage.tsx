@@ -146,10 +146,21 @@ export function MarketplacePage() {
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {filtered.map((product) => (
                   <Card key={product.id} className="border-border/80 bg-background shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-elevated">
-                    <div className="relative flex h-32 items-center justify-center rounded-t-xl border-b border-border bg-gradient-to-br from-emerald-50 to-sky-50 text-5xl dark:from-emerald-950/40 dark:to-sky-950/40">
-                      {product.image}
+                    <div className="relative h-32 overflow-hidden rounded-t-xl border-b border-border bg-surface">
+                      {product.image.startsWith("http") ? (
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-emerald-50 to-sky-50 text-5xl dark:from-emerald-950/40 dark:to-sky-950/40">
+                          {product.image}
+                        </div>
+                      )}
                       {product.verified && (
-                        <span className="absolute right-2 top-2 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">✓ Verified</span>
+                        <span className="absolute right-2 top-2 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 backdrop-blur-sm">✓ Verified</span>
                       )}
                       <button
                         onClick={() => toggleWishlist(product.id)}
@@ -251,10 +262,22 @@ export function MarketplacePage() {
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4" onClick={() => setViewProduct(null)}>
           <div className="w-full max-w-lg rounded-2xl border border-border bg-background p-6 shadow-pop" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-start justify-between">
-              <div>
-                <span className="text-4xl">{viewProduct.image}</span>
-                <h2 className="mt-2 text-xl font-semibold text-foreground">{viewProduct.name}</h2>
-                <p className="text-sm text-muted-foreground">{viewProduct.category} · {viewProduct.location}</p>
+              <div className="flex items-start gap-4">
+                {viewProduct.image.startsWith("http") ? (
+                  <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-border">
+                    <img
+                      src={viewProduct.image}
+                      alt={viewProduct.name}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <span className="text-4xl shrink-0">{viewProduct.image}</span>
+                )}
+                <div>
+                  <h2 className="text-xl font-semibold text-foreground">{viewProduct.name}</h2>
+                  <p className="text-sm text-muted-foreground">{viewProduct.category} · {viewProduct.location}</p>
+                </div>
               </div>
               <button onClick={() => setViewProduct(null)} className="rounded-lg border border-border p-1.5 hover:bg-surface">
                 <X className="h-4 w-4" />
