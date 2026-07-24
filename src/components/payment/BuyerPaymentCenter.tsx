@@ -205,24 +205,15 @@ export function BuyerPaymentCenter() {
   );
 
   return (
-    <div className="space-y-6">
-      <div className="rounded-2xl border border-border/80 bg-background p-6 shadow-sm">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
-              <ArrowDownToLine className="h-4 w-4" /> Buyer payment center
-            </div>
-            <h1 className="mt-3 text-3xl font-semibold tracking-tight text-foreground">Manage invoices, payments and supplier liquidity</h1>
-            <p className="mt-2 max-w-2xl text-sm text-muted-foreground">Track every payment flow from one secure workspace with live status visibility, smart reminders and payment method controls.</p>
-          </div>
-          <div className="rounded-2xl border border-border bg-surface px-4 py-3 text-sm text-muted-foreground">
-            <div className="font-medium text-foreground">Operational note</div>
-            <div className="mt-1">{feedback}</div>
-          </div>
+    <div className="space-y-5">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-xl border border-border bg-surface px-4 py-3">
+        <div className="inline-flex items-center gap-2 text-sm font-medium text-primary">
+          <ArrowDownToLine className="h-4 w-4" /> Payments synced with supplier ledger
         </div>
+        <div className="text-sm text-muted-foreground">{feedback}</div>
       </div>
 
-      <div className="flex flex-wrap gap-2 rounded-2xl border border-border bg-background p-2 shadow-sm">
+      <div className="flex flex-wrap gap-2 rounded-xl border border-border bg-background p-1.5 shadow-sm">
         {tabs.map((tab) => (
           <button key={tab} onClick={() => setActiveTab(tab)} className={`rounded-xl px-3 py-2 text-sm font-medium transition ${activeTab === tab ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-surface"}`}>
             {tab}

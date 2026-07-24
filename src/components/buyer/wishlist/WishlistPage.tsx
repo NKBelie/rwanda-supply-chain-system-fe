@@ -218,16 +218,21 @@ function WishlistCard({
 }) {
   return (
     <Card className={cn("border-border/80 bg-background shadow-sm transition-all duration-200 hover:-translate-y-0.5", !item.inStock && "opacity-75")}>
-      <div className="relative flex h-28 items-center justify-center rounded-t-xl border-b border-border bg-gradient-to-br from-emerald-50 to-sky-50 text-5xl dark:from-emerald-950/40 dark:to-sky-950/40">
-        {item.image}
+      <div className="relative h-32 overflow-hidden rounded-t-xl border-b border-border">
+        <img
+          src={item.image}
+          alt={item.name}
+          className="h-full w-full object-cover"
+          loading="lazy"
+        />
         {!item.inStock && (
-          <div className="absolute inset-0 flex items-center justify-center rounded-t-xl bg-background/60">
-            <span className="rounded-full bg-rose-500/10 px-2.5 py-1 text-xs font-semibold text-rose-700">Out of Stock</span>
+          <div className="absolute inset-0 flex items-center justify-center rounded-t-xl bg-background/70">
+            <span className="rounded-full bg-rose-500/10 px-2.5 py-1 text-xs font-semibold text-rose-700 shadow-sm">Out of Stock</span>
           </div>
         )}
         <button
           onClick={onRemove}
-          className="absolute right-2 top-2 rounded-full border border-border bg-background p-1.5 shadow-sm hover:bg-rose-50 hover:border-rose-200 hover:text-rose-600"
+          className="absolute right-2 top-2 rounded-full border border-border bg-background/90 p-1.5 shadow-sm hover:bg-rose-50 hover:border-rose-200 hover:text-rose-600"
         >
           <Trash2 className="h-3.5 w-3.5" />
         </button>
