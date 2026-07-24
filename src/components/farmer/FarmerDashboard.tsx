@@ -36,6 +36,34 @@ export default function FarmerDashboardPage() {
   const recentProducts = [...products].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 5);
   const recentOrders = [...orders].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 5);
 
+  // Additional statistics
+  const completedOrders = orders.filter(o => o.status === "Completed").length;
+  const pendingOrders = orders.filter(o => o.status === "Pending").length;
+  const inProgressOrders = orders.filter(o => o.status === "Processing" || o.status === "Packed").length;
+  
+  // Revenue by period
+  const thisMonthRevenue = orders
+    .filter(o => o.status === "Completed" && new Date(o.createdAt).getMonth() === new Date().getMonth())
+    .reduce((s, o) => s + o.totalPrice, 0);
+  
+  const lastMonthRevenue = orders
+    .filter(o => {
+      const orderDate = new Date(o.createdAt);
+      const lastMonth = new Date();
+      lastMonth.setMonth(lastMonth.getMonth() - 1);
+      return o.status === "Completed" && orderDate.getMonth() === lastMonth.getMonth();
+    })
+    .reduce((s, o) => s + o.totalPrice, 0);
+  
+  const revenueChange = lastMonthRevenue > 0 ? ((thisMonthRevenue - lastMonthRevenue) / lastMonthRevenue) * 100 : 0;
+
+  // Top selling products
+  const productSales = products.map(p => ({
+    ...p,
+    totalOrders: orders.filter(o => o.productId === p.id).length,
+    totalRevenue: orders.filter(o => o.productId === p.id && o.status === "Completed").reduce((s, o) => s + o.totalPrice, 0)
+  })).sort((a, b) => b.totalRevenue - a.totalRevenue).slice(0, 3);
+
   return (
     <>
       <PageHeader
@@ -115,6 +143,112 @@ export default function FarmerDashboardPage() {
         {/* Market Price Trends - Enhanced Widget */}
         <div className="mt-6">
           <MarketPriceWidget />
+        </div>
+
+        {/* Revenue Insights */}
+        <div className="mt-6 rounded-xl border border-border bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-950/20 dark:to-pink-950/20 p-6 shadow-sm">
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-semibold text-foreground">Revenue Performance</h3>
+              <p className="text-sm text-muted-foreground">This month vs last month</p>
+            </div>
+            {revenueChange !== 0 && (
+              <div className={`flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-semibold ${
+                revenueChange > 0 ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-700"
+              }`}>
+                {revenueChange > 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
+                {revenueChange > 0 ? "+" : ""}{revenueChange.toFixed(1)}%
+              </div>
+            )}
+          </div>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className="rounded-lg border border-border bg-background p-4">
+              <p className="text-sm text-muted-foreground">This Month</p>
+              <p className="mt-1 text-2xl font-bold text-foreground">RWF {(thisMonthRevenue / 1000).toFixed(1)}K</p>
+              <p className="mt-1 text-xs text-muted-foreground">{completedOrders} orders completed</p>
+            </div>
+            <div className="rounded-lg border border-border bg-background p-4">
+              <p className="text-sm text-muted-foreground">Last Month</p>
+              <p className="mt-1 text-2xl font-bold text-muted-foreground">RWF {(lastMonthRevenue / 1000).toFixed(1)}K</p>
+              <p className="mt-1 text-xs text-muted-foreground">Historical data</p>
+            </div>
+            <div className="rounded-lg border border-border bg-background p-4">
+              <p className="text-sm text-muted-foreground">Avg Order Value</p>
+              <p className="mt-1 text-2xl font-bold text-foreground">
+                RWF {completedOrders > 0 ? (thisMonthRevenue / completedOrders).toFixed(0) : "0"}
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground">Per completed order</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Top Performing Products */}
+        {productSales.length > 0 && (
+          <div className="mt-6 rounded-xl border border-border bg-background p-6 shadow-sm">
+            <div className="mb-4 flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-semibold text-foreground">Top Selling Products</h3>
+                <p className="text-sm text-muted-foreground">Your best performers this period</p>
+              </div>
+            </div>
+            <div className="space-y-3">
+              {productSales.map((product, idx) => (
+                <div key={product.id} className="flex items-center gap-4 rounded-lg border border-border bg-surface/50 p-4 transition-all hover:bg-surface">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-primary/10 text-2xl font-bold text-primary">
+                    #{idx + 1}
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-semibold text-foreground">{product.name}</p>
+                    <p className="text-sm text-muted-foreground">{product.category} · {product.quantity} {product.unit} in stock</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-lg font-bold text-foreground">RWF {(product.totalRevenue / 1000).toFixed(1)}K</p>
+                    <p className="text-xs text-muted-foreground">{product.totalOrders} orders</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Order Status Overview */}
+        <div className="mt-6 rounded-xl border border-border bg-background p-6 shadow-sm">
+          <h3 className="mb-4 text-lg font-semibold text-foreground">Order Status Overview</h3>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className="rounded-lg border border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950/20 p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-green-700 dark:text-green-400">Completed</p>
+                  <p className="mt-1 text-3xl font-bold text-green-800 dark:text-green-300">{completedOrders}</p>
+                </div>
+                <div className="rounded-full bg-green-200 dark:bg-green-900/50 p-3">
+                  <TrendingUp className="h-6 w-6 text-green-700 dark:text-green-400" />
+                </div>
+              </div>
+            </div>
+            <div className="rounded-lg border border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950/20 p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-blue-700 dark:text-blue-400">In Progress</p>
+                  <p className="mt-1 text-3xl font-bold text-blue-800 dark:text-blue-300">{inProgressOrders}</p>
+                </div>
+                <div className="rounded-full bg-blue-200 dark:bg-blue-900/50 p-3">
+                  <Package className="h-6 w-6 text-blue-700 dark:text-blue-400" />
+                </div>
+              </div>
+            </div>
+            <div className="rounded-lg border border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/20 p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-amber-700 dark:text-amber-400">Pending</p>
+                  <p className="mt-1 text-3xl font-bold text-amber-800 dark:text-amber-300">{pendingOrders}</p>
+                </div>
+                <div className="rounded-full bg-amber-200 dark:bg-amber-900/50 p-3">
+                  <AlertTriangle className="h-6 w-6 text-amber-700 dark:text-amber-400" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Quick Stats Row */}
