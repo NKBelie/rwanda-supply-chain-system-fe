@@ -2,33 +2,45 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
+import { HeroImageOverlay } from "./HeroImageOverlay";
 
 export function AuthShell({
   title, description, children, footer, back = "/",
 }: { title: string; description?: string; children: ReactNode; footer?: ReactNode; back?: string }) {
   return (
     <div className="grid min-h-dvh grid-cols-1 lg:grid-cols-2 bg-background">
-      <div className="hidden lg:flex flex-col justify-between bg-primary p-10 text-primary-foreground">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="grid h-9 w-9 place-items-center rounded-md bg-primary-foreground text-primary font-bold">R</div>
-          <span className="text-lg font-semibold">RSCN</span>
-        </Link>
-        <div>
-          <h2 className="text-3xl font-bold leading-tight">Rwanda&apos;s national supply chain network.</h2>
-          <p className="mt-3 max-w-md text-primary-foreground/80">
-            One secure platform connecting farmers, cooperatives, manufacturers, warehouses, transporters,
-            retailers, banks and government.
-          </p>
-          <div className="mt-8 grid grid-cols-3 gap-4">
-            {[["12K+","Businesses"],["48","Districts"],["99.9%","Uptime"]].map(([n,l]) => (
-              <div key={l} className="rounded-xl border border-primary-foreground/20 bg-primary-foreground/10 p-4">
-                <div className="text-2xl font-bold">{n}</div>
-                <div className="text-xs text-primary-foreground/80">{l}</div>
-              </div>
-            ))}
+      <div className="hidden lg:flex flex-col justify-between relative p-10 text-primary-foreground">
+        <Image
+          src="/images/auth-bg.jpg"
+          alt="Rwanda Supply Chain Network"
+          fill
+          className="object-cover"
+          priority
+        />
+        <HeroImageOverlay />
+        <div className="relative z-10 flex flex-col justify-between h-full">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="grid h-9 w-9 place-items-center rounded-md bg-primary-foreground text-primary font-bold">R</div>
+            <span className="text-lg font-semibold">RSCN</span>
+          </Link>
+          <div>
+            <h2 className="text-3xl font-bold leading-tight">Rwanda's national supply chain network.</h2>
+            <p className="mt-3 max-w-md text-primary-foreground/80">
+              One secure platform connecting farmers, cooperatives, manufacturers, warehouses, transporters,
+              retailers, banks and government.
+            </p>
+            <div className="mt-8 grid grid-cols-3 gap-4">
+              {[["12K+","Businesses"],["48","Districts"],["99.9%","Uptime"]].map(([n,l]) => (
+                <div key={l} className="rounded-xl border border-primary-foreground/20 bg-primary-foreground/10 p-4">
+                  <div className="text-2xl font-bold">{n}</div>
+                  <div className="text-xs text-primary-foreground/80">{l}</div>
+                </div>
+              ))}
+            </div>
           </div>
+          <p className="text-xs text-primary-foreground/70">&copy; {new Date().getFullYear()} Rwanda Supply Chain Network</p>
         </div>
-        <p className="text-xs text-primary-foreground/70">&copy; {new Date().getFullYear()} Rwanda Supply Chain Network</p>
       </div>
       <div className="flex flex-col p-6 md:p-10">
         <div className="flex items-center justify-between">

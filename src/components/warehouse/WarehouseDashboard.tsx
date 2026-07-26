@@ -33,6 +33,28 @@ export default function WarehouseDashboardPage() {
   const storedBatches = batches.filter(b => b.status === "Stored").length;
   const reservations = reservationService.getAll().filter(r => warehouses.some(w => w.id === r.warehouseId));
 
+  // Additional statistics
+  const completedDeliveries = 28; // Mock data
+  const inTransitDeliveries = 5;
+  const scheduledDeliveries = 8;
+  
+  // Storage trends (mock data for visualization)
+  const storageTrends = [
+    { day: "Mon", incoming: 12, outgoing: 8 },
+    { day: "Tue", incoming: 15, outgoing: 10 },
+    { day: "Wed", incoming: 10, outgoing: 12 },
+    { day: "Thu", incoming: 18, outgoing: 9 },
+    { day: "Fri", incoming: 14, outgoing: 15 },
+    { day: "Sat", incoming: 8, outgoing: 6 },
+    { day: "Sun", incoming: 5, outgoing: 4 },
+  ];
+
+  // Capacity alerts
+  const nearCapacityWarehouses = warehouses.filter(w => {
+    const occupancyRate = ((w.capacity - w.availableSpace) / w.capacity) * 100;
+    return occupancyRate > 80;
+  });
+
   // Mock data for incoming/outgoing flow
   const incomingGoods = [
     { id: "IN-001", supplier: "Green Valley Farms", product: "Maize", quantity: 500, unit: "kg", eta: "Today 2:00 PM", status: "In Transit" as const },
@@ -272,6 +294,136 @@ export default function WarehouseDashboardPage() {
             </div>
           </div>
         </div>
+
+        {/* Storage Activity Trends */}
+        <div className="mt-6 rounded-xl border border-border bg-background p-6 shadow-sm">
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-semibold text-foreground">Weekly Activity</h3>
+              <p className="text-sm text-muted-foreground">Incoming vs Outgoing shipments</p>
+            </div>
+          </div>
+          <div className="flex items-end justify-between gap-2" style={{ height: "180px" }}>
+            {storageTrends.map((day, idx) => {
+              const maxValue = Math.max(...storageTrends.flatMap(d => [d.incoming, d.outgoing]));
+              const incomingHeight = (day.incoming / maxValue) * 100;
+              const outgoingHeight = (day.outgoing / maxValue) * 100;
+              
+              return (
+                <div key={idx} className="flex flex-1 flex-col items-center gap-2">
+                  <div className="relative w-full flex gap-1 items-end" style={{ height: "140px" }}>
+                    <div className="flex-1 relative group">
+                      <div
+                        className="w-full rounded-t bg-emerald-500 transition-all hover:bg-emerald-600"
+                        style={{ height: `${incomingHeight}%` }}
+                      />
+                      <div className="invisible group-hover:visible absolute -top-8 left-1/2 -translate-x-1/2 rounded bg-black/80 px-2 py-1 text-[10px] text-white whitespace-nowrap">
+                        In: {day.incoming}
+                      </div>
+                    </div>
+                    <div className="flex-1 relative group">
+                      <div
+                        className="w-full rounded-t bg-blue-500 transition-all hover:bg-blue-600"
+                        style={{ height: `${outgoingHeight}%` }}
+                      />
+                      <div className="invisible group-hover:visible absolute -top-8 left-1/2 -translate-x-1/2 rounded bg-black/80 px-2 py-1 text-[10px] text-white whitespace-nowrap">
+                        Out: {day.outgoing}
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-[10px] font-medium text-muted-foreground">{day.day}</p>
+                </div>
+              );
+            })}
+          </div>
+          <div className="mt-4 flex items-center justify-center gap-6 text-xs">
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded-full bg-emerald-500" />
+              <span className="text-muted-foreground">Incoming</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded-full bg-blue-500" />
+              <span className="text-muted-foreground">Outgoing</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Delivery Status Overview */}
+        <div className="mt-6 rounded-xl border border-border bg-background p-6 shadow-sm">
+          <h3 className="mb-4 text-lg font-semibold text-foreground">Delivery Status Overview</h3>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className="rounded-lg border border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950/20 p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-green-700 dark:text-green-400">Completed</p>
+                  <p className="mt-1 text-3xl font-bold text-green-800 dark:text-green-300">{completedDeliveries}</p>
+                  <p className="mt-1 text-xs text-green-600 dark:text-green-500">This week</p>
+                </div>
+                <div className="rounded-full bg-green-200 dark:bg-green-900/50 p-3">
+                  <CheckCircle2 className="h-6 w-6 text-green-700 dark:text-green-400" />
+                </div>
+              </div>
+            </div>
+            <div className="rounded-lg border border-orange-200 bg-orange-50 dark:border-orange-800 dark:bg-orange-950/20 p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-orange-700 dark:text-orange-400">In Transit</p>
+                  <p className="mt-1 text-3xl font-bold text-orange-800 dark:text-orange-300">{inTransitDeliveries}</p>
+                  <p className="mt-1 text-xs text-orange-600 dark:text-orange-500">Active now</p>
+                </div>
+                <div className="rounded-full bg-orange-200 dark:bg-orange-900/50 p-3">
+                  <TrendingUp className="h-6 w-6 text-orange-700 dark:text-orange-400" />
+                </div>
+              </div>
+            </div>
+            <div className="rounded-lg border border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950/20 p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-blue-700 dark:text-blue-400">Scheduled</p>
+                  <p className="mt-1 text-3xl font-bold text-blue-800 dark:text-blue-300">{scheduledDeliveries}</p>
+                  <p className="mt-1 text-xs text-blue-600 dark:text-blue-500">Upcoming</p>
+                </div>
+                <div className="rounded-full bg-blue-200 dark:bg-blue-900/50 p-3">
+                  <Clock className="h-6 w-6 text-blue-700 dark:text-blue-400" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Capacity Alerts */}
+        {nearCapacityWarehouses.length > 0 && (
+          <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/20 p-5">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <h3 className="text-sm font-semibold text-amber-800 dark:text-amber-300">
+                  Capacity Warning
+                </h3>
+                <p className="mt-1 text-sm text-amber-700 dark:text-amber-400">
+                  {nearCapacityWarehouses.length} warehouse{nearCapacityWarehouses.length > 1 ? "s are" : " is"} near capacity (>80%)
+                </p>
+                <ul className="mt-3 space-y-2">
+                  {nearCapacityWarehouses.map(w => {
+                    const occupancyRate = ((w.capacity - w.availableSpace) / w.capacity) * 100;
+                    return (
+                      <li key={w.id} className="flex items-center justify-between rounded-lg border border-amber-300 bg-white dark:bg-amber-950/30 p-3 text-sm">
+                        <div>
+                          <p className="font-medium text-foreground">{w.name}</p>
+                          <p className="text-xs text-muted-foreground">{w.district}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-bold text-amber-700 dark:text-amber-400">{occupancyRate.toFixed(1)}%</p>
+                          <p className="text-xs text-muted-foreground">{w.availableSpace} tons left</p>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Warehouses overview */}
         <div className="mt-6 grid gap-4 lg:grid-cols-2">
