@@ -22,8 +22,8 @@ export function GoogleButton({ disabled = false }: { label?: string; onClick?: (
       </button>
       
       {showMessage && (
-        <div className="absolute -bottom-16 left-0 right-0 rounded-lg border border-yellow-500 bg-yellow-50 p-3 text-xs text-yellow-900 shadow-lg dark:bg-yellow-950 dark:text-yellow-100">
-          <p className="font-medium">Google OAuth not configured</p>
+        <div className="absolute -bottom-16 left-0 right-0 rounded-lg border border-border bg-muted p-3 text-xs text-muted-foreground shadow-lg">
+          <p className="font-medium text-foreground">Google OAuth not configured</p>
           <p className="mt-1">Use email/password login for testing. See README for OAuth setup.</p>
         </div>
       )}
