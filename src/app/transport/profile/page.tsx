@@ -1,0 +1,6 @@
+"use client";
+import { RoleProfilePage } from "@/components/app/modules/ProfilePage";
+
+export default function TransportProfile() {
+  return <RoleProfilePage role="transport" />;
+}
