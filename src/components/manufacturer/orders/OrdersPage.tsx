@@ -37,7 +37,7 @@ export function OrdersPage() {
     const term = search.toLowerCase();
     return orderList.filter((o) => {
       const matchTab = tab === "All" || o.status === tab;
-      const matchSearch = !term || [o.id, o.customer, o.product, o.sku].some((v) => v.toLowerCase().includes(term));
+      const matchSearch = !term || [o.customer, o.product, o.sku].some((v) => v.toLowerCase().includes(term));
       return matchTab && matchSearch;
     });
   }, [orderList, tab, search]);
@@ -48,7 +48,7 @@ export function OrdersPage() {
     <>
       <PageHeader
         title="Orders"
-        description="Manage outbound customer orders, track fulfillment and payment status."
+        description="Manage outgoing customer orders, track fulfillment and payment status."
         crumbs={[{ label: "Manufacturer", href: "/manufacturer/dashboard" }, { label: "Orders" }]}
         actions={
           <div className="flex gap-2">
@@ -89,7 +89,7 @@ export function OrdersPage() {
             <table className="min-w-full text-sm">
               <thead className="border-b border-border bg-surface text-xs uppercase tracking-wider text-muted-foreground">
                 <tr>
-                  <th className="px-4 py-3 text-left">Order ID</th>
+                  <th className="px-4 py-3 text-left">Date</th>
                   <th className="px-4 py-3 text-left">Customer</th>
                   <th className="px-4 py-3 text-left">Product</th>
                   <th className="px-4 py-3 text-left">Qty</th>
@@ -105,7 +105,7 @@ export function OrdersPage() {
                   <tr><td colSpan={9} className="px-4 py-10 text-center text-muted-foreground">No orders found.</td></tr>
                 ) : filtered.map((o) => (
                   <tr key={o.id} className="hover:bg-surface/50 transition-colors">
-                    <td className="px-4 py-3 font-medium text-primary">{o.id}</td>
+                    <td className="px-4 py-3 font-medium">{o.orderDate}</td>
                     <td className="px-4 py-3 font-medium">{o.customer}</td>
                     <td className="px-4 py-3"><p className="text-foreground">{o.product}</p><p className="text-xs text-muted-foreground font-mono">{o.sku}</p></td>
                     <td className="px-4 py-3">{o.qty} {o.unit}</td>
@@ -126,7 +126,7 @@ export function OrdersPage() {
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4" onClick={() => setViewOrder(null)}>
           <div className="w-full max-w-lg rounded-2xl border border-border bg-background p-6 shadow-pop" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-start justify-between mb-4">
-              <div><h2 className="text-lg font-semibold">{viewOrder.id}</h2><p className="text-sm text-muted-foreground">{viewOrder.customer}</p></div>
+              <div><h2 className="text-lg font-semibold">{viewOrder.product}</h2><p className="text-sm text-muted-foreground">{viewOrder.customer}</p></div>
               <button onClick={() => setViewOrder(null)} className="rounded-lg border border-border p-1.5 hover:bg-surface"><X className="h-4 w-4" /></button>
             </div>
             <div className="space-y-3 text-sm">

@@ -30,7 +30,7 @@ export function OrderTrackingPage() {
 
   const filtered = shipments.filter((s) => {
     const term = search.toLowerCase();
-    return !term || [s.orderId, s.trackingRef, s.product, s.supplier].some((v) => v.toLowerCase().includes(term));
+    return !term || [s.trackingRef, s.product, s.supplier].some((v) => v.toLowerCase().includes(term));
   });
 
   return (
@@ -49,7 +49,7 @@ export function OrderTrackingPage() {
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Order ID or tracking ref…"
+                placeholder="Search product or tracking ref…"
                 className="h-10 w-full rounded-xl border border-border bg-background pl-9 pr-4 text-sm outline-none focus:ring-2 focus:ring-ring"
               />
             </div>
@@ -70,8 +70,8 @@ export function OrderTrackingPage() {
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <p className="font-semibold text-sm text-foreground">{s.orderId}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{s.product}</p>
+                    <p className="font-semibold text-sm text-foreground">{s.product}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{s.supplier}</p>
                   </div>
                   <span className={cn("shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold", statusColor(s.status))}>
                     {s.status}
@@ -94,12 +94,12 @@ export function OrderTrackingPage() {
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h2 className="text-xl font-semibold text-foreground">{selected.orderId}</h2>
+                        <h2 className="text-xl font-semibold text-foreground">{selected.product}</h2>
                         <span className={cn("rounded-full px-2.5 py-1 text-xs font-semibold", statusColor(selected.status))}>
                           {selected.status}
                         </span>
                       </div>
-                      <p className="text-sm text-muted-foreground mt-0.5">{selected.product}</p>
+                      <p className="text-sm text-muted-foreground mt-0.5">{selected.supplier} → {selected.destination}</p>
                     </div>
                     <div className="text-right">
                       <p className="text-xs text-muted-foreground">Tracking ref</p>
