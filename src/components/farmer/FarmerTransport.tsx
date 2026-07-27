@@ -54,13 +54,12 @@ export default function FarmerTransportPage() {
   }
 
   const columns: Column<TransportRequest>[] = [
-    { key: "id", label: "Request ID" },
+    { key: "preferredDate", label: "Date", render: r => new Date(r.preferredDate).toLocaleDateString() },
     { key: "pickupLocation", label: "Pickup" },
     { key: "destination", label: "Destination" },
     { key: "productId", label: "Product", render: r => products.find(p => p.id === r.productId)?.name ?? r.productId },
     { key: "quantity", label: "Qty" },
     { key: "vehicleType", label: "Vehicle" },
-    { key: "preferredDate", label: "Date", render: r => new Date(r.preferredDate).toLocaleDateString() },
     { key: "status", label: "Status", render: r => <StatusBadge status={r.status} /> },
   ];
 
@@ -126,7 +125,7 @@ export default function FarmerTransportPage() {
       )}
 
       {deleting && (
-        <ConfirmDialog title="Delete Request" message={`Delete transport request ${deleting.id}?`}
+        <ConfirmDialog title="Delete Request" message={`Delete transport request from ${deleting.pickupLocation} to ${deleting.destination}?`}
           onConfirm={() => { transportService.delete(deleting.id); setDeleting(null); showToast("Deleted."); load(); }}
           onCancel={() => setDeleting(null)} />
       )}
