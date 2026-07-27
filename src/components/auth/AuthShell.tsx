@@ -20,7 +20,7 @@ export function AuthShell({
             retailers, banks and government.
           </p>
           <div className="mt-8 grid grid-cols-3 gap-4">
-            {[["12K+","Businesses"],["48","Districts"],["99.9%","Uptime"]].map(([n,l]) => (
+            {[["12K+","Businesses"],["30","Districts"],["99.9%","Uptime"]].map(([n,l]) => (
               <div key={l} className="rounded-xl border border-primary-foreground/20 bg-primary-foreground/10 p-4">
                 <div className="text-2xl font-bold">{n}</div>
                 <div className="text-xs text-primary-foreground/80">{l}</div>

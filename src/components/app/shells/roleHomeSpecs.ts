@@ -105,7 +105,7 @@ export const ROLE_HOME_SPEC: Record<Role, HomeSpec> = {
   },
   manufacturer: {
     greeting: "Production floor",
-    subtitle: "Batches, procurement and outbound in one place.",
+    subtitle: "Batches, procurement and outgoing in one place.",
     kpis: [
       { label: "Active batches",   value: "18",    delta: "+2",     up: true,  icon: "Factory" },
       { label: "Open POs",         value: "34",    delta: "-3",     up: true,  icon: "ClipboardList" },
@@ -202,11 +202,11 @@ export const ROLE_HOME_SPEC: Record<Role, HomeSpec> = {
   },
   warehouse: {
     greeting: "Warehouse control",
-    subtitle: "Capacity, inbound and outbound flow.",
+    subtitle: "Capacity, incoming and outgoing flow.",
     kpis: [
       { label: "Capacity used",      value: "76%",      delta: "+2pp", up: false, icon: "Building2" },
-      { label: "Inbound today",      value: "24 trucks",delta: "+4",   up: true,  icon: "PackageOpen" },
-      { label: "Outbound today",     value: "18 trucks",delta: "-2",   up: false, icon: "PackageCheck" },
+      { label: "incoming today",      value: "24 trucks",delta: "+4",   up: true,  icon: "PackageOpen" },
+      { label: "outgoing today",     value: "18 trucks",delta: "-2",   up: false, icon: "PackageCheck" },
       { label: "Open reservations",  value: "37",       delta: "+6",   up: true,  icon: "ClipboardList" },
     ],
     chart: { kind: "area", title: "Occupancy trend", data: range(30, 65, 25) },
