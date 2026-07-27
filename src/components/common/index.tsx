@@ -98,14 +98,30 @@ export function ComingSoon({ feature }: { feature?: string }) {
 }
 
 // ─── StatusBadge ─────────────────────────────────────────────────────────────
-export function StatusBadge({ status }: { status: string }) {
+export function StatusBadge({ status, tone, size }: { status: string; tone?: Tone; size?: "sm" | "md" | "lg" }) {
   const toneMap: Record<string, Tone> = {
-    Active: "success", Confirmed: "success", Delivered: "success", Available: "success",
-    Pending: "warning", "In Transit": "info", "On Trip": "info",
-    Inactive: "muted", "Off Duty": "muted",
-    Cancelled: "danger", Suspended: "danger",
+    // Active states
+    "active": "success", "Active": "success", "Confirmed": "success", "Delivered": "success", 
+    "Available": "success", "verified": "success", "completed": "success", "paid": "success",
+    "in-stock": "success", "Good": "success",
+    
+    // Pending/Warning states
+    "pending": "warning", "Pending": "warning", "low-stock": "warning", "Low": "warning",
+    "expiring-soon": "warning",
+    
+    // Info/In Progress states
+    "in-transit": "info", "In Transit": "info", "On Trip": "info", "in-progress": "info",
+    "shipped": "info", "scheduled": "info", "arrived": "info", "unloading": "info",
+    "reserved": "info", "processing": "info", "confirmed": "info",
+    
+    // Inactive/Muted states
+    "inactive": "muted", "Inactive": "muted", "Off Duty": "muted",
+    
+    // Danger states
+    "cancelled": "danger", "Cancelled": "danger", "suspended": "danger", "Suspended": "danger",
+    "out-of-stock": "danger", "Critical": "danger", "delayed": "danger",
   };
-  return <Badge tone={toneMap[status] ?? "muted"}>{status}</Badge>;
+  return <Badge tone={tone ?? toneMap[status] ?? "muted"} size={size}>{status}</Badge>;
 }
 
 // ─── SearchBar ────────────────────────────────────────────────────────────────

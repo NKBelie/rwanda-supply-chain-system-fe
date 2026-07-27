@@ -351,7 +351,7 @@ export function getLocationRecommendations(role: RegistrationRole, location: Par
     case "retailer":
       return [`Nearby suppliers in ${place}`, ...shared];
     case "warehouse":
-      return [`Compatible products expected around ${place}`, `Capacity planning for ${place}`, `Inbound transport providers near ${place}`];
+      return [`Compatible products expected around ${place}`, `Capacity planning for ${place}`, `incoming transport providers near ${place}`];
     case "transport":
     case "driver":
       return [`Nearest pickup requests around ${place}`, `Best route estimate from ${place}`, `Delivery cost estimate based on district distance`];

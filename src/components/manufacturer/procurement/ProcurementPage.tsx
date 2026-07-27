@@ -43,7 +43,7 @@ export function ProcurementPage() {
     const term = search.toLowerCase();
     return orders.filter((o) => {
       const matchTab = tab === "All" || o.status === tab;
-      const matchSearch = !term || [o.id, o.supplier, o.material].some((v) => v.toLowerCase().includes(term));
+      const matchSearch = !term || [o.supplier, o.material].some((v) => v.toLowerCase().includes(term));
       return matchTab && matchSearch;
     });
   }, [orders, tab, search]);
@@ -109,7 +109,7 @@ export function ProcurementPage() {
             <table className="min-w-full text-sm">
               <thead className="border-b border-border bg-surface text-xs uppercase tracking-wider text-muted-foreground">
                 <tr>
-                  <th className="px-4 py-3 text-left">PO #</th>
+                  <th className="px-4 py-3 text-left">Date</th>
                   <th className="px-4 py-3 text-left">Supplier</th>
                   <th className="px-4 py-3 text-left">Material</th>
                   <th className="px-4 py-3 text-left">Qty</th>
@@ -125,7 +125,7 @@ export function ProcurementPage() {
                   <tr><td colSpan={9} className="px-4 py-10 text-center text-muted-foreground">No purchase orders found.</td></tr>
                 ) : filtered.map((po) => (
                   <tr key={po.id} className="hover:bg-surface/50 transition-colors">
-                    <td className="px-4 py-3 font-medium text-primary">{po.id}</td>
+                    <td className="px-4 py-3 font-medium">{po.issueDate}</td>
                     <td className="px-4 py-3 font-medium">{po.supplier}</td>
                     <td className="px-4 py-3 text-muted-foreground">{po.material}</td>
                     <td className="px-4 py-3">{po.qty} {po.unit}</td>
@@ -151,7 +151,7 @@ export function ProcurementPage() {
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4" onClick={() => setViewPO(null)}>
           <div className="w-full max-w-lg rounded-2xl border border-border bg-background p-6 shadow-pop" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-start justify-between mb-4">
-              <div><h2 className="text-lg font-semibold">{viewPO.id}</h2><p className="text-sm text-muted-foreground">{viewPO.supplier}</p></div>
+              <div><h2 className="text-lg font-semibold">{viewPO.material}</h2><p className="text-sm text-muted-foreground">{viewPO.supplier}</p></div>
               <button onClick={() => setViewPO(null)} className="rounded-lg border border-border p-1.5 hover:bg-surface"><X className="h-4 w-4" /></button>
             </div>
             <div className="space-y-3 text-sm">

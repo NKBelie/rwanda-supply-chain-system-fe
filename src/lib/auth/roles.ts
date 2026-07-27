@@ -18,7 +18,7 @@ export const ROLE_META: Record<Role, RoleMeta> = {
   supplier:     { label: "Supplier",            short: "Supplier",     home: "/supplier",     orgType: "Supplier",         accent: BRAND, description: "Catalogue, RFQs, deliveries." },
   buyer:        { label: "Buyer / Client",      short: "Buyer",        home: "/buyer",        orgType: "Business",         accent: BRAND, description: "Source and track orders." },
   retailer:     { label: "Retailer",            short: "Retailer",     home: "/retailer",     orgType: "Retail",           accent: BRAND, description: "Shop-floor stock & sales." },
-  warehouse:    { label: "Warehouse Manager",   short: "Warehouse",    home: "/warehouse",    orgType: "Warehouse",        accent: BRAND, description: "Capacity, inbound, outbound." },
+  warehouse:    { label: "Warehouse Manager",   short: "Warehouse",    home: "/warehouse",    orgType: "Warehouse",        accent: BRAND, description: "Capacity, incoming, outgoing." },
   transport:    { label: "Transport Company",   short: "Transport",    home: "/transport",    orgType: "Logistics",        accent: BRAND, description: "Fleet, routes, deliveries." },
   driver:       { label: "Driver",              short: "Driver",       home: "/driver",       orgType: "Driver",           accent: BRAND, description: "On-the-road delivery ops." },
   bank:         { label: "Financial Institution", short: "Bank",       home: "/bank",         orgType: "Bank",             accent: BRAND, description: "Loans, risk & verification." },

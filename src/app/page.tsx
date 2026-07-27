@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-  title: "RSCN ” Rwanda Supply Chain Network",
+  title: "RSCN - Rwanda Supply Chain Network",
   description: "Connecting every product, every business, every movement across Rwanda. One national supply chain platform.",
 };
 
@@ -72,9 +72,9 @@ export default function Home() {
               </div>
               <div className="mt-4 space-y-2">
                 {[
-                  ["Maize · 12 tons", "Musanze †’ Kigali", "In transit", "info"],
-                  ["Coffee · 8 tons", "Huye †’ Rusizi", "Delivered", "success"],
-                  ["Fertilizer · 40 pallets", "Kigali †’ Nyagatare", "Loading", "warning"],
+                  ["Maize · 12 tons", "Musanze > Kigali", "In transit", "info"],
+                  ["Coffee · 8 tons", "Huye > Rusizi", "Delivered", "success"],
+                  ["Fertilizer · 40 pallets", "Kigali > Nyagatare", "Loading", "warning"],
                 ].map(([a,b,c,tone]) => (
                   <div key={a} className="flex items-center justify-between rounded-lg border border-border px-3 py-2 text-sm">
                     <div>
@@ -97,7 +97,7 @@ export default function Home() {
         <div className="container-rscn grid grid-cols-2 gap-6 py-10 md:grid-cols-4">
           {([
             { v: 12480, suffix: "+", l: "Businesses onboarded" },
-            { v: 48, suffix: "", l: "Districts covered" },
+            { v: 30, suffix: "", l: "Districts covered" },
             { v: 1.2, suffix: "M", l: "Tons moved / year", decimals: 1 },
             { v: 99.9, suffix: "%", l: "Platform uptime", decimals: 1 },
           ]).map((s) => (
@@ -116,7 +116,7 @@ export default function Home() {
         <div className="grid gap-4 md:grid-cols-3">
           {[
             ["Invisible inventory","Producers, warehouses and retailers can't see each other's stock in real time."],
-            ["Manual logistics","Transport is booked over phone; deliveries lose 20“30% of value to delays."],
+            ["Manual logistics","Transport is booked over phone; deliveries lose 20-30% of value to delays."],
             ["Broken financing","Banks and buyers can't verify inventory, contracts or transactions on paper."],
           ].map(([t, d]) => (
             <div key={t} className="rounded-xl border border-border bg-background p-6">
@@ -222,7 +222,7 @@ export default function Home() {
         <div className="container-rscn py-10">
           <div className="mb-4 text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">Partners & integrations</div>
           <div className="grid grid-cols-2 gap-6 md:grid-cols-6">
-            {["MINAGRI","RRA","BNR","MINICOM","RSSB","RIB"].map((p) => (
+            {["MINAGRI","RRA","BNR","MINICOM","RSSB","RIB","RAB"].map((p) => (
               <div key={p} className="grid h-14 place-items-center rounded-lg border border-border bg-background text-sm font-semibold text-muted-foreground">{p}</div>
             ))}
           </div>

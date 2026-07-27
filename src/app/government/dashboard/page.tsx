@@ -1,6 +1,5 @@
-import { RoleHome } from "@/components/app/shells/RoleHome";
-import { ROLE_HOME_SPEC } from "@/components/app/shells/roleHomeSpecs";
+import GovernmentDashboardPage from "@/components/government/GovernmentDashboard";
 
-export default function GovernmentDashboardPage() {
-  return <RoleHome role="government" spec={ROLE_HOME_SPEC.government} />;
+export default function GovernmentDashboard() {
+  return <GovernmentDashboardPage />;
 }

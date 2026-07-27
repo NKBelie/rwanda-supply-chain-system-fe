@@ -1,7 +1,6 @@
 "use client";
 import { use } from "react";
-import { RoleHome } from "@/components/app/shells/RoleHome";
-import { ROLE_HOME_SPEC } from "@/components/app/shells/roleHomeSpecs";
+import SupplierDashboardPage from "@/components/supplier/SupplierDashboard";
 import { RoleModulePage } from "@/components/app/shells/RoleModulePage";
 import { RoleMessagesPage } from "@/components/app/modules/MessagesPage";
 import { RoleNotificationsPage } from "@/components/app/modules/NotificationsPage";
@@ -9,7 +8,7 @@ import { RoleNotificationsPage } from "@/components/app/modules/NotificationsPag
 export default function SupplierSlugPage({ params }: { params: Promise<{ slug?: string[] }> }) {
   const { slug } = use(params);
   const primary = slug?.[0] ?? "";
-  if (!primary) return <RoleHome role="supplier" spec={ROLE_HOME_SPEC.supplier} />;
+  if (!primary || primary === "dashboard") return <SupplierDashboardPage />;
   if (primary === "messages") return <RoleMessagesPage role="supplier" />;
   if (primary === "notifications") return <RoleNotificationsPage role="supplier" />;
   return <RoleModulePage role="supplier" slug={slug!.join("/")} />;

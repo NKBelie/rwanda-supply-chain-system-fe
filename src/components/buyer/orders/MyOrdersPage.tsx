@@ -21,7 +21,7 @@ export function MyOrdersPage() {
     const term = search.toLowerCase();
     return orders.filter((o) => {
       const matchTab = tab === "All" || o.status === tab;
-      const matchSearch = !term || [o.id, o.product, o.supplier].some((v) => v.toLowerCase().includes(term));
+      const matchSearch = !term || [o.product, o.supplier].some((v) => v.toLowerCase().includes(term));
       return matchTab && matchSearch;
     });
   }, [search, tab, orders]);
@@ -99,7 +99,7 @@ export function MyOrdersPage() {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by order ID, product, supplier…"
+            placeholder="Search by product, supplier…"
             className="h-10 w-full max-w-sm rounded-xl border border-border bg-background pl-9 pr-4 text-sm outline-none focus:ring-2 focus:ring-ring"
           />
           {search && <button onClick={() => setSearch("")} className="absolute left-[calc(50%-1rem)] top-1/2 -translate-y-1/2 text-muted-foreground"><X className="h-4 w-4" /></button>}
@@ -111,14 +111,14 @@ export function MyOrdersPage() {
             <table className="min-w-full text-sm">
               <thead className="border-b border-border bg-surface text-xs uppercase tracking-wider text-muted-foreground">
                 <tr>
-                  <th className="px-4 py-3 text-left">Order ID</th>
+                  <th className="px-4 py-3 text-left">Date</th>
                   <th className="px-4 py-3 text-left">Product</th>
                   <th className="px-4 py-3 text-left">Supplier</th>
                   <th className="px-4 py-3 text-left">Qty</th>
                   <th className="px-4 py-3 text-left">Amount</th>
                   <th className="px-4 py-3 text-left">Status</th>
                   <th className="px-4 py-3 text-left">Payment</th>
-                  <th className="px-4 py-3 text-left">Date</th>
+                  <th className="px-4 py-3 text-left">Delivery</th>
                   <th className="px-4 py-3 text-left">Actions</th>
                 </tr>
               </thead>
@@ -131,7 +131,7 @@ export function MyOrdersPage() {
                   </tr>
                 ) : filtered.map((order) => (
                   <tr key={order.id} className="hover:bg-surface/50 transition-colors">
-                    <td className="px-4 py-3 font-medium text-primary">{order.id}</td>
+                    <td className="px-4 py-3 font-medium">{order.date}</td>
                     <td className="px-4 py-3">{order.product}</td>
                     <td className="px-4 py-3 text-muted-foreground">{order.supplier}</td>
                     <td className="px-4 py-3">{order.quantity}</td>
@@ -146,7 +146,7 @@ export function MyOrdersPage() {
                         {order.paymentStatus}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-muted-foreground text-xs">{order.date}</td>
+                    <td className="px-4 py-3 text-muted-foreground text-xs">{order.expectedDelivery}</td>
                     <td className="px-4 py-3">
                       <div className="flex gap-1.5">
                         <button
@@ -184,7 +184,7 @@ export function MyOrdersPage() {
           <div className="w-full max-w-lg rounded-2xl border border-border bg-background p-6 shadow-pop" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h2 className="text-lg font-semibold text-foreground">{viewOrder.id}</h2>
+                <h2 className="text-lg font-semibold text-foreground">{viewOrder.product}</h2>
                 <p className="text-sm text-muted-foreground">{viewOrder.supplier} · {viewOrder.supplierLocation}</p>
               </div>
               <button onClick={() => setViewOrder(null)} className="rounded-lg border border-border p-1.5 hover:bg-surface">
@@ -246,7 +246,7 @@ export function MyOrdersPage() {
           <div className="w-full max-w-sm rounded-2xl border border-border bg-background p-6 shadow-pop" onClick={(e) => e.stopPropagation()}>
             <h2 className="text-lg font-semibold text-foreground">Cancel Order?</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Are you sure you want to cancel <span className="font-medium text-foreground">{cancelTarget.id}</span> — {cancelTarget.product}? This cannot be undone.
+              Are you sure you want to cancel your order for <span className="font-medium text-foreground">{cancelTarget.product}</span> from {cancelTarget.supplier}? This cannot be undone.
             </p>
             <div className="mt-5 flex gap-2">
               <Button variant="secondary" className="flex-1" onClick={() => setCancelTarget(null)}>Keep Order</Button>

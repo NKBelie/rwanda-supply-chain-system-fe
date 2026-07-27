@@ -5,6 +5,13 @@ import type { LoginInput, Session } from "@/lib/auth/session";
 import type { Role } from "@/lib/auth/roles";
 import { hasPermission, type Permission } from "@/lib/auth/permissions";
 
+// Initialize mock data in development
+if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
+  import("@/lib/storage/init-mock-data").then(({ initializeMockData }) => {
+    initializeMockData();
+  }).catch(console.error);
+}
+
 type AuthContextValue = {
   session: Session | null;
   isAuthenticated: boolean;

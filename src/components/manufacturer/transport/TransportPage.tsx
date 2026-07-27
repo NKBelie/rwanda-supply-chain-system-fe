@@ -35,7 +35,7 @@ export function TransportPage() {
     <>
       <PageHeader
         title="Transport"
-        description="Track outbound shipments and coordinate delivery logistics."
+        description="Track outgoing shipments and coordinate delivery logistics."
         crumbs={[{ label: "Manufacturer", href: "/manufacturer/dashboard" }, { label: "Transport" }]}
         actions={<Button size="sm"><Truck className="mr-1.5 h-4 w-4" />Schedule Trip</Button>}
       />
@@ -63,8 +63,8 @@ export function TransportPage() {
               <div key={trip.id} className="rounded-xl border border-border bg-background p-4 shadow-sm">
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <div>
-                    <p className="font-semibold text-foreground text-sm">{trip.id}</p>
-                    <p className="text-xs text-muted-foreground">{trip.orderId} · {trip.cargo}</p>
+                    <p className="font-semibold text-foreground text-sm">{trip.cargo}</p>
+                    <p className="text-xs text-muted-foreground">{trip.origin} → {trip.destination}</p>
                   </div>
                   <span className={cn("shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold", statusColor(trip.status))}>{trip.status}</span>
                 </div>
@@ -92,9 +92,8 @@ export function TransportPage() {
             <table className="min-w-full text-sm">
               <thead className="border-b border-border bg-surface text-xs uppercase tracking-wider text-muted-foreground">
                 <tr>
-                  <th className="px-4 py-3 text-left">Trip ID</th>
-                  <th className="px-4 py-3 text-left">Cargo</th>
                   <th className="px-4 py-3 text-left">Route</th>
+                  <th className="px-4 py-3 text-left">Cargo</th>
                   <th className="px-4 py-3 text-left">Driver</th>
                   <th className="px-4 py-3 text-left">Departure</th>
                   <th className="px-4 py-3 text-left">ETA</th>
@@ -105,9 +104,8 @@ export function TransportPage() {
               <tbody className="divide-y divide-border/70">
                 {trips.map((trip) => (
                   <tr key={trip.id} className="hover:bg-surface/50 transition-colors">
-                    <td className="px-4 py-3 font-medium text-primary">{trip.id}</td>
+                    <td className="px-4 py-3 text-xs text-muted-foreground max-w-[200px] truncate">{trip.origin} → {trip.destination}</td>
                     <td className="px-4 py-3"><p className="font-medium">{trip.cargo}</p><p className="text-xs text-muted-foreground">{trip.qty}</p></td>
-                    <td className="px-4 py-3 text-xs text-muted-foreground max-w-[180px] truncate">{trip.origin} → {trip.destination}</td>
                     <td className="px-4 py-3 text-muted-foreground">{trip.driver}</td>
                     <td className="px-4 py-3 text-xs text-muted-foreground">{trip.departureDate}</td>
                     <td className="px-4 py-3 text-xs text-muted-foreground">{trip.eta}</td>
@@ -125,7 +123,7 @@ export function TransportPage() {
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4" onClick={() => setSelected(null)}>
           <div className="w-full max-w-lg rounded-2xl border border-border bg-background p-6 shadow-pop" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-start justify-between mb-4">
-              <div><h2 className="text-lg font-semibold">{selected.id}</h2><p className="text-sm text-muted-foreground">{selected.orderId} · {selected.cargo}</p></div>
+              <div><h2 className="text-lg font-semibold">{selected.cargo}</h2><p className="text-sm text-muted-foreground">{selected.origin} → {selected.destination}</p></div>
               <button onClick={() => setSelected(null)} className="rounded-lg border border-border p-1.5 hover:bg-surface"><X className="h-4 w-4" /></button>
             </div>
             <div className="space-y-3 text-sm">

@@ -85,69 +85,32 @@ export default function WarehouseDashboardPage() {
         }
       />
       <PageBody>
-        {/* Enhanced KPI Cards with gradients */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-indigo-500/10 via-indigo-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Total Warehouses</p>
-                <p className="mt-2 text-3xl font-bold text-foreground">{warehouses.length}</p>
-                <p className="mt-1 text-xs text-muted-foreground">Active facilities</p>
-              </div>
-              <div className="rounded-lg bg-indigo-500/10 p-2.5">
-                <Building2 className="h-5 w-5 text-indigo-600" />
-              </div>
+        {/* Summary Statistics */}
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex gap-6">
+            <div>
+              <p className="text-sm text-muted-foreground">Total Warehouses</p>
+              <p className="text-2xl font-semibold text-foreground">{warehouses.length}</p>
             </div>
-            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-indigo-500/5 transition-transform group-hover:scale-110" />
-          </div>
-
-          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-blue-500/10 via-blue-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Total Capacity</p>
-                <p className="mt-2 text-3xl font-bold text-foreground">{totalCapacity.toLocaleString()}</p>
-                <p className="mt-1 text-xs text-muted-foreground">tons storage</p>
-              </div>
-              <div className="rounded-lg bg-blue-500/10 p-2.5">
-                <Package className="h-5 w-5 text-blue-600" />
-              </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Total Capacity</p>
+              <p className="text-2xl font-semibold text-foreground">{totalCapacity.toLocaleString()} tons</p>
             </div>
-            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-blue-500/5 transition-transform group-hover:scale-110" />
-          </div>
-
-          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Available Space</p>
-                <p className="mt-2 text-3xl font-bold text-foreground">{totalAvailable.toLocaleString()}</p>
-                <p className="mt-1 text-xs text-muted-foreground">tons remaining</p>
-              </div>
-              <div className="rounded-lg bg-emerald-500/10 p-2.5">
-                <PackageOpen className="h-5 w-5 text-emerald-600" />
-              </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Available Space</p>
+              <p className="text-2xl font-semibold text-emerald-600">{totalAvailable.toLocaleString()} tons</p>
             </div>
-            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-emerald-500/5 transition-transform group-hover:scale-110" />
-          </div>
-
-          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Occupancy Rate</p>
-                <p className="mt-2 text-3xl font-bold text-foreground">{totalCapacity > 0 ? Math.round((occupied / totalCapacity) * 100) : 0}%</p>
-                <p className="mt-1 text-xs text-muted-foreground">{occupied.toLocaleString()} tons used</p>
-              </div>
-              <div className="rounded-lg bg-amber-500/10 p-2.5">
-                <PackageCheck className="h-5 w-5 text-amber-600" />
-              </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Occupancy Rate</p>
+              <p className="text-2xl font-semibold text-foreground">{totalCapacity > 0 ? Math.round((occupied / totalCapacity) * 100) : 0}%</p>
             </div>
-            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-amber-500/5 transition-transform group-hover:scale-110" />
           </div>
         </div>
 
-        {/* Incoming/Outgoing Flow Section - New Design */}
+        {/* Incoming/Outgoing Flow Section */}
         <div className="mt-6 grid gap-4 lg:grid-cols-2">
           {/* Incoming Goods */}
-          <div className="rounded-xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/5 to-transparent p-6 shadow-sm">
+          <div className="rounded-xl border border-border bg-background p-6 shadow-sm">
             <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="rounded-lg bg-emerald-500/10 p-2">
@@ -167,7 +130,7 @@ export default function WarehouseDashboardPage() {
             </div>
             <div className="space-y-3">
               {incomingGoods.map((item) => (
-                <div key={item.id} className="flex items-center gap-3 rounded-lg border border-border bg-background p-3 transition-all hover:border-emerald-500/30 hover:shadow-sm">
+                <div key={item.id} className="flex items-center gap-3 rounded-lg border border-border bg-surface/50 p-3">
                   <div className={`rounded-full p-2 ${item.status === "In Transit" ? "bg-orange-500/10" : "bg-blue-500/10"}`}>
                     {item.status === "In Transit" ? (
                       <TrendingUp className="h-4 w-4 text-orange-600" />
@@ -197,7 +160,7 @@ export default function WarehouseDashboardPage() {
           </div>
 
           {/* Outgoing Goods */}
-          <div className="rounded-xl border border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-transparent p-6 shadow-sm">
+          <div className="rounded-xl border border-border bg-background p-6 shadow-sm">
             <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="rounded-lg bg-blue-500/10 p-2">
@@ -401,7 +364,7 @@ export default function WarehouseDashboardPage() {
                   Capacity Warning
                 </h3>
                 <p className="mt-1 text-sm text-amber-700 dark:text-amber-400">
-                  {nearCapacityWarehouses.length} warehouse{nearCapacityWarehouses.length > 1 ? "s are" : " is"} near capacity (>80%)
+                  {nearCapacityWarehouses.length} warehouse{nearCapacityWarehouses.length > 1 ? "s are" : " is"} near capacity {`(>80%)`}
                 </p>
                 <ul className="mt-3 space-y-2">
                   {nearCapacityWarehouses.map(w => {
@@ -466,8 +429,8 @@ export default function WarehouseDashboardPage() {
                   {requests.filter(r => r.status === "Pending").slice(0, 5).map(r => (
                     <li key={r.id} className="flex items-center justify-between py-2.5 text-sm">
                       <div>
-                        <div className="font-medium">{r.id}</div>
-                        <div className="text-xs text-muted-foreground">Qty: {r.quantity} · {r.duration} days</div>
+                        <div className="font-medium">Storage Request</div>
+                        <div className="text-xs text-muted-foreground">{r.quantity} units · {r.duration} days · {new Date(r.requestDate).toLocaleDateString()}</div>
                       </div>
                       <StatusBadge status={r.status} />
                     </li>

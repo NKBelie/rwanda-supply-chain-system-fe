@@ -1,105 +1,250 @@
 import {
-    Home,
-    Package,
-    Warehouse,
-    Truck,
-    ShoppingCart,
-    Users,
-    BarChart3,
-    Settings,
+  Home,
+  Package,
+  Warehouse,
+  Truck,
+  ShoppingCart,
+  Users,
+  BarChart3,
+  Settings,
+  MessageSquare,
+  Bell,
+  User,
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
+  Briefcase,
+  MapPin,
+  AlertCircle,
+  FileText,
+  Boxes,
+  Building2,
+  CheckCircle,
+  Search,
+  Heart,
+  Star,
+  Factory,
+  Box,
+  Calendar,
+  ClipboardList,
+  Map,
+  History,
+  CreditCard,
 } from "lucide-react";
 
-
 export const dashboardNavigation = {
+  // Admin Dashboard
+  ADMIN: [
+    { label: "Dashboard", href: "/admin/dashboard", icon: Home },
+    { label: "Users", href: "/admin/users", icon: Users },
+    { label: "Verification", href: "/admin/verification", icon: CheckCircle },
+    { label: "Government", href: "/admin/government", icon: Building2 },
+    { label: "Analytics", href: "/admin/analytics", icon: BarChart3 },
+    { label: "Messages", href: "/admin/messages", icon: MessageSquare },
+    { label: "Notifications", href: "/admin/notifications", icon: Bell },
+    { label: "Profile", href: "/admin/profile", icon: User },
+    { label: "Settings", href: "/admin/settings", icon: Settings },
+  ],
 
-ADMIN: [
+  // Farmer Dashboard
+  FARMER: [
+    { label: "Dashboard", href: "/farmer/dashboard", icon: Home },
+    { label: "Products", href: "/farmer/products", icon: Package },
+    { label: "Inventory", href: "/farmer/inventory", icon: Boxes },
+    { label: "Orders", href: "/farmer/orders", icon: ShoppingCart },
+    { label: "Sales", href: "/farmer/sales", icon: TrendingUp },
+    { label: "Buyers", href: "/farmer/buyers", icon: Users },
+    { label: "Transport", href: "/farmer/transport", icon: Truck },
+    { label: "Warehouse", href: "/farmer/warehouse", icon: Warehouse },
+    { label: "Payments", href: "/farmer/payments", icon: DollarSign },
+    { label: "Messages", href: "/farmer/messages", icon: MessageSquare },
+    { label: "Notifications", href: "/farmer/notifications", icon: Bell },
+    { label: "Profile", href: "/farmer/profile", icon: User },
+    { label: "Settings", href: "/farmer/settings", icon: Settings },
+  ],
 
-{
-label:"Dashboard",
-href:"/admin",
-icon:Home
-},
+  // Cooperative Dashboard
+  COOPERATIVE: [
+    { label: "Dashboard", href: "/cooperative/dashboard", icon: Home },
+    { label: "Members", href: "/cooperative/members", icon: Users },
+    { label: "Products", href: "/cooperative/products", icon: Package },
+    { label: "Collections", href: "/cooperative/collections", icon: Boxes },
+    { label: "Inventory", href: "/cooperative/inventory", icon: Warehouse },
+    { label: "Orders", href: "/cooperative/orders", icon: ShoppingCart },
+    { label: "Buyers", href: "/cooperative/buyers", icon: Briefcase },
+    { label: "Sales", href: "/cooperative/sales", icon: TrendingUp },
+    { label: "Transport", href: "/cooperative/transport", icon: Truck },
+    { label: "Warehouses", href: "/cooperative/warehouses", icon: Building2 },
+    { label: "Payments", href: "/cooperative/payments", icon: DollarSign },
+    { label: "Reports", href: "/cooperative/reports", icon: FileText },
+    { label: "Messages", href: "/cooperative/messages", icon: MessageSquare },
+    { label: "Notifications", href: "/cooperative/notifications", icon: Bell },
+    { label: "Profile", href: "/cooperative/profile", icon: User },
+    { label: "Settings", href: "/cooperative/settings", icon: Settings },
+  ],
 
-{
-label:"Users",
-href:"/admin/users",
-icon:Users
-},
+  // Manufacturer Dashboard
+  MANUFACTURER: [
+    { label: "Dashboard", href: "/manufacturer/dashboard", icon: Home },
+    { label: "Raw Materials", href: "/manufacturer/materials", icon: Package },
+    { label: "Suppliers", href: "/manufacturer/suppliers", icon: Briefcase },
+    { label: "Purchase Orders", href: "/manufacturer/procurement", icon: ShoppingCart },
+    { label: "Production", href: "/manufacturer/production", icon: Factory },
+    { label: "Inventory", href: "/manufacturer/inventory", icon: Warehouse },
+    { label: "Orders", href: "/manufacturer/orders", icon: Box },
+    { label: "Transport", href: "/manufacturer/transport", icon: Truck },
+    { label: "Warehouses", href: "/manufacturer/warehouses", icon: Building2 },
+    { label: "Payments", href: "/manufacturer/payments", icon: DollarSign },
+    { label: "Analytics", href: "/manufacturer/analytics", icon: BarChart3 },
+    { label: "Messages", href: "/manufacturer/messages", icon: MessageSquare },
+    { label: "Notifications", href: "/manufacturer/notifications", icon: Bell },
+    { label: "Profile", href: "/manufacturer/profile", icon: User },
+    { label: "Settings", href: "/manufacturer/settings", icon: Settings },
+  ],
 
-{
-label:"Analytics",
-href:"/admin/analytics",
-icon:BarChart3
-},
+  // Supplier Dashboard
+  SUPPLIER: [
+    { label: "Dashboard", href: "/supplier/dashboard", icon: Home },
+    { label: "Products", href: "/supplier/products", icon: Package },
+    { label: "Inventory", href: "/supplier/inventory", icon: Warehouse },
+    { label: "Buyer Requests", href: "/supplier/requests", icon: Bell },
+    { label: "Orders", href: "/supplier/orders", icon: ShoppingCart },
+    { label: "Offers", href: "/supplier/offers", icon: TrendingUp },
+    { label: "Transport", href: "/supplier/transport", icon: Truck },
+    { label: "Warehouses", href: "/supplier/warehouses", icon: Building2 },
+    { label: "Payments", href: "/supplier/payments", icon: DollarSign },
+    { label: "Messages", href: "/supplier/messages", icon: MessageSquare },
+    { label: "Notifications", href: "/supplier/notifications", icon: Bell },
+    { label: "Profile", href: "/supplier/profile", icon: User },
+    { label: "Settings", href: "/supplier/settings", icon: Settings },
+  ],
 
-{
-label:"Settings",
-href:"/admin/settings",
-icon:Settings
-}
+  // Buyer Dashboard
+  BUYER: [
+    { label: "Dashboard", href: "/buyer/dashboard", icon: Home },
+    { label: "Marketplace", href: "/buyer/marketplace", icon: ShoppingCart },
+    { label: "Search", href: "/buyer/search", icon: Search },
+    { label: "Orders", href: "/buyer/orders", icon: Box },
+    { label: "Offers", href: "/buyer/offers", icon: TrendingUp },
+    { label: "Suppliers", href: "/buyer/suppliers", icon: Briefcase },
+    { label: "Wishlist", href: "/buyer/wishlist", icon: Heart },
+    { label: "Transport", href: "/buyer/transport", icon: Truck },
+    { label: "Payments", href: "/buyer/payments", icon: DollarSign },
+    { label: "Tracking", href: "/buyer/tracking", icon: MapPin },
+    { label: "Reviews", href: "/buyer/reviews", icon: Star },
+    { label: "Messages", href: "/buyer/messages", icon: MessageSquare },
+    { label: "Notifications", href: "/buyer/notifications", icon: Bell },
+    { label: "Profile", href: "/buyer/profile", icon: User },
+    { label: "Settings", href: "/buyer/settings", icon: Settings },
+  ],
 
-],
+  // Retailer Dashboard
+  RETAILER: [
+    { label: "Dashboard", href: "/retailer/dashboard", icon: Home },
+    { label: "Marketplace", href: "/retailer/marketplace", icon: ShoppingCart },
+    { label: "Products", href: "/retailer/products", icon: Package },
+    { label: "Suppliers", href: "/retailer/suppliers", icon: Briefcase },
+    { label: "Orders", href: "/retailer/orders", icon: Box },
+    { label: "Inventory", href: "/retailer/inventory", icon: Warehouse },
+    { label: "Sales", href: "/retailer/sales", icon: TrendingUp },
+    { label: "Transport", href: "/retailer/transport", icon: Truck },
+    { label: "Payments", href: "/retailer/payments", icon: DollarSign },
+    { label: "Customers", href: "/retailer/customers", icon: Users },
+    { label: "Messages", href: "/retailer/messages", icon: MessageSquare },
+    { label: "Notifications", href: "/retailer/notifications", icon: Bell },
+    { label: "Profile", href: "/retailer/profile", icon: User },
+    { label: "Settings", href: "/retailer/settings", icon: Settings },
+  ],
 
+  // Warehouse Manager Dashboard
+  WAREHOUSE: [
+    { label: "Dashboard", href: "/warehouse/dashboard", icon: Home },
+    { label: "Warehouse", href: "/warehouse/facilities", icon: Building2 },
+    { label: "Inventory", href: "/warehouse/inventory", icon: Warehouse },
+    { label: "Storage", href: "/warehouse/storage", icon: Boxes },
+    { label: "Incoming", href: "/warehouse/incoming", icon: TrendingUp },
+    { label: "Outgoing", href: "/warehouse/outgoing", icon: TrendingDown },
+    { label: "Reservations", href: "/warehouse/reservations", icon: Calendar },
+    { label: "Requests", href: "/warehouse/requests", icon: Bell },
+    { label: "Batches", href: "/warehouse/batches", icon: Package },
+    { label: "Transport", href: "/warehouse/transport", icon: Truck },
+    { label: "Analytics", href: "/warehouse/analytics", icon: BarChart3 },
+    { label: "Messages", href: "/warehouse/messages", icon: MessageSquare },
+    { label: "Notifications", href: "/warehouse/notifications", icon: Bell },
+    { label: "Profile", href: "/warehouse/profile", icon: User },
+    { label: "Settings", href: "/warehouse/settings", icon: Settings },
+  ],
 
+  // Transport Manager Dashboard
+  TRANSPORT: [
+    { label: "Dashboard", href: "/transport/dashboard", icon: Home },
+    { label: "Requests", href: "/transport/requests", icon: Bell },
+    { label: "Drivers", href: "/transport/drivers", icon: Users },
+    { label: "Vehicles", href: "/transport/vehicles", icon: Truck },
+    { label: "Shipments", href: "/transport/shipments", icon: Box },
+    { label: "Routes", href: "/transport/routes", icon: MapPin },
+    { label: "Assignments", href: "/transport/assignments", icon: ClipboardList },
+    { label: "Map", href: "/transport/map", icon: Map },
+    { label: "History", href: "/transport/history", icon: History },
+    { label: "Payments", href: "/transport/payments", icon: DollarSign },
+    { label: "Reports", href: "/transport/reports", icon: FileText },
+    { label: "Messages", href: "/transport/messages", icon: MessageSquare },
+    { label: "Notifications", href: "/transport/notifications", icon: Bell },
+    { label: "Profile", href: "/transport/profile", icon: User },
+    { label: "Settings", href: "/transport/settings", icon: Settings },
+  ],
 
-FARMER:[
+  // Driver Dashboard
+  DRIVER: [
+    { label: "Dashboard", href: "/driver/dashboard", icon: Home },
+    { label: "My Jobs", href: "/driver/jobs", icon: ShoppingCart },
+    { label: "Current Delivery", href: "/driver/delivery", icon: Truck },
+    { label: "Route", href: "/driver/route", icon: MapPin },
+    { label: "Map", href: "/driver/map", icon: Map },
+    { label: "History", href: "/driver/history", icon: History },
+    { label: "Documents", href: "/driver/documents", icon: FileText },
+    { label: "Earnings", href: "/driver/earnings", icon: DollarSign },
+    { label: "Messages", href: "/driver/messages", icon: MessageSquare },
+    { label: "Notifications", href: "/driver/notifications", icon: Bell },
+    { label: "Profile", href: "/driver/profile", icon: User },
+    { label: "Settings", href: "/driver/settings", icon: Settings },
+  ],
 
-{
-label:"Dashboard",
-href:"/farmer",
-icon:Home
-},
+  // Bank Dashboard
+  BANK: [
+    { label: "Dashboard", href: "/bank/dashboard", icon: Home },
+    { label: "Customers", href: "/bank/customers", icon: Users },
+    { label: "Requests", href: "/bank/requests", icon: Bell },
+    { label: "Transactions", href: "/bank/transactions", icon: DollarSign },
+    { label: "Payments", href: "/bank/payments", icon: CreditCard },
+    { label: "Loans", href: "/bank/loans", icon: Briefcase },
+    { label: "Credit", href: "/bank/credit", icon: TrendingUp },
+    { label: "Financing", href: "/bank/financing", icon: DollarSign },
+    { label: "Reports", href: "/bank/reports", icon: FileText },
+    { label: "Analytics", href: "/bank/analytics", icon: BarChart3 },
+    { label: "Messages", href: "/bank/messages", icon: MessageSquare },
+    { label: "Notifications", href: "/bank/notifications", icon: Bell },
+    { label: "Profile", href: "/bank/profile", icon: User },
+    { label: "Settings", href: "/bank/settings", icon: Settings },
+  ],
 
-{
-label:"Products",
-href:"/farmer/products",
-icon:Package
-},
-
-{
-label:"Orders",
-href:"/farmer/orders",
-icon:ShoppingCart
-}
-
-
-],
-
-
-
-WAREHOUSE:[
-
-{
-label:"Dashboard",
-href:"/warehouse",
-icon:Home
-},
-
-{
-label:"Storage",
-href:"/warehouse/storage",
-icon:Warehouse
-}
-
-
-],
-
-
-
-DRIVER:[
-
-{
-label:"Dashboard",
-href:"/driver",
-icon:Home
-},
-
-{
-label:"Trips",
-href:"/driver/trips",
-icon:Truck
-}
-
-]
-
+  // Government Dashboard
+  GOVERNMENT: [
+    { label: "Dashboard", href: "/government/dashboard", icon: Home },
+    { label: "Supply Chain", href: "/government/supply-chain", icon: TrendingUp },
+    { label: "Businesses", href: "/government/businesses", icon: Building2 },
+    { label: "Farmers", href: "/government/farmers", icon: Users },
+    { label: "Cooperatives", href: "/government/cooperatives", icon: Users },
+    { label: "Manufacturers", href: "/government/manufacturers", icon: Factory },
+    { label: "Warehouses", href: "/government/warehouses", icon: Warehouse },
+    { label: "Transport", href: "/government/transport", icon: Truck },
+    { label: "Markets", href: "/government/markets", icon: ShoppingCart },
+    { label: "Compliance", href: "/government/compliance", icon: CheckCircle },
+    { label: "Analytics", href: "/government/analytics", icon: BarChart3 },
+    { label: "Reports", href: "/government/reports", icon: FileText },
+    { label: "Messages", href: "/government/messages", icon: MessageSquare },
+    { label: "Notifications", href: "/government/notifications", icon: Bell },
+    { label: "Profile", href: "/government/profile", icon: User },
+    { label: "Settings", href: "/government/settings", icon: Settings },
+  ],
 };

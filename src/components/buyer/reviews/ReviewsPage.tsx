@@ -163,7 +163,7 @@ export function ReviewsPage() {
                         </span>
                       </div>
                       <p className="text-xs text-muted-foreground mt-0.5">
-                        {review.supplier} · Order {review.orderId}
+                        {review.supplier}
                       </p>
                     </div>
                     <div className="text-right shrink-0">

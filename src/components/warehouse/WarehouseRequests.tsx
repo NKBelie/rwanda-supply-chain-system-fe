@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { CheckCircle, XCircle } from "lucide-react";
 import { PageHeader, PageBody } from "@/components/app/PageChrome";
 import { DataTable, Column, StatusBadge, ConfirmDialog, KpiCard, EmptyState, ghostBtn } from "@/components/common/ui";
-import { storageRequestService, warehouseService, productService } from "@/services/data.service";
+import { storageRequestService, warehouseService, productService, userService } from "@/services/data.service";
 import { useSession } from "@/lib/auth/session";
 import type { StorageRequest, Warehouse, Product } from "@/lib/storage";
 
@@ -40,7 +40,7 @@ export default function WarehouseRequestsPage() {
 
   const columns: Column<StorageRequest>[] = [
     { key: "id", label: "Request ID" },
-    { key: "farmerId", label: "Farmer ID" },
+    { key: "farmerId", label: "Farmer", render: r => userService.getUserName(r.farmerId) },
     { key: "warehouseId", label: "Warehouse", render: r => warehouses.find(w => w.id === r.warehouseId)?.name ?? r.warehouseId },
     { key: "productId", label: "Product", render: r => products.find(p => p.id === r.productId)?.name ?? r.productId },
     { key: "quantity", label: "Quantity" },

@@ -6,7 +6,7 @@ import {
   DataTable, Column, StatusBadge, ConfirmDialog, FormModal,
   Field, inputCls, primaryBtn, secondaryBtn, dangerBtn, ghostBtn, EmptyState,
 } from "@/components/common/ui";
-import { batchService, warehouseService, productService } from "@/services/data.service";
+import { batchService, warehouseService, productService, userService } from "@/services/data.service";
 import { useSession } from "@/lib/auth/session";
 import type { WarehouseBatch, Warehouse, Product } from "@/lib/storage";
 
@@ -73,6 +73,7 @@ export default function WarehouseBatchesPage() {
 
   const columns: Column<WarehouseBatch>[] = [
     { key: "id", label: "Batch ID" },
+    { key: "farmerId", label: "Farmer", render: b => userService.getUserName(b.farmerId) },
     { key: "warehouseId", label: "Warehouse", render: b => warehouses.find(w => w.id === b.warehouseId)?.name ?? b.warehouseId },
     { key: "productId", label: "Product", render: b => products.find(p => p.id === b.productId)?.name ?? b.productId },
     { key: "quantity", label: "Quantity" },

@@ -1,6 +1,5 @@
-import { RoleHome } from "@/components/app/shells/RoleHome";
-import { ROLE_HOME_SPEC } from "@/components/app/shells/roleHomeSpecs";
+import DriverDashboardPage from "@/components/driver/DriverDashboard";
 
-export default function DriverDashboardPage() {
-  return <RoleHome role="driver" spec={ROLE_HOME_SPEC.driver} />;
+export default function DriverDashboard() {
+  return <DriverDashboardPage />;
 }
