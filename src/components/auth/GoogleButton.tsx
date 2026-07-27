@@ -35,7 +35,7 @@ export function GoogleButton({ disabled = false }: { label?: string; onClick?: (
         type="button"
         onClick={handleGoogleSignIn}
         disabled={isLoading || disabled}
-        className="inline-flex h-11 w-full items-center justify-center gap-3 rounded-lg border border-border bg-background px-4 text-sm font-semibold hover:bg-accent transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="inline-flex h-11 w-full items-center justify-center gap-3 rounded-lg border border-border bg-background px-4 text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading ? (
           <>
