@@ -374,3 +374,66 @@ export const authService = {
     }
   },
 };
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Mock Google Sign-In for Development
+// ──────────────────────────────────────────────────────────────────────────────
+
+export type GoogleSignInResult = {
+  success: boolean;
+  redirectUrl: string;
+  session?: Session;
+};
+
+export async function signInWithGoogle(): Promise<GoogleSignInResult> {
+  // Simulate network delay
+  await new Promise(resolve => setTimeout(resolve, 1500));
+  
+  // In development, auto-login as admin for testing
+  if (process.env.NODE_ENV === "development") {
+    const users = getUsers();
+    
+    // Auto-initialize mock data if no users exist
+    if (users.length === 0 && typeof window !== "undefined") {
+      const { initializeMockData } = await import("@/lib/storage/init-mock-data");
+      initializeMockData(true);
+    }
+    
+    // Use admin account for mock Google login
+    const adminUser = getUsers().find(u => u.email === "admin@rscn.rw");
+    
+    if (!adminUser) {
+      throw new Error("Mock data not loaded. Please refresh the page.");
+    }
+    
+    // Auto-verify admin user if not already verified
+    if (!adminUser.verified) {
+      const allUsers = getUsers();
+      const userIndex = allUsers.findIndex(u => u.email === "admin@rscn.rw");
+      allUsers[userIndex] = { ...allUsers[userIndex], verified: true };
+      saveUsers(allUsers);
+    }
+    
+    // Create session
+    const session = buildSession(adminUser, true);
+    await persistSession(session, true);
+    
+    const redirectUrl = session.requiresProfileSetup 
+      ? "/auth/profile-setup" 
+      : ROLE_DASHBOARDS[adminUser.role];
+    
+    return {
+      success: true,
+      redirectUrl,
+      session,
+    };
+  }
+  
+  // In production, this would redirect to actual Google OAuth
+  throw new Error("Google OAuth not configured. Please contact your administrator.");
+}
+
+// Helper function for the login page
+export async function signInWithCredentials(input: LoginInput): Promise<AuthResult> {
+  return authService.login(input);
+}
