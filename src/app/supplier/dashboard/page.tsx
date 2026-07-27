@@ -1,7 +1,6 @@
 "use client";
-import { RoleHome } from "@/components/app/shells/RoleHome";
-import { ROLE_HOME_SPEC } from "@/components/app/shells/roleHomeSpecs";
+import SupplierDashboardPage from "@/components/supplier/SupplierDashboard";
 
-export default function SupplierDashboardPage() {
-  return <RoleHome role="supplier" spec={ROLE_HOME_SPEC.supplier} />;
+export default function SupplierDashboard() {
+  return <SupplierDashboardPage />;
 }
