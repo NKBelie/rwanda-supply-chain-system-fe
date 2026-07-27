@@ -66,6 +66,20 @@ export default function WarehouseOutgoingGoodsPage() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [statusFilter, setStatusFilter] = useState<string>("All");
   const [selectedOrder, setSelectedOrder] = useState<OutgoingOrder | null>(null);
+  const [newOrderModal, setNewOrderModal] = useState(false);
+  const [newOrderForm, setNewOrderForm] = useState({
+    customer: "",
+    customerType: "Retailer" as OutgoingOrder["customerType"],
+    product: "",
+    quantity: "",
+    unit: "kg",
+    destination: "",
+    contactPerson: "",
+    contactPhone: "",
+    scheduledDate: "",
+    priority: "Standard" as OutgoingOrder["priority"],
+    notes: ""
+  });
 
   const getStatusConfig = (status: OutgoingOrder["status"]) => {
     const configs = {
@@ -108,14 +122,14 @@ export default function WarehouseOutgoingGoodsPage() {
     <>
       <PageHeader
         title="Outgoing Orders"
-        description="Manage and track outbound shipments to customers"
+        description="Manage and track outgoing shipments to customers"
         crumbs={[{ label: "Warehouse", href: "/warehouse/dashboard" }, { label: "Outgoing" }]}
         actions={
           <div className="flex gap-2">
             <Button size="sm" variant="outline">
               <BarChart2 className="mr-1.5 h-4 w-4" /> Reports
             </Button>
-            <Button size="sm">
+            <Button size="sm" onClick={() => setNewOrderModal(true)}>
               <Send className="mr-1.5 h-4 w-4" /> New Order
             </Button>
           </div>

@@ -6,7 +6,7 @@ import {
   DataTable, Column, StatusBadge, ConfirmDialog, FormModal,
   Field, inputCls, primaryBtn, secondaryBtn, dangerBtn, ghostBtn, EmptyState,
 } from "@/components/common/ui";
-import { reservationService, warehouseService } from "@/services/data.service";
+import { reservationService, warehouseService, userService } from "@/services/data.service";
 import { useSession } from "@/lib/auth/session";
 import type { Reservation, Warehouse } from "@/lib/storage";
 
@@ -71,7 +71,7 @@ export default function WarehouseReservationsPage() {
   const columns: Column<Reservation>[] = [
     { key: "id", label: "Reservation ID" },
     { key: "warehouseId", label: "Warehouse", render: r => warehouses.find(w => w.id === r.warehouseId)?.name ?? r.warehouseId },
-    { key: "customerId", label: "Customer" },
+    { key: "customerId", label: "Customer", render: r => userService.getUserName(r.customerId) },
     { key: "product", label: "Product" },
     { key: "quantity", label: "Qty" },
     { key: "startDate", label: "Start", render: r => new Date(r.startDate).toLocaleDateString() },
