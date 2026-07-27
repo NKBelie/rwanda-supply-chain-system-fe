@@ -45,9 +45,6 @@ export default function RegisterPage() {
       description={t("auth.register.description")}
       footer={<>{t("auth.register.footer.prompt")} <Link href="/auth/login" className="font-medium text-primary hover:underline">{t("auth.register.footer.link")}</Link></>}
     >
-      <div className="mb-5 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2 text-xs text-primary">
-        Email OTP verification is required before access is granted to your dashboard or profile setup.
-      </div>
       <ol className="mb-6 grid grid-cols-3 gap-2 text-xs">
         {[t("auth.register.steps.account"), t("auth.register.steps.verify"), t("auth.register.steps.profile")].map((step, index) => (
           <li key={step} className="flex items-center gap-2">
