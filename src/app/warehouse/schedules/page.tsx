@@ -1,6 +1,6 @@
 "use client";
-import { RoleModulePage } from "@/components/app/shells/RoleModulePage";
+import WarehouseSchedules from "@/components/warehouse/WarehouseSchedules";
 
-export default function WarehouseSchedules() {
-  return <RoleModulePage role="warehouse" slug="schedules" />;
+export default function WarehouseSchedulesPage() {
+  return <WarehouseSchedules />;
 }
