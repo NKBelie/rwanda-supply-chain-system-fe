@@ -1,16 +1,22 @@
-export * from "./PlaceholderPage";
-export * from "./coming-soon";
-export * from "./empty-state";
-export * from "./error-state";
-export * from "./feature-card";
-export * from "./filter-bar";
-export * from "./hero";
-export * from "./loading-state";
-export * from "./logo";
-export * from "./metric-card";
-export * from "./no-data";
-export * from "./page-header";
-export * from "./role-card";
-export * from "./search-bar";
-export * from "./section-header";
-export * from "./stat-card";
+/**
+ * Standardized Common Components
+ * 
+ * Export all reusable common components from a single location
+ * to ensure consistency across all dashboards and roles.
+ */
+
+// Status and State Components
+export { StatusBadge } from "./StatusBadge";
+export type { StatusBadgeProps, StatusTone } from "./StatusBadge";
+
+export { EmptyState } from "./empty-state/EmptyState";
+export type { EmptyStateProps } from "./empty-state/EmptyState.types";
+
+export { LoadingState } from "./loading-state/LoadingState";
+
+// Location Components
+export { LocationSelector } from "./LocationSelector";
+export type { LocationSelectorProps } from "./LocationSelector";
+
+export { DistrictSelector } from "./DistrictSelector";
+export type { DistrictSelectorProps } from "./DistrictSelector";
