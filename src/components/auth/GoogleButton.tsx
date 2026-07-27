@@ -1,16 +1,32 @@
 "use client";
 
+import { useState } from "react";
+
 export function GoogleButton({ disabled = false }: { label?: string; onClick?: () => void; disabled?: boolean }) {
+  const [showMessage, setShowMessage] = useState(false);
+
+  const handleClick = () => {
+    setShowMessage(true);
+    setTimeout(() => setShowMessage(false), 4000);
+  };
+
   return (
     <div className="relative">
-      <button type="button"
-        title="Google login requires backend integration"
-        className="inline-flex h-11 w-full items-center justify-center gap-3 rounded-lg border border-border bg-background px-4 text-sm font-semibold cursor-not-allowed opacity-50"
-        aria-disabled="true"
+      <button 
+        type="button"
+        onClick={handleClick}
+        className="inline-flex h-11 w-full items-center justify-center gap-3 rounded-lg border border-border bg-background px-4 text-sm font-semibold hover:bg-accent transition-colors"
       >
         <GoogleIcon className="h-5 w-5" />
         Continue with Google
       </button>
+      
+      {showMessage && (
+        <div className="absolute -bottom-16 left-0 right-0 rounded-lg border border-yellow-500 bg-yellow-50 p-3 text-xs text-yellow-900 shadow-lg dark:bg-yellow-950 dark:text-yellow-100">
+          <p className="font-medium">Google OAuth not configured</p>
+          <p className="mt-1">Use email/password login for testing. See README for OAuth setup.</p>
+        </div>
+      )}
     </div>
   );
 }
