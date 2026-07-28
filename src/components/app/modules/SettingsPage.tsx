@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { PageHeader, PageBody } from "@/components/app/PageChrome";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { StatusBadge } from "@/components/common";
+import { StatusBadge } from "@/components/common/ui";
 
 interface RoleSettingsPageProps {
   role: string;

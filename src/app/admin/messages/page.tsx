@@ -2,5 +2,5 @@
 import { RoleMessagesPage } from "@/components/app/modules/MessagesPage";
 
 export default function AdminMessages() {
-  return <RoleMessagesPage role="admin" />;
+  return <RoleMessagesPage role="super_admin" />;
 }
