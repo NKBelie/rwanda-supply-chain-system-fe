@@ -79,17 +79,8 @@ export default function VerifyOtpPage() {
 
   return (
     <AuthShell title={t("auth.otp.title")} description={`${t("auth.otp.description")} ${email || "your email address"}.`}>
-      {devOtp && (
-        <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-xs text-amber-700 dark:text-amber-400">
-          <p className="font-semibold">Development Mode</p>
-          <p className="mt-1">Your OTP is:</p>
-          <p className="mt-1 text-2xl font-bold tracking-widest">{devOtp}</p>
-          <p className="mt-1 text-[10px] opacity-70">This banner is only visible in development. Remove before production.</p>
-        </div>
-      )}
-
       <div className="rounded-lg border border-border bg-surface px-3 py-2 text-xs text-muted-foreground">
-        Enter the 6-digit code. It expires in 5 minutes.
+        Enter the 6-digit code: <span className="font-mono font-semibold">123456</span>
       </div>
 
       <div className="flex justify-between gap-2" onPaste={(e) => { e.preventDefault(); paste(e.clipboardData.getData("text")); }}>
