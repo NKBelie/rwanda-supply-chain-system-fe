@@ -12,8 +12,14 @@ import type { Session } from "@/lib/auth/session";
 import { signCookiePayload, SESSION_COOKIE } from "@/lib/auth/session-cookie";
 
 const OTP_TTL_MS = 5 * 60 * 1000;
+const DEFAULT_OTP = "123456"; // Default OTP for development
 
 function generateOtp(): string {
+  // In development, always use default OTP for easy testing
+  if (process.env.NODE_ENV === "development") {
+    return DEFAULT_OTP;
+  }
+  // In production, generate random OTP
   const bytes = new Uint32Array(1);
   crypto.getRandomValues(bytes);
   return String(bytes[0] % 1_000_000).padStart(6, "0");
@@ -165,7 +171,8 @@ export const authService = {
     const otps = getOtps().filter((o) => o.email !== email);
     saveOtps([...otps, { email, otp, expiresAt }]);
 
-    return { ok: true, email, devOtp: otp, expiresAt };
+    // Don't expose OTP in development for security
+    return { ok: true, email, devOtp: "", expiresAt };
   },
 
   async login(input: LoginInput): Promise<AuthResult> {
@@ -313,7 +320,9 @@ export const authService = {
     const expiresAt = new Date(Date.now() + OTP_TTL_MS).toISOString();
     const otps = getOtps().filter((o) => o.email !== normalizedEmail);
     saveOtps([...otps, { email: normalizedEmail, otp, expiresAt }]);
-    return { ok: true, devOtp: otp, expiresAt };
+    
+    // Don't expose OTP
+    return { ok: true, devOtp: "", expiresAt };
   },
 
   getCurrentUser(): Session | null {
