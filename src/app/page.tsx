@@ -22,7 +22,7 @@ export default function Home() {
               <span className="h-1.5 w-1.5 rounded-full bg-primary" /> National digital infrastructure
             </span>
             <h1 className="mt-4 text-4xl font-bold tracking-tight text-foreground md:text-6xl">
-              Rwanda&apos;s national supply chain, connected.
+              Rwanda's national supply chain, connected.
             </h1>
             <p className="mt-5 max-w-xl text-lg text-muted-foreground">
               RSCN unifies farmers, cooperatives, manufacturers, warehouses, transporters,
