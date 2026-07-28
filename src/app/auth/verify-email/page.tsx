@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { AuthShell, primaryBtn, secondaryBtn } from "@/components/auth/AuthShell";
 import { MailCheck } from "lucide-react";
