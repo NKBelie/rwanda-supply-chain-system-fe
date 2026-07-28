@@ -3,7 +3,7 @@
 import { Users, Package, TrendingUp, DollarSign, Calendar, AlertCircle } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import StatusBadge from "@/components/common/StatusBadge";
+import { StatusBadge } from "@/components/common/StatusBadge";
 
 export default function CooperativeDashboard() {
   const stats = [

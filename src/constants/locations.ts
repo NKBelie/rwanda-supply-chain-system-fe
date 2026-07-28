@@ -250,7 +250,7 @@ export const DISTRICTS: District[] = [
     provinceId: "eastern",
     capital: "Nyagatare",
     area: 1741.0,
-    population: 466,944,
+    population: 466944,
     latitude: -1.2981,
     longitude: 30.3314,
   },

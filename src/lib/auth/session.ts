@@ -160,5 +160,12 @@ export function signOut() {
   emit();
 }
 
+export async function signInAs(role: Role): Promise<{ redirectUrl: string }> {
+  // Mock function for role selection during onboarding
+  // In production, this would update the user's role on the backend
+  const redirectUrl = ROLE_DASHBOARDS[role];
+  return { redirectUrl };
+}
+
 // Keep signCookiePayload and SESSION_COOKIE re-exported for session-cookie usage
 export { signCookiePayload, SESSION_COOKIE, STORAGE_KEYS };
