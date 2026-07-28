@@ -145,7 +145,8 @@ function normalizeDocuments(value: unknown): SubmittedDocument[] {
       progress: Number(file.progress ?? 0),
     } satisfies SubmittedDocument;
   });
-  return mapped.filter((file): file is SubmittedDocument => file !== null && Boolean(file.key && file.name && Number.isFinite(file.size)));
+  const filtered = mapped.filter((file) => file !== null && Boolean(file.key && file.name && Number.isFinite(file.size)));
+  return filtered as SubmittedDocument[];
 }
 
 function fail(error: string, status: number) {
