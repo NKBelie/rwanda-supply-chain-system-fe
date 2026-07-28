@@ -1,0 +1,387 @@
+
+> rscn-frontend@0.1.0 build
+> next build
+
+▲ Next.js 16.2.10 (Turbopack)
+- Environments: .env.local
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 15 errors:
+./src/constants/locations.ts:400:24
+Unexpected token `,`. Expected identifier
+  [90m398 |[0m     capital: [32m"Gikongoro"[0m,
+  [90m399 |[0m     area: [35m1181.0[0m,
+[31m[1m>[0m [90m400 |[0m     population: [35m366[0m,[35m398[0m,
+  [90m    |[0m                        [31m[1m^[0m
+  [90m401 |[0m     latitude: -[35m2.4556[0m,
+  [90m402 |[0m     longitude: [35m29.5144[0m,
+  [90m403 |[0m   },
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Client Component Browser:
+    ./src/constants/locations.ts [Client Component Browser]
+    ./src/app/farmer/products/[id]/page.tsx [Client Component Browser]
+    ./src/app/farmer/products/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/constants/locations.ts [Client Component SSR]
+    ./src/app/farmer/products/[id]/page.tsx [Client Component SSR]
+    ./src/app/farmer/products/[id]/page.tsx [Server Component]
+
+
+./src/app/farmer/prices/page.tsx:14:1
+Export DistrictSelector doesn't exist in target module
+  [90m12 |[0m   [33mCalendar[0m
+  [90m13 |[0m } [36mfrom[0m [32m"lucide-react"[0m;
+[31m[1m>[0m [90m14 |[0m [36mimport[0m { [33mDistrictSelector[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m15 |[0m [36mimport[0m { districts } [36mfrom[0m [32m"@/constants/locations"[0m;
+  [90m16 |[0m
+  [90m17 |[0m [36minterface[0m [33mMarketPrice[0m {
+
+The export DistrictSelector was not found in module [project]/src/components/common/index.tsx [app-client] (ecmascript).
+Did you mean to import ContentSection?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/app/farmer/prices/page.tsx [Client Component Browser]
+    ./src/app/farmer/prices/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/farmer/prices/page.tsx [Client Component SSR]
+    ./src/app/farmer/prices/page.tsx [Server Component]
+
+
+./src/app/farmer/prices/page.tsx:14:1
+Export DistrictSelector doesn't exist in target module
+  [90m12 |[0m   [33mCalendar[0m
+  [90m13 |[0m } [36mfrom[0m [32m"lucide-react"[0m;
+[31m[1m>[0m [90m14 |[0m [36mimport[0m { [33mDistrictSelector[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m15 |[0m [36mimport[0m { districts } [36mfrom[0m [32m"@/constants/locations"[0m;
+  [90m16 |[0m
+  [90m17 |[0m [36minterface[0m [33mMarketPrice[0m {
+
+The export DistrictSelector was not found in module [project]/src/components/common/index.tsx [app-ssr] (ecmascript).
+Did you mean to import ContentSection?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/app/farmer/prices/page.tsx [Client Component Browser]
+    ./src/app/farmer/prices/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/farmer/prices/page.tsx [Client Component SSR]
+    ./src/app/farmer/prices/page.tsx [Server Component]
+
+
+./src/app/farmer/warehouse/page.tsx:8:1
+Export DistrictSelector doesn't exist in target module
+  [90m 6 |[0m [36mimport[0m { [33mPageHeader[0m, [33mPageBody[0m } [36mfrom[0m [32m"@/components/app/PageChrome"[0m;
+  [90m 7 |[0m [36mimport[0m { [33mEmptyState[0m } [36mfrom[0m [32m"@/components/common"[0m;
+[31m[1m>[0m [90m 8 |[0m [36mimport[0m { [33mDistrictSelector[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m 9 |[0m [36mimport[0m { warehouseService } [36mfrom[0m [32m"@/services/data.service"[0m;
+  [90m10 |[0m [36mimport[0m { findNearestDistricts } [36mfrom[0m [32m"@/constants/locations"[0m;
+  [90m11 |[0m
+
+The export DistrictSelector was not found in module [project]/src/components/common/index.tsx [app-client] (ecmascript).
+Did you mean to import ContentSection?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/app/farmer/warehouse/page.tsx [Client Component Browser]
+    ./src/app/farmer/warehouse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/farmer/warehouse/page.tsx [Client Component SSR]
+    ./src/app/farmer/warehouse/page.tsx [Server Component]
+
+
+./src/app/farmer/warehouse/page.tsx:8:1
+Export DistrictSelector doesn't exist in target module
+  [90m 6 |[0m [36mimport[0m { [33mPageHeader[0m, [33mPageBody[0m } [36mfrom[0m [32m"@/components/app/PageChrome"[0m;
+  [90m 7 |[0m [36mimport[0m { [33mEmptyState[0m } [36mfrom[0m [32m"@/components/common"[0m;
+[31m[1m>[0m [90m 8 |[0m [36mimport[0m { [33mDistrictSelector[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m 9 |[0m [36mimport[0m { warehouseService } [36mfrom[0m [32m"@/services/data.service"[0m;
+  [90m10 |[0m [36mimport[0m { findNearestDistricts } [36mfrom[0m [32m"@/constants/locations"[0m;
+  [90m11 |[0m
+
+The export DistrictSelector was not found in module [project]/src/components/common/index.tsx [app-ssr] (ecmascript).
+Did you mean to import ContentSection?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/app/farmer/warehouse/page.tsx [Client Component Browser]
+    ./src/app/farmer/warehouse/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/farmer/warehouse/page.tsx [Client Component SSR]
+    ./src/app/farmer/warehouse/page.tsx [Server Component]
+
+
+./src/app/government/farmers/page.tsx:7:1
+Export DistrictSelector doesn't exist in target module
+  [90m 5 |[0m [36mimport[0m { [33mEmptyState[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m 6 |[0m [36mimport[0m { [33mSearch[0m, [33mUsers[0m, [33mMapPin[0m, [33mTrendingUp[0m, [33mPackage[0m } [36mfrom[0m [32m"lucide-react"[0m;
+[31m[1m>[0m [90m 7 |[0m [36mimport[0m { [33mDistrictSelector[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m 8 |[0m
+  [90m 9 |[0m [36minterface[0m [33mFarmer[0m {
+  [90m10 |[0m   id: string;
+
+The export DistrictSelector was not found in module [project]/src/components/common/index.tsx [app-client] (ecmascript).
+Did you mean to import ContentSection?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/app/government/farmers/page.tsx [Client Component Browser]
+    ./src/app/government/farmers/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/government/farmers/page.tsx [Client Component SSR]
+    ./src/app/government/farmers/page.tsx [Server Component]
+
+
+./src/app/government/farmers/page.tsx:7:1
+Export DistrictSelector doesn't exist in target module
+  [90m 5 |[0m [36mimport[0m { [33mEmptyState[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m 6 |[0m [36mimport[0m { [33mSearch[0m, [33mUsers[0m, [33mMapPin[0m, [33mTrendingUp[0m, [33mPackage[0m } [36mfrom[0m [32m"lucide-react"[0m;
+[31m[1m>[0m [90m 7 |[0m [36mimport[0m { [33mDistrictSelector[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m 8 |[0m
+  [90m 9 |[0m [36minterface[0m [33mFarmer[0m {
+  [90m10 |[0m   id: string;
+
+The export DistrictSelector was not found in module [project]/src/components/common/index.tsx [app-ssr] (ecmascript).
+Did you mean to import ContentSection?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/app/government/farmers/page.tsx [Client Component Browser]
+    ./src/app/government/farmers/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/government/farmers/page.tsx [Client Component SSR]
+    ./src/app/government/farmers/page.tsx [Server Component]
+
+
+./src/app/farmer/products/[id]/edit/page.tsx:6:1
+Export InputField doesn't exist in target module
+  [90m4 |[0m [36mimport[0m { useRouter } [36mfrom[0m [32m"next/navigation"[0m;
+  [90m5 |[0m [36mimport[0m { [33mFormTemplate[0m } [36mfrom[0m [32m"@/components/layouts"[0m;
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mInputField[0m, [33mTextareaField[0m, [33mSelectField[0m } [36mfrom[0m [32m"@/components/forms"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mLocationSelector[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m8 |[0m [36mimport[0m { productService } [36mfrom[0m [32m"@/services/data.service"[0m;
+  [90m9 |[0m
+
+The export InputField was not found in module [project]/src/components/forms/index.tsx [app-client] (ecmascript).
+Did you mean to import FormField?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/app/farmer/products/[id]/edit/page.tsx [Client Component Browser]
+    ./src/app/farmer/products/[id]/edit/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/farmer/products/[id]/edit/page.tsx [Client Component SSR]
+    ./src/app/farmer/products/[id]/edit/page.tsx [Server Component]
+
+
+./src/app/farmer/products/[id]/edit/page.tsx:6:1
+Export InputField doesn't exist in target module
+  [90m4 |[0m [36mimport[0m { useRouter } [36mfrom[0m [32m"next/navigation"[0m;
+  [90m5 |[0m [36mimport[0m { [33mFormTemplate[0m } [36mfrom[0m [32m"@/components/layouts"[0m;
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mInputField[0m, [33mTextareaField[0m, [33mSelectField[0m } [36mfrom[0m [32m"@/components/forms"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mLocationSelector[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m8 |[0m [36mimport[0m { productService } [36mfrom[0m [32m"@/services/data.service"[0m;
+  [90m9 |[0m
+
+The export InputField was not found in module [project]/src/components/forms/index.tsx [app-ssr] (ecmascript).
+Did you mean to import FormField?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/app/farmer/products/[id]/edit/page.tsx [Client Component Browser]
+    ./src/app/farmer/products/[id]/edit/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/farmer/products/[id]/edit/page.tsx [Client Component SSR]
+    ./src/app/farmer/products/[id]/edit/page.tsx [Server Component]
+
+
+./src/app/farmer/products/add/page.tsx:6:1
+Export InputField doesn't exist in target module
+  [90m4 |[0m [36mimport[0m { useRouter } [36mfrom[0m [32m"next/navigation"[0m;
+  [90m5 |[0m [36mimport[0m { [33mFormTemplate[0m } [36mfrom[0m [32m"@/components/layouts"[0m;
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mInputField[0m, [33mTextareaField[0m, [33mSelectField[0m } [36mfrom[0m [32m"@/components/forms"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mLocationSelector[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m8 |[0m [36mimport[0m { useSession } [36mfrom[0m [32m"@/lib/auth/session"[0m;
+  [90m9 |[0m
+
+The export InputField was not found in module [project]/src/components/forms/index.tsx [app-client] (ecmascript).
+Did you mean to import FormField?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/app/farmer/products/add/page.tsx [Client Component Browser]
+    ./src/app/farmer/products/add/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/farmer/products/add/page.tsx [Client Component SSR]
+    ./src/app/farmer/products/add/page.tsx [Server Component]
+
+
+./src/app/farmer/products/add/page.tsx:6:1
+Export InputField doesn't exist in target module
+  [90m4 |[0m [36mimport[0m { useRouter } [36mfrom[0m [32m"next/navigation"[0m;
+  [90m5 |[0m [36mimport[0m { [33mFormTemplate[0m } [36mfrom[0m [32m"@/components/layouts"[0m;
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mInputField[0m, [33mTextareaField[0m, [33mSelectField[0m } [36mfrom[0m [32m"@/components/forms"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mLocationSelector[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m8 |[0m [36mimport[0m { useSession } [36mfrom[0m [32m"@/lib/auth/session"[0m;
+  [90m9 |[0m
+
+The export InputField was not found in module [project]/src/components/forms/index.tsx [app-ssr] (ecmascript).
+Did you mean to import FormField?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/app/farmer/products/add/page.tsx [Client Component Browser]
+    ./src/app/farmer/products/add/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/farmer/products/add/page.tsx [Client Component SSR]
+    ./src/app/farmer/products/add/page.tsx [Server Component]
+
+
+./src/app/farmer/products/[id]/edit/page.tsx:7:1
+Export LocationSelector doesn't exist in target module
+  [90m 5 |[0m [36mimport[0m { [33mFormTemplate[0m } [36mfrom[0m [32m"@/components/layouts"[0m;
+  [90m 6 |[0m [36mimport[0m { [33mInputField[0m, [33mTextareaField[0m, [33mSelectField[0m } [36mfrom[0m [32m"@/components/forms"[0m;
+[31m[1m>[0m [90m 7 |[0m [36mimport[0m { [33mLocationSelector[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m 8 |[0m [36mimport[0m { productService } [36mfrom[0m [32m"@/services/data.service"[0m;
+  [90m 9 |[0m
+  [90m10 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mEditProductPage[0m({ params }: { params: [33mPromise[0m<{ id: string }> }) {
+
+The export LocationSelector was not found in module [project]/src/components/common/index.tsx [app-client] (ecmascript).
+Did you mean to import LoadingState?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/app/farmer/products/[id]/edit/page.tsx [Client Component Browser]
+    ./src/app/farmer/products/[id]/edit/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/farmer/products/[id]/edit/page.tsx [Client Component SSR]
+    ./src/app/farmer/products/[id]/edit/page.tsx [Server Component]
+
+
+./src/app/farmer/products/[id]/edit/page.tsx:7:1
+Export LocationSelector doesn't exist in target module
+  [90m 5 |[0m [36mimport[0m { [33mFormTemplate[0m } [36mfrom[0m [32m"@/components/layouts"[0m;
+  [90m 6 |[0m [36mimport[0m { [33mInputField[0m, [33mTextareaField[0m, [33mSelectField[0m } [36mfrom[0m [32m"@/components/forms"[0m;
+[31m[1m>[0m [90m 7 |[0m [36mimport[0m { [33mLocationSelector[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m 8 |[0m [36mimport[0m { productService } [36mfrom[0m [32m"@/services/data.service"[0m;
+  [90m 9 |[0m
+  [90m10 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mEditProductPage[0m({ params }: { params: [33mPromise[0m<{ id: string }> }) {
+
+The export LocationSelector was not found in module [project]/src/components/common/index.tsx [app-ssr] (ecmascript).
+Did you mean to import LoadingState?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/app/farmer/products/[id]/edit/page.tsx [Client Component Browser]
+    ./src/app/farmer/products/[id]/edit/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/farmer/products/[id]/edit/page.tsx [Client Component SSR]
+    ./src/app/farmer/products/[id]/edit/page.tsx [Server Component]
+
+
+./src/app/farmer/products/add/page.tsx:7:1
+Export LocationSelector doesn't exist in target module
+  [90m 5 |[0m [36mimport[0m { [33mFormTemplate[0m } [36mfrom[0m [32m"@/components/layouts"[0m;
+  [90m 6 |[0m [36mimport[0m { [33mInputField[0m, [33mTextareaField[0m, [33mSelectField[0m } [36mfrom[0m [32m"@/components/forms"[0m;
+[31m[1m>[0m [90m 7 |[0m [36mimport[0m { [33mLocationSelector[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m 8 |[0m [36mimport[0m { useSession } [36mfrom[0m [32m"@/lib/auth/session"[0m;
+  [90m 9 |[0m
+  [90m10 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mAddProductPage[0m() {
+
+The export LocationSelector was not found in module [project]/src/components/common/index.tsx [app-client] (ecmascript).
+Did you mean to import LoadingState?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/app/farmer/products/add/page.tsx [Client Component Browser]
+    ./src/app/farmer/products/add/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/farmer/products/add/page.tsx [Client Component SSR]
+    ./src/app/farmer/products/add/page.tsx [Server Component]
+
+
+./src/app/farmer/products/add/page.tsx:7:1
+Export LocationSelector doesn't exist in target module
+  [90m 5 |[0m [36mimport[0m { [33mFormTemplate[0m } [36mfrom[0m [32m"@/components/layouts"[0m;
+  [90m 6 |[0m [36mimport[0m { [33mInputField[0m, [33mTextareaField[0m, [33mSelectField[0m } [36mfrom[0m [32m"@/components/forms"[0m;
+[31m[1m>[0m [90m 7 |[0m [36mimport[0m { [33mLocationSelector[0m } [36mfrom[0m [32m"@/components/common"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m 8 |[0m [36mimport[0m { useSession } [36mfrom[0m [32m"@/lib/auth/session"[0m;
+  [90m 9 |[0m
+  [90m10 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mAddProductPage[0m() {
+
+The export LocationSelector was not found in module [project]/src/components/common/index.tsx [app-ssr] (ecmascript).
+Did you mean to import LoadingState?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./src/app/farmer/products/add/page.tsx [Client Component Browser]
+    ./src/app/farmer/products/add/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/farmer/products/add/page.tsx [Client Component SSR]
+    ./src/app/farmer/products/add/page.tsx [Server Component]
+
+
+    at <unknown> (./src/constants/locations.ts:400:24)
+    at <unknown> (./src/app/farmer/prices/page.tsx:14:1)
+    at <unknown> (./src/app/farmer/prices/page.tsx:14:1)
+    at <unknown> (./src/app/farmer/warehouse/page.tsx:8:1)
+    at <unknown> (./src/app/farmer/warehouse/page.tsx:8:1)
+    at <unknown> (./src/app/government/farmers/page.tsx:7:1)
+    at <unknown> (./src/app/government/farmers/page.tsx:7:1)
+    at <unknown> (./src/app/farmer/products/[id]/edit/page.tsx:6:1)
+    at <unknown> (./src/app/farmer/products/[id]/edit/page.tsx:6:1)
+    at <unknown> (./src/app/farmer/products/add/page.tsx:6:1)
+    at <unknown> (./src/app/farmer/products/add/page.tsx:6:1)
+    at <unknown> (./src/app/farmer/products/[id]/edit/page.tsx:7:1)
+    at <unknown> (./src/app/farmer/products/[id]/edit/page.tsx:7:1)
+    at <unknown> (./src/app/farmer/products/add/page.tsx:7:1)
+    at <unknown> (./src/app/farmer/products/add/page.tsx:7:1)
