@@ -7,7 +7,7 @@ import {
   Settings, FileText, Bell, Lock, BarChart3
 } from "lucide-react";
 import { PageHeader, PageBody } from "@/components/app/PageChrome";
-import { StatusBadge, EmptyState } from "@/components/common/ui";
+import { StatusBadge, EmptyState } from "@/components/common";
 import { userService } from "@/services/data.service";
 import { useSession } from "@/lib/auth/session";
 import type { User } from "@/lib/storage";

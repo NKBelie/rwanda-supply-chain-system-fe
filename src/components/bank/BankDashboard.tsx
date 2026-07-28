@@ -7,7 +7,7 @@ import {
   ShieldCheck, TrendingDown, Activity, Wallet
 } from "lucide-react";
 import { PageHeader, PageBody } from "@/components/app/PageChrome";
-import { StatusBadge, EmptyState } from "@/components/common/ui";
+import { StatusBadge, EmptyState } from "@/components/common";
 import { orderService, userService } from "@/services/data.service";
 import { useSession } from "@/lib/auth/session";
 
