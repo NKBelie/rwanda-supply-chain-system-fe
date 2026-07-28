@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { PageBody, PageHeader } from "@/components/app/PageChrome";
+import { PageBody, PageHeader } from "@/components/app/PageChro.me";
 import {
   Send,
   Package2,
