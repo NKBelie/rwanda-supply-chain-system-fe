@@ -81,62 +81,25 @@ export default function FarmerDashboardPage() {
         }
       />
       <PageBody>
-        {/* KPI Cards with gradient backgrounds */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-blue-500/10 via-blue-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Total Products</p>
-                <p className="mt-2 text-3xl font-bold text-foreground">{products.length}</p>
-                <p className="mt-1 text-xs text-muted-foreground">{totalStock} units in stock</p>
-              </div>
-              <div className="rounded-lg bg-blue-500/10 p-2.5">
-                <Package className="h-5 w-5 text-blue-600" />
-              </div>
+        {/* Summary Statistics */}
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex gap-6">
+            <div>
+              <p className="text-sm text-muted-foreground">Total Products</p>
+              <p className="text-2xl font-semibold text-foreground">{products.length}</p>
             </div>
-            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-blue-500/5 transition-transform group-hover:scale-110" />
-          </div>
-
-          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Active Orders</p>
-                <p className="mt-2 text-3xl font-bold text-foreground">{activeOrders}</p>
-                <p className="mt-1 text-xs text-muted-foreground">{orders.length} total orders</p>
-              </div>
-              <div className="rounded-lg bg-emerald-500/10 p-2.5">
-                <ShoppingCart className="h-5 w-5 text-emerald-600" />
-              </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Active Orders</p>
+              <p className="text-2xl font-semibold text-emerald-600">{activeOrders}</p>
             </div>
-            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-emerald-500/5 transition-transform group-hover:scale-110" />
-          </div>
-
-          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-purple-500/10 via-purple-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Revenue</p>
-                <p className="mt-2 text-3xl font-bold text-foreground">RWF {(revenue / 1000).toFixed(1)}K</p>
-                <p className="mt-1 text-xs text-muted-foreground">Completed orders</p>
-              </div>
-              <div className="rounded-lg bg-purple-500/10 p-2.5">
-                <TrendingUp className="h-5 w-5 text-purple-600" />
-              </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Revenue</p>
+              <p className="text-2xl font-semibold text-foreground">RWF {(revenue / 1000).toFixed(1)}K</p>
             </div>
-            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-purple-500/5 transition-transform group-hover:scale-110" />
-          </div>
-
-          <div className="group relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent p-5 shadow-sm transition-all hover:shadow-elevated">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Storage</p>
-                <p className="mt-2 text-3xl font-bold text-foreground">{batches.length}</p>
-                <p className="mt-1 text-xs text-muted-foreground">{storageReqs.filter(r => r.status === "Pending").length} pending requests</p>
-              </div>
-              <div className="rounded-lg bg-amber-500/10 p-2.5">
-                <Warehouse className="h-5 w-5 text-amber-600" />
-              </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Storage Batches</p>
+              <p className="text-2xl font-semibold text-foreground">{batches.length}</p>
             </div>
-            <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-amber-500/5 transition-transform group-hover:scale-110" />
           </div>
         </div>
 
@@ -145,23 +108,8 @@ export default function FarmerDashboardPage() {
           <MarketPriceWidget />
         </div>
 
-        {/* Revenue Insights */}
-        <div className="mt-6 rounded-xl border border-border bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-950/20 dark:to-pink-950/20 p-6 shadow-sm">
-          <div className="mb-4 flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-semibold text-foreground">Revenue Performance</h3>
-              <p className="text-sm text-muted-foreground">This month vs last month</p>
-            </div>
-            {revenueChange !== 0 && (
-              <div className={`flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-semibold ${
-                revenueChange > 0 ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-700"
-              }`}>
-                {revenueChange > 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
-                {revenueChange > 0 ? "+" : ""}{revenueChange.toFixed(1)}%
-              </div>
-            )}
-          </div>
-          <div className="grid gap-4 sm:grid-cols-3">
+        {/* Revenue Statistics */}
+        <div className="mt-6 grid gap-4 sm:grid-cols-3">
             <div className="rounded-lg border border-border bg-background p-4">
               <p className="text-sm text-muted-foreground">This Month</p>
               <p className="mt-1 text-2xl font-bold text-foreground">RWF {(thisMonthRevenue / 1000).toFixed(1)}K</p>
@@ -180,7 +128,6 @@ export default function FarmerDashboardPage() {
               <p className="mt-1 text-xs text-muted-foreground">Per completed order</p>
             </div>
           </div>
-        </div>
 
         {/* Top Performing Products */}
         {productSales.length > 0 && (

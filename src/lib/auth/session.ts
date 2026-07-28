@@ -1,6 +1,12 @@
 // Temporary localStorage authentication.
 // Replace with backend API and JWT authentication before production.
 "use client";
+
+// Force load mock data before any auth operations
+if (typeof window !== "undefined") {
+  import("@/lib/storage/force-init").catch(console.error);
+}
+
 import { useSyncExternalStore } from "react";
 import { ROLE_DASHBOARDS, type RegistrationRole } from "./onboarding";
 import { SESSION_COOKIE, signCookiePayload } from "./session-cookie";

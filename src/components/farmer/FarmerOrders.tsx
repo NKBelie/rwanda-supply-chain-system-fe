@@ -6,7 +6,7 @@ import {
   DataTable, Column, StatusBadge, ConfirmDialog, FormModal,
   Field, inputCls, primaryBtn, secondaryBtn, dangerBtn, ghostBtn, EmptyState,
 } from "@/components/common/ui";
-import { orderService, productService } from "@/services/data.service";
+import { orderService, productService, userService } from "@/services/data.service";
 import { useSession } from "@/lib/auth/session";
 import type { Order, Product } from "@/lib/storage";
 
@@ -64,12 +64,12 @@ export default function FarmerOrdersPage() {
   }
 
   const columns: Column<Order>[] = [
-    { key: "id", label: "Order ID" },
+    { key: "createdAt", label: "Date", render: o => new Date(o.createdAt).toLocaleDateString() },
     { key: "productId", label: "Product", render: o => products.find(p => p.id === o.productId)?.name ?? o.productId },
+    { key: "buyerId", label: "Buyer", render: o => userService.getUserName(o.buyerId) },
     { key: "quantity", label: "Qty" },
     { key: "totalPrice", label: "Total", render: o => `RWF ${o.totalPrice.toLocaleString()}` },
     { key: "status", label: "Status", render: o => <StatusBadge status={o.status} /> },
-    { key: "createdAt", label: "Date", render: o => new Date(o.createdAt).toLocaleDateString() },
   ];
 
   return (
@@ -83,7 +83,7 @@ export default function FarmerOrdersPage() {
       <PageBody>
         {orders.length === 0
           ? <EmptyState title="No orders yet" description="Orders will appear here once buyers place them." action={<button onClick={openAdd} className={primaryBtn}><Plus className="h-4 w-4" /> New Order</button>} />
-          : <DataTable columns={columns} rows={orders} searchKeys={["id", "status"]}
+          : <DataTable columns={columns} rows={orders} searchKeys={["status"]}
               actions={o => (
                 <div className="flex gap-1">
                   <button onClick={() => openEdit(o)} className={ghostBtn}><Edit2 className="h-3.5 w-3.5" /> Edit</button>
@@ -126,7 +126,7 @@ export default function FarmerOrdersPage() {
       )}
 
       {deleting && (
-        <ConfirmDialog title="Delete Order" message={`Delete order ${deleting.id}?`}
+        <ConfirmDialog title="Delete Order" message={`Delete order for ${products.find(p => p.id === deleting.productId)?.name ?? 'this product'}?`}
           onConfirm={() => { orderService.delete(deleting.id); setDeleting(null); showToast("Deleted."); load(); }}
           onCancel={() => setDeleting(null)} />
       )}

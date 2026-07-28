@@ -4,7 +4,7 @@ import { storageService, STORAGE_KEYS } from "@/lib/storage";
 import type {
   Product, Warehouse, WarehouseBatch, Order,
   StorageRequest, Reservation, TransportRequest, InventoryItem,
-} from "@/lib/storage";
+  RegisteredUser,} from "@/lib/storage";
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
@@ -21,6 +21,23 @@ function list<T>(key: string): T[] {
 function save<T>(key: string, items: T[]): void {
   storageService.save(key, items);
 }
+
+// ─── Users ───────────────────────────────────────────────────────────────────
+
+export const userService = {
+  getAll(): RegisteredUser[] { return list<RegisteredUser>(STORAGE_KEYS.USERS); },
+  getById(id: string): RegisteredUser | null {
+    return this.getAll().find(u => u.id === id) ?? null;
+  },
+  getUserName(id: string): string {
+    const user = this.getById(id);
+    if (!user) return id;
+    return `${user.firstName} ${user.lastName}`.trim();
+  },
+  getUsersByRole(role: RegisteredUser["role"]): RegisteredUser[] {
+    return this.getAll().filter(u => u.role === role);
+  },
+};
 
 // ─── Products ────────────────────────────────────────────────────────────────
 

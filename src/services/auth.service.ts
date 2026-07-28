@@ -1,6 +1,9 @@
 // Temporary localStorage authentication.
 // Replace with backend API and JWT authentication before production.
 
+// Force load mock data immediately
+import "@/lib/storage/force-init";
+
 import { storageService, STORAGE_KEYS } from "@/lib/storage";
 import type { RegisteredUser, OtpRecord } from "@/lib/storage";
 import type { Role } from "@/lib/auth/roles";
@@ -168,8 +171,94 @@ export const authService = {
   async login(input: LoginInput): Promise<AuthResult> {
     const email = input.email.trim().toLowerCase();
     const users = getUsers();
+    
+    // Auto-initialize mock data if no users exist
+    if (users.length === 0 && typeof window !== "undefined") {
+      const { initializeMockData } = await import("@/lib/storage/init-mock-data");
+      initializeMockData(true);
+      // Re-fetch users after initialization
+      const updatedUsers = getUsers();
+      const user = updatedUsers.find((u) => u.email === email);
+      if (!user) throw new Error("No account found with this email address.");
+      
+      // For development: Accept mock passwords directly
+      if (process.env.NODE_ENV === "development") {
+        const mockPasswords: Record<string, string> = {
+          "admin@rscn.rw": "Admin@2024",
+          "jean.baptiste@farmer.rw": "Farmer@2024",
+          "marie.claire@farmer.rw": "Farmer@2024",
+          "patrick.n@driver.rw": "Driver@2024",
+          "grace.m@warehouse.rw": "Warehouse@2024",
+          "emmanuel.h@buyer.rw": "Buyer@2024",
+          "sarah.u@farmer.rw": "Farmer@2024",
+          "david.m@driver.rw": "Driver@2024",
+          "agnes.i@government.rw": "Government@2024",
+          "eric.m@warehouse.rw": "Warehouse@2024",
+          "alice.k@buyer.rw": "Buyer@2024",
+          "joseph.n@farmer.rw": "Farmer@2024",
+          "claudine.u@farmer.rw": "Farmer@2024",
+        };
+        
+        if (mockPasswords[email] && input.password === mockPasswords[email]) {
+          // Auto-verify mock users
+          if (!user.verified) {
+            const userIndex = updatedUsers.findIndex((u) => u.email === email);
+            updatedUsers[userIndex] = { ...updatedUsers[userIndex], verified: true };
+            saveUsers(updatedUsers);
+          }
+          
+          const session = buildSession(user, input.remember);
+          await persistSession(session, input.remember);
+          const nextPath = session.requiresProfileSetup ? "/auth/profile-setup" : ROLE_DASHBOARDS[user.role];
+          return { ok: true, session, nextPath };
+        }
+      }
+      
+      // Fall through to regular password check
+      const passwordHash = await hashPassword(input.password);
+      if (passwordHash !== user.passwordHash) throw new Error("Invalid email or password.");
+      
+      const session = buildSession(user, input.remember);
+      await persistSession(session, input.remember);
+      const nextPath = session.requiresProfileSetup ? "/auth/profile-setup" : ROLE_DASHBOARDS[user.role];
+      return { ok: true, session, nextPath };
+    }
+    
     const user = users.find((u) => u.email === email);
     if (!user) throw new Error("No account found with this email address.");
+
+    // For development: Accept mock passwords directly
+    if (process.env.NODE_ENV === "development") {
+      const mockPasswords: Record<string, string> = {
+        "admin@rscn.rw": "Admin@2024",
+        "jean.baptiste@farmer.rw": "Farmer@2024",
+        "marie.claire@farmer.rw": "Farmer@2024",
+        "patrick.n@driver.rw": "Driver@2024",
+        "grace.m@warehouse.rw": "Warehouse@2024",
+        "emmanuel.h@buyer.rw": "Buyer@2024",
+        "sarah.u@farmer.rw": "Farmer@2024",
+        "david.m@driver.rw": "Driver@2024",
+        "agnes.i@government.rw": "Government@2024",
+        "eric.m@warehouse.rw": "Warehouse@2024",
+        "alice.k@buyer.rw": "Buyer@2024",
+        "joseph.n@farmer.rw": "Farmer@2024",
+        "claudine.u@farmer.rw": "Farmer@2024",
+      };
+      
+      if (mockPasswords[email] && input.password === mockPasswords[email]) {
+        // Auto-verify mock users
+        if (!user.verified) {
+          const userIndex = users.findIndex((u) => u.email === email);
+          users[userIndex] = { ...users[userIndex], verified: true };
+          saveUsers(users);
+        }
+        
+        const session = buildSession(user, input.remember);
+        await persistSession(session, input.remember);
+        const nextPath = session.requiresProfileSetup ? "/auth/profile-setup" : ROLE_DASHBOARDS[user.role];
+        return { ok: true, session, nextPath };
+      }
+    }
 
     const passwordHash = await hashPassword(input.password);
     if (passwordHash !== user.passwordHash) throw new Error("Invalid email or password.");
@@ -285,3 +374,66 @@ export const authService = {
     }
   },
 };
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Mock Google Sign-In for Development
+// ──────────────────────────────────────────────────────────────────────────────
+
+export type GoogleSignInResult = {
+  success: boolean;
+  redirectUrl: string;
+  session?: Session;
+};
+
+export async function signInWithGoogle(): Promise<GoogleSignInResult> {
+  // Simulate network delay
+  await new Promise(resolve => setTimeout(resolve, 1500));
+  
+  // In development, auto-login as admin for testing
+  if (process.env.NODE_ENV === "development") {
+    const users = getUsers();
+    
+    // Auto-initialize mock data if no users exist
+    if (users.length === 0 && typeof window !== "undefined") {
+      const { initializeMockData } = await import("@/lib/storage/init-mock-data");
+      initializeMockData(true);
+    }
+    
+    // Use admin account for mock Google login
+    const adminUser = getUsers().find(u => u.email === "admin@rscn.rw");
+    
+    if (!adminUser) {
+      throw new Error("Mock data not loaded. Please refresh the page.");
+    }
+    
+    // Auto-verify admin user if not already verified
+    if (!adminUser.verified) {
+      const allUsers = getUsers();
+      const userIndex = allUsers.findIndex(u => u.email === "admin@rscn.rw");
+      allUsers[userIndex] = { ...allUsers[userIndex], verified: true };
+      saveUsers(allUsers);
+    }
+    
+    // Create session
+    const session = buildSession(adminUser, true);
+    await persistSession(session, true);
+    
+    const redirectUrl = session.requiresProfileSetup 
+      ? "/auth/profile-setup" 
+      : ROLE_DASHBOARDS[adminUser.role];
+    
+    return {
+      success: true,
+      redirectUrl,
+      session,
+    };
+  }
+  
+  // In production, this would redirect to actual Google OAuth
+  throw new Error("Google OAuth not configured. Please contact your administrator.");
+}
+
+// Helper function for the login page
+export async function signInWithCredentials(input: LoginInput): Promise<AuthResult> {
+  return authService.login(input);
+}

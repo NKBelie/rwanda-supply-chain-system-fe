@@ -35,7 +35,7 @@ export function ProductionPage() {
     const term = search.toLowerCase();
     return batches.filter((b) => {
       const matchTab = tab === "All" || b.status === tab;
-      const matchSearch = !term || [b.id, b.product, b.sku, b.supervisor].some((v) => v.toLowerCase().includes(term));
+      const matchSearch = !term || [b.product, b.sku, b.supervisor].some((v) => v.toLowerCase().includes(term));
       return matchTab && matchSearch;
     });
   }, [batches, tab, search]);
@@ -184,12 +184,12 @@ export function ProductionPage() {
             <table className="min-w-full text-sm">
               <thead className="border-b border-border bg-surface text-xs uppercase tracking-wider text-muted-foreground">
                 <tr>
-                  <th className="px-4 py-3 text-left">Batch ID</th>
                   <th className="px-4 py-3 text-left">Product</th>
                   <th className="px-4 py-3 text-left">Line</th>
                   <th className="px-4 py-3 text-left">Progress</th>
                   <th className="px-4 py-3 text-left">Status</th>
                   <th className="px-4 py-3 text-left">Yield</th>
+                  <th className="px-4 py-3 text-left">Start Date</th>
                   <th className="px-4 py-3 text-left">ETA</th>
                   <th className="px-4 py-3 text-left">Actions</th>
                 </tr>

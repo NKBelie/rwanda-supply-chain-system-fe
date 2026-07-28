@@ -23,7 +23,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-border">
         <div className="container-rscn flex flex-col items-center justify-between gap-2 py-6 text-xs text-muted-foreground md:flex-row">
-          <span>© {new Date().getFullYear()} Rwanda Supply Chain Network. All rights reserved.</span>
+          <span>&copy {new Date().getFullYear()} Rwanda Supply Chain Network. All rights reserved.</span>
           <span>Kigali, Rwanda</span>
         </div>
       </div>
