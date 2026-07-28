@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { AuthShell, primaryBtn } from "@/components/auth/AuthShell";
 import { Shield } from "lucide-react";
