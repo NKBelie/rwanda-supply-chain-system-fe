@@ -73,13 +73,13 @@ export function HeroImageOverlay() {
         {/* Technology Icons - White circles with symbols */}
         <g fill="white" opacity="0.95">
           {/* Cloud icon - top left area */}
-          <g transform="translate(20%, 12%)">
+          <g style={{ transform: "translate(20%, 12%)" }}>
             <circle r="18" fill="rgba(255,255,255,0.15)" stroke="white" strokeWidth="1.5" />
             <path d="M-6,-2 Q-6,-6 -2,-6 Q0,-9 4,-9 Q8,-9 10,-6 Q14,-6 14,-2 Q14,2 10,2 L-6,2 Q-10,2 -10,-2 Q-10,-6 -6,-2 Z" fill="white" opacity="0.9" />
           </g>
           
           {/* Analytics/Chart icon - top center */}
-          <g transform="translate(35%, 12%)">
+          <g style={{ transform: "translate(35%, 12%)" }}>
             <circle r="18" fill="rgba(255,255,255,0.15)" stroke="white" strokeWidth="1.5" />
             <rect x="-6" y="-2" width="3" height="8" fill="white" opacity="0.9" />
             <rect x="-1" y="-5" width="3" height="11" fill="white" opacity="0.9" />
@@ -87,7 +87,7 @@ export function HeroImageOverlay() {
           </g>
           
           {/* QR Code icon - top right area */}
-          <g transform="translate(80%, 12%)">
+          <g style={{ transform: "translate(80%, 12%)" }}>
             <circle r="18" fill="rgba(255,255,255,0.15)" stroke="white" strokeWidth="1.5" />
             <rect x="-7" y="-7" width="5" height="5" fill="white" opacity="0.9" />
             <rect x="2" y="-7" width="5" height="5" fill="white" opacity="0.9" />
@@ -96,14 +96,14 @@ export function HeroImageOverlay() {
           </g>
           
           {/* GPS Location pin - middle left */}
-          <g transform="translate(25%, 35%)">
+          <g style={{ transform: "translate(25%, 35%)" }}>
             <circle r="18" fill="rgba(255,255,255,0.15)" stroke="white" strokeWidth="1.5" />
             <path d="M0,-8 C-4,-8 -7,-5 -7,-2 C-7,3 0,10 0,10 C0,10 7,3 7,-2 C7,-5 4,-8 0,-8 Z" fill="white" opacity="0.9" />
             <circle r="2" cy="-2" fill="rgba(0,60,30,0.9)" />
           </g>
           
           {/* Warehouse icon - middle center */}
-          <g transform="translate(50%, 35%)">
+          <g style={{ transform: "translate(50%, 35%)" }}>
             <circle r="18" fill="rgba(255,255,255,0.15)" stroke="white" strokeWidth="1.5" />
             <path d="M-8,2 L-8,-2 L0,-8 L8,-2 L8,2 Z" fill="none" stroke="white" strokeWidth="1.5" opacity="0.9" />
             <rect x="-6" y="2" width="12" height="6" fill="none" stroke="white" strokeWidth="1.5" opacity="0.9" />
@@ -111,7 +111,7 @@ export function HeroImageOverlay() {
           </g>
           
           {/* Mobile phone icon - middle right */}
-          <g transform="translate(75%, 35%)">
+          <g style={{ transform: "translate(75%, 35%)" }}>
             <circle r="18" fill="rgba(255,255,255,0.15)" stroke="white" strokeWidth="1.5" />
             <rect x="-5" y="-7" width="10" height="14" rx="1.5" fill="none" stroke="white" strokeWidth="1.5" opacity="0.9" />
             <line x1="-5" y1="-3" x2="5" y2="-3" stroke="white" strokeWidth="1" opacity="0.9" />
