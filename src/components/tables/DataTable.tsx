@@ -2,11 +2,23 @@
 import { useState, ReactNode } from "react";
 import { ChevronUp, ChevronDown, ChevronsUpDown, Download, Filter, RefreshCw } from "lucide-react";
 import { Badge } from "@/components/ui";
-import { SearchField } from "@/components/forms";
+import { InputField } from "@/components/forms";
 import { useSearch, usePagination, useSorting } from "@/hooks";
 import { useT } from "@/lib/i18n";
 import { cn } from "@/utils";
 import type { TableColumn, Tone } from "@/types";
+
+// Helper to convert tone to badge className
+const getToneClass = (tone: Tone): string => {
+  const toneClasses: Record<Tone, string> = {
+    success: "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300",
+    warning: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300",
+    danger: "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300",
+    info: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
+    muted: "bg-gray-100 text-gray-700 dark:bg-gray-900 dark:text-gray-300",
+  };
+  return toneClasses[tone] || "";
+};
 
 interface DataTableProps<T extends Record<string, unknown>> {
   columns: TableColumn<T>[];
@@ -51,7 +63,7 @@ export function DataTable<T extends Record<string, unknown>>({
 
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-2 border-b border-border p-3">
-        <SearchField value={query} onChange={setQuery} placeholder={t("table.search")} className="min-w-48 flex-1" />
+        <InputField type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t("table.search")} className="min-w-48 flex-1" />
         {onRefresh && (
           <button onClick={onRefresh} title={t("common.refresh")} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border bg-background px-3 text-sm hover:bg-surface">
             <RefreshCw className="h-4 w-4" />
@@ -102,7 +114,7 @@ export function DataTable<T extends Record<string, unknown>>({
                   return (
                     <td key={col.key} className="px-4 py-3">
                       {col.render ? col.render(val, row)
-                        : tone ? <Badge tone={tone as Tone}>{String(val)}</Badge>
+                        : tone ? <Badge className={getToneClass(tone as Tone)}>{String(val)}</Badge>
                         : <span className="text-foreground">{String(val ?? "—")}</span>}
                     </td>
                   );

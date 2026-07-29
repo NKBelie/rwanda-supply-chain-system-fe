@@ -79,9 +79,9 @@ export default function VerifyOtpPage() {
 
   return (
     <AuthShell title={t("auth.otp.title")} description={`${t("auth.otp.description")} ${email || "your email address"}.`}>
-      <div className="rounded-lg border border-border bg-surface px-3 py-2 text-xs text-muted-foreground">
+      {/* <div className="rounded-lg border border-border bg-surface px-3 py-2 text-xs text-muted-foreground">
         Enter the 6-digit code: <span className="font-mono font-semibold">123456</span>
-      </div>
+      </div> */}
 
       <div className="flex justify-between gap-2" onPaste={(e) => { e.preventDefault(); paste(e.clipboardData.getData("text")); }}>
         {digits.map((digit, i) => (

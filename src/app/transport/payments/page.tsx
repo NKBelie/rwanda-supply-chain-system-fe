@@ -178,7 +178,7 @@ export default function TransportPaymentsPage() {
           <EmptyState
             title="No payments found"
             description="No payments match your search criteria."
-            icon={DollarSign}
+            icon={<DollarSign className="h-10 w-10" />}
           />
         )}
       </PageBody>

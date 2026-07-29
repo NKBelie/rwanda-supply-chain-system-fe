@@ -15,7 +15,7 @@ export default function SupplierInventoryPage() {
   const inventoryItems = useMemo(() => {
     return allProducts.map(product => ({
       ...product,
-      stock: product.stock || Math.floor(Math.random() * 500) + 100,
+      stock: product.quantity || Math.floor(Math.random() * 500) + 100,
       minStock: 50,
       maxStock: 1000,
       reorderPoint: 100,
@@ -206,7 +206,7 @@ export default function SupplierInventoryPage() {
           <EmptyState
             title="No inventory items found"
             description="No items match your search criteria."
-            icon={Package}
+            icon={<Package className="h-10 w-10" />}
           />
         )}
       </PageBody>

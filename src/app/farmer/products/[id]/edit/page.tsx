@@ -19,8 +19,6 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
     price: "",
     quality: "A",
     description: "",
-    harvestDate: "",
-    expiryDate: "",
     status: "Available",
   });
 
@@ -52,15 +50,14 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
       price: String(product.price),
       quality: product.quality,
       description: product.description || "",
-      harvestDate: product.harvestDate || "",
-      expiryDate: product.expiryDate || "",
       status: product.status,
     });
 
+    // Product interface doesn't have location properties
     setLocation({
-      provinceId: product.provinceId || "",
-      districtId: product.districtId || "",
-      sectorId: product.sectorId || "",
+      provinceId: "",
+      districtId: "",
+      sectorId: "",
     });
 
     setIsLoading(false);
@@ -263,34 +260,15 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
           children: (
             <LocationSelector
               value={location}
-              onChange={setLocation}
+              onChange={(value) => setLocation({
+                provinceId: value.provinceId || "",
+                districtId: value.districtId || "",
+                sectorId: value.sectorId || "",
+              })}
               level="sector"
               required
               showLabels
             />
-          ),
-        },
-        {
-          title: "Dates",
-          columns: 2,
-          children: (
-            <>
-              <InputField
-                name="harvestDate"
-                label="Harvest Date"
-                type="date"
-                value={formData.harvestDate}
-                onChange={handleChange}
-              />
-
-              <InputField
-                name="expiryDate"
-                label="Expiry Date (Optional)"
-                type="date"
-                value={formData.expiryDate}
-                onChange={handleChange}
-              />
-            </>
           ),
         },
       ]}

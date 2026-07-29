@@ -15,19 +15,19 @@ export default function SupplierOrdersPage() {
   const filteredOrders = useMemo(() => {
     return allOrders.filter(order => {
       const matchesSearch = searchQuery === "" ||
-        order.buyerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        order.id.toLowerCase().includes(searchQuery.toLowerCase());
+        order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        order.buyerId.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesStatus = statusFilter === "" || order.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
   }, [allOrders, searchQuery, statusFilter]);
 
   const totalOrders = allOrders.length;
-  const pendingOrders = allOrders.filter(o => o.status === "pending").length;
-  const completedOrders = allOrders.filter(o => o.status === "completed").length;
+  const pendingOrders = allOrders.filter(o => o.status === "Request").length;
+  const completedOrders = allOrders.filter(o => o.status === "Completed").length;
   const totalRevenue = allOrders
-    .filter(o => o.status === "completed")
-    .reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+    .filter(o => o.status === "Completed")
+    .reduce((sum, o) => sum + o.totalPrice, 0);
 
   return (
     <>
@@ -88,79 +88,84 @@ export default function SupplierOrdersPage() {
             className="h-10 rounded-md border border-input bg-background px-3 text-sm"
           >
             <option value="">All Statuses</option>
-            <option value="pending">Pending</option>
-            <option value="accepted">Accepted</option>
-            <option value="processing">Processing</option>
-            <option value="in_transit">In Transit</option>
-            <option value="completed">Completed</option>
+            <option value="Request">Request</option>
+            <option value="Accepted">Accepted</option>
+            <option value="Processing">Processing</option>
+            <option value="Transport">Transport</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Completed">Completed</option>
           </select>
         </div>
 
         {/* Orders List */}
         {filteredOrders.length > 0 ? (
           <div className="space-y-4">
-            {filteredOrders.map((order) => (
-              <div
-                key={order.id}
-                className="rounded-lg border bg-card p-5 transition-all hover:shadow-md cursor-pointer"
-                onClick={() => window.location.href = `/supplier/orders/${order.id}`}
-              >
-                <div className="mb-3 flex items-start justify-between">
-                  <div>
-                    <div className="flex items-center gap-3">
-                      <h3 className="font-semibold">{order.id}</h3>
-                      <StatusBadge status={order.status} />
-                    </div>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {order.buyerName} • {order.buyerPhone}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-2xl font-bold text-primary">
-                      RWF {(order.totalAmount || 0).toLocaleString()}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {order.items.length} items
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mb-3 rounded-lg bg-muted/50 p-3">
-                  <p className="mb-2 text-sm font-medium">Order Items</p>
-                  <div className="space-y-1">
-                    {order.items.slice(0, 3).map((item, idx) => (
-                      <div key={idx} className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">
-                          {item.productName} x {item.quantity}
-                        </span>
-                        <span className="font-medium">
-                          RWF {(item.price * item.quantity).toLocaleString()}
-                        </span>
+            {filteredOrders.map((order) => {
+              // Generate mock buyer name from buyerId
+              const buyerName = `Buyer ${order.buyerId.slice(-4)}`;
+              
+              return (
+                <div
+                  key={order.id}
+                  className="rounded-lg border bg-card p-5 transition-all hover:shadow-md cursor-pointer"
+                  onClick={() => window.location.href = `/supplier/orders/${order.id}`}
+                >
+                  <div className="mb-3 flex items-start justify-between">
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <h3 className="font-semibold">{order.id}</h3>
+                        <StatusBadge status={order.status} />
                       </div>
-                    ))}
-                    {order.items.length > 3 && (
-                      <p className="text-xs text-muted-foreground">
-                        +{order.items.length - 3} more items
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {buyerName}
                       </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-2xl font-bold text-primary">
+                        RWF {order.totalPrice.toLocaleString()}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Qty: {order.quantity}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mb-3 rounded-lg bg-muted/50 p-3">
+                    <p className="mb-2 text-sm font-medium">Order Details</p>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">Product ID</span>
+                        <span className="font-medium">{order.productId}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">Quantity</span>
+                        <span className="font-medium">{order.quantity}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">Total Price</span>
+                        <span className="font-medium">RWF {order.totalPrice.toLocaleString()}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-3.5 w-3.5" />
+                      <span>Ordered: {new Date(order.createdAt).toLocaleDateString()}</span>
+                    </div>
+                    {order.deliveryDate && (
+                      <span>Deliver by: {new Date(order.deliveryDate).toLocaleDateString()}</span>
                     )}
                   </div>
                 </div>
-
-                <div className="flex items-center justify-between text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-3.5 w-3.5" />
-                    <span>Ordered: {new Date(order.createdAt).toLocaleDateString()}</span>
-                  </div>
-                  <span>Deliver to: {order.deliveryDistrict}</span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         ) : (
           <EmptyState
             title="No orders found"
             description="No orders match your search criteria."
-            icon={ShoppingBag}
+            icon={<ShoppingBag className="h-10 w-10" />}
           />
         )}
       </PageBody>

@@ -200,7 +200,11 @@ export default function AddProductPage() {
           children: (
             <LocationSelector
               value={location}
-              onChange={setLocation}
+              onChange={(value) => setLocation({
+                provinceId: value.provinceId || "",
+                districtId: value.districtId || "",
+                sectorId: value.sectorId || "",
+              })}
               level="sector"
               required
               showLabels

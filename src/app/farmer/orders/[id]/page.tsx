@@ -107,15 +107,6 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
           title: "Delivery Information",
           children: (
             <div className="space-y-3">
-              {order.deliveryAddress && (
-                <div className="flex items-start gap-3">
-                  <MapPin className="mt-0.5 h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Delivery Address</p>
-                    <p className="text-sm text-muted-foreground">{order.deliveryAddress}</p>
-                  </div>
-                </div>
-              )}
               {order.deliveryDate && (
                 <div className="flex items-start gap-3">
                   <Calendar className="mt-0.5 h-5 w-5 text-muted-foreground" />
@@ -131,14 +122,8 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
                   </div>
                 </div>
               )}
-              {order.transportId && (
-                <div className="flex items-start gap-3">
-                  <Truck className="mt-0.5 h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Transport ID</p>
-                    <p className="text-sm text-muted-foreground">{order.transportId}</p>
-                  </div>
-                </div>
+              {!order.deliveryDate && (
+                <p className="text-sm text-muted-foreground italic">Delivery date not yet scheduled</p>
               )}
             </div>
           ),

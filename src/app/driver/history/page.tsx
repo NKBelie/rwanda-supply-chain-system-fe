@@ -253,7 +253,7 @@ export default function DriverHistoryPage() {
           <EmptyState
             title="No delivery history found"
             description="No deliveries match your current filters."
-            icon={Package}
+            icon={<Package className="h-10 w-10" />}
           />
         )}
       </PageBody>

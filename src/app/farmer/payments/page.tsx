@@ -36,25 +36,30 @@ export default function FarmerPaymentsPage() {
   const allPayments = useMemo<Payment[]>(() => {
     const orders = orderService.getAll();
     
-    return orders.map(order => ({
-      id: `PAY-${order.id.slice(0, 8)}`,
-      orderId: order.id,
-      buyerName: order.buyerName,
-      amount: order.totalAmount || 0,
-      paymentMethod: ["Mobile Money", "Bank Transfer", "Cash", "Credit Card"][
-        Math.floor(Math.random() * 4)
-      ],
-      status: order.status === "completed" 
-        ? "paid" 
-        : order.status === "pending" 
-        ? "pending" 
-        : Math.random() > 0.9 
-        ? "failed" 
-        : "pending",
-      date: order.createdAt,
-      transactionId: `TXN-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
-      receiptUrl: order.status === "completed" ? "#" : undefined
-    }));
+    return orders.map(order => {
+      // Generate mock buyer name from ID
+      const buyerNumber = order.buyerId.split('-').pop() || '001';
+      
+      return {
+        id: `PAY-${order.id.slice(0, 8)}`,
+        orderId: order.id,
+        buyerName: `Buyer ${buyerNumber}`,
+        amount: order.totalPrice || 0,
+        paymentMethod: ["Mobile Money", "Bank Transfer", "Cash", "Credit Card"][
+          Math.floor(Math.random() * 4)
+        ],
+        status: order.status === "Completed" 
+          ? "paid" 
+          : order.status === "Request" 
+          ? "pending" 
+          : Math.random() > 0.9 
+          ? "failed" 
+          : "pending",
+        date: order.createdAt,
+        transactionId: `TXN-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
+        receiptUrl: order.status === "Completed" ? "#" : undefined
+      };
+    });
   }, []);
 
   const filteredPayments = useMemo(() => {
@@ -277,7 +282,7 @@ export default function FarmerPaymentsPage() {
           <EmptyState
             title="No payments found"
             description="No payments match your current filters. Try adjusting your search criteria."
-            icon={DollarSign}
+            icon={<DollarSign className="h-10 w-10" />}
           />
         )}
 

@@ -12,7 +12,7 @@ export function RoleProfilePage({ role }: RoleProfilePageProps) {
     <>
       <PageHeader 
         title="Profile" 
-        subtitle="Manage your profile information and settings"
+        description="Manage your profile information and settings"
       />
       <PageBody>
         <div className="rounded-lg border border-border bg-card p-6">

@@ -208,7 +208,7 @@ export default function TransportHistoryPage() {
           <EmptyState
             title="No history found"
             description="No transport history matches your search criteria."
-            icon={Package}
+            icon={<Package className="h-10 w-10" />}
           />
         )}
       </PageBody>

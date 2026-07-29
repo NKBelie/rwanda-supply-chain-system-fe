@@ -16,7 +16,7 @@ export default function FarmerSalesPage() {
   const filteredSales = useMemo(() => {
     return allSales.filter(sale => {
       const matchesSearch = searchQuery === "" ||
-        sale.buyerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        sale.buyerId.toLowerCase().includes(searchQuery.toLowerCase()) ||
         sale.id.toLowerCase().includes(searchQuery.toLowerCase());
 
       const matchesStatus = statusFilter === "" || sale.status === statusFilter;
@@ -40,9 +40,9 @@ export default function FarmerSalesPage() {
   // Calculate stats
   const totalSales = filteredSales.length;
   const totalRevenue = filteredSales
-    .filter(s => s.status === "completed")
-    .reduce((sum, sale) => sum + (sale.totalAmount || 0), 0);
-  const completedSales = filteredSales.filter(s => s.status === "completed").length;
+    .filter(s => s.status === "Completed")
+    .reduce((sum, sale) => sum + (sale.totalPrice || 0), 0);
+  const completedSales = filteredSales.filter(s => s.status === "Completed").length;
   const avgSaleValue = completedSales > 0 ? totalRevenue / completedSales : 0;
 
   const handleExport = () => {
@@ -115,11 +115,12 @@ export default function FarmerSalesPage() {
             className="h-10 rounded-md border border-input bg-background px-3 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <option value="">All Statuses</option>
-            <option value="pending">Pending</option>
-            <option value="accepted">Accepted</option>
-            <option value="processing">Processing</option>
-            <option value="in_transit">In Transit</option>
-            <option value="completed">Completed</option>
+            <option value="Request">Request</option>
+            <option value="Accepted">Accepted</option>
+            <option value="Processing">Processing</option>
+            <option value="Transport">Transport</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Completed">Completed</option>
           </select>
 
           <select
@@ -159,39 +160,45 @@ export default function FarmerSalesPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y">
-                  {filteredSales.map((sale) => (
-                    <tr key={sale.id} className="hover:bg-muted/50">
-                      <td className="px-4 py-3 text-sm font-mono">
-                        {sale.id.slice(0, 8)}
-                      </td>
-                      <td className="px-4 py-3 text-sm">
-                        <div>
-                          <p className="font-medium">{sale.buyerName}</p>
-                          <p className="text-xs text-muted-foreground">{sale.buyerPhone}</p>
-                        </div>
-                      </td>
-                      <td className="px-4 py-3 text-sm text-muted-foreground">
-                        {new Date(sale.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="px-4 py-3 text-sm">
-                        {sale.items.length} item{sale.items.length !== 1 ? 's' : ''}
-                      </td>
-                      <td className="px-4 py-3 text-sm font-medium">
-                        RWF {(sale.totalAmount || 0).toLocaleString()}
-                      </td>
-                      <td className="px-4 py-3">
-                        <StatusBadge status={sale.status} />
-                      </td>
-                      <td className="px-4 py-3 text-sm">
-                        <button
-                          onClick={() => window.location.href = `/farmer/orders/${sale.id}`}
-                          className="text-primary hover:underline"
-                        >
-                          View Details
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  {filteredSales.map((sale) => {
+                    // Generate mock buyer name from ID
+                    const buyerNumber = sale.buyerId.split('-').pop() || '001';
+                    const buyerName = `Buyer ${buyerNumber}`;
+                    
+                    return (
+                      <tr key={sale.id} className="hover:bg-muted/50">
+                        <td className="px-4 py-3 text-sm font-mono">
+                          {sale.id.slice(0, 8)}
+                        </td>
+                        <td className="px-4 py-3 text-sm">
+                          <div>
+                            <p className="font-medium">{buyerName}</p>
+                            <p className="text-xs text-muted-foreground">{sale.buyerId}</p>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-muted-foreground">
+                          {new Date(sale.createdAt).toLocaleDateString()}
+                        </td>
+                        <td className="px-4 py-3 text-sm">
+                          {sale.quantity} {sale.productId ? 'unit(s)' : 'items'}
+                        </td>
+                        <td className="px-4 py-3 text-sm font-medium">
+                          RWF {(sale.totalPrice || 0).toLocaleString()}
+                        </td>
+                        <td className="px-4 py-3">
+                          <StatusBadge status={sale.status} />
+                        </td>
+                        <td className="px-4 py-3 text-sm">
+                          <button
+                            onClick={() => window.location.href = `/farmer/orders/${sale.id}`}
+                            className="text-primary hover:underline"
+                          >
+                            View Details
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -200,7 +207,7 @@ export default function FarmerSalesPage() {
           <EmptyState
             title="No sales found"
             description="No sales match your current filters. Try adjusting your search criteria."
-            icon={ShoppingBag}
+            icon={<ShoppingBag className="h-10 w-10" />}
           />
         )}
       </PageBody>

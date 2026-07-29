@@ -209,7 +209,7 @@ export default function WarehouseTransport() {
           {types.map((type) => (
             <Button
               key={type}
-              variant={selectedType === type ? "default" : "outline"}
+              variant={selectedType === type ? "primary" : "outline"}
               size="sm"
               onClick={() => setSelectedType(type)}
             >
@@ -222,7 +222,7 @@ export default function WarehouseTransport() {
       {/* Transport List */}
       {filteredTransports.length === 0 ? (
         <EmptyState
-          icon={Truck}
+          icon={<Truck className="h-10 w-10" />}
           title="No transport records found"
           description="Try adjusting your search or filters"
         />

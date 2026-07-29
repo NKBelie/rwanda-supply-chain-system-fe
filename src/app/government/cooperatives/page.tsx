@@ -190,7 +190,7 @@ export default function GovernmentCooperativesPage() {
           <EmptyState
             title="No cooperatives found"
             description="No cooperatives match your search criteria."
-            icon={Users}
+            icon={<Users className="h-10 w-10" />}
           />
         )}
       </PageBody>

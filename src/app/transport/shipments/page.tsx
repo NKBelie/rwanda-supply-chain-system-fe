@@ -227,7 +227,7 @@ export default function TransportShipmentsPage() {
           <EmptyState
             title="No shipments found"
             description="No shipments match your search criteria."
-            icon={Package}
+            icon={<Package className="h-10 w-10" />}
           />
         )}
       </PageBody>

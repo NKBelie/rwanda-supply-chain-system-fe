@@ -215,7 +215,7 @@ export default function BankCustomersPage() {
           <EmptyState
             title="No customers found"
             description="No customers match your search criteria."
-            icon={Users}
+            icon={<Users className="h-10 w-10" />}
           />
         )}
       </PageBody>

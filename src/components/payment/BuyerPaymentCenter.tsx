@@ -109,7 +109,7 @@ export function BuyerPaymentCenter() {
     <div className="space-y-4">
       <div className="flex flex-wrap gap-2">
         {['All', 'Pending', 'Paid', 'Overdue'].map((filter) => (
-          <Button key={filter} variant={invoiceFilter === filter ? 'default' : 'outline'} size="sm" onClick={() => setInvoiceFilter(filter)}>{filter}</Button>
+          <Button key={filter} variant={invoiceFilter === filter ? 'primary' : 'outline'} size="sm" onClick={() => setInvoiceFilter(filter)}>{filter}</Button>
         ))}
       </div>
       <InvoiceTable filter={invoiceFilter} onViewInvoice={(invoiceId) => {

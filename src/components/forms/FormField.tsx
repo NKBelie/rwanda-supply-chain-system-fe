@@ -216,7 +216,7 @@ export function CheckboxField({
 }
 
 // File Upload Field
-export type FileFieldProps = BaseFieldProps & {
+export type FileFieldProps = BaseFieldProps & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   accept?: string;
   onChange?: (file: File | null) => void;
   currentFileName?: string;

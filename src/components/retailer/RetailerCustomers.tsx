@@ -110,7 +110,7 @@ export default function RetailerCustomers() {
 
       {/* Customers List */}
       {filteredCustomers.length === 0 ? (
-        <EmptyState icon={Users} title="No customers found" description="Try adjusting your search" />
+        <EmptyState icon={<Users className="h-10 w-10" />} title="No customers found" description="Try adjusting your search" />
       ) : (
         <div className="grid gap-4">
           {filteredCustomers.map((customer) => (

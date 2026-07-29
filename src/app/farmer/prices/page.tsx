@@ -12,7 +12,7 @@ import {
   Calendar
 } from "lucide-react";
 import { DistrictSelector } from "@/components/common";
-import { districts } from "@/constants/locations";
+import { DISTRICTS } from "@/constants/locations";
 
 interface MarketPrice {
   id: string;
@@ -230,7 +230,7 @@ export default function FarmerPricesPage() {
 
           <DistrictSelector
             value={selectedDistrict}
-            onChange={setSelectedDistrict}
+            onChange={(districtId) => setSelectedDistrict(districtId || "")}
             placeholder="All Districts"
           />
 
@@ -319,7 +319,7 @@ export default function FarmerPricesPage() {
           <EmptyState
             title="No market prices found"
             description="Try adjusting your filters or check back later for updated prices."
-            icon={Search}
+            icon={<Search className="h-10 w-10" />}
           />
         )}
       </PageBody>

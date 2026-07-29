@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { Warehouse, Search, MapPin, Package, DollarSign, Star } from "lucide-react";
+import { Warehouse, Search, MapPin, Package, DollarSign } from "lucide-react";
 import { PageHeader, PageBody } from "@/components/app/PageChrome";
 import { EmptyState } from "@/components/common";
 import { DistrictSelector } from "@/components/common";
@@ -26,8 +26,8 @@ export default function FarmerWarehousePage() {
     if (searchQuery) {
       filtered = filtered.filter(warehouse =>
         warehouse.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        warehouse.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        warehouse.district?.toLowerCase().includes(searchQuery.toLowerCase())
+        warehouse.district?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        warehouse.sector?.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
@@ -42,13 +42,11 @@ export default function FarmerWarehousePage() {
     return filtered.sort((a, b) => {
       switch (sortBy) {
         case "price":
-          return (a.pricePerUnit || 0) - (b.pricePerUnit || 0);
         case "rating":
-          return (b.rating || 0) - (a.rating || 0);
         case "distance":
         default:
-          // Simple alphabetical sort by location as proxy for distance
-          return a.location.localeCompare(b.location);
+          // Simple alphabetical sort by name/district as proxy
+          return a.name.localeCompare(b.name);
       }
     });
   }, [allWarehouses, searchQuery, selectedDistrict, sortBy]);
@@ -62,9 +60,9 @@ export default function FarmerWarehousePage() {
   };
 
   const getAvailabilityPercentage = (warehouse: any) => {
-    if (!warehouse.totalCapacity) return 0;
-    const available = warehouse.totalCapacity - warehouse.usedCapacity;
-    return Math.round((available / warehouse.totalCapacity) * 100);
+    if (!warehouse.capacity) return 0;
+    const available = warehouse.availableSpace || 0;
+    return Math.round((available / warehouse.capacity) * 100);
   };
 
   return (
@@ -166,9 +164,8 @@ export default function FarmerWarehousePage() {
                             {warehouse.name}
                           </h3>
                           <div className="mt-1 flex items-center gap-1">
-                            <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
-                            <span className="text-sm font-medium text-foreground">
-                              {warehouse.rating || "N/A"}
+                            <span className="text-xs text-muted-foreground">
+                              {warehouse.type}
                             </span>
                           </div>
                         </div>
@@ -177,7 +174,7 @@ export default function FarmerWarehousePage() {
 
                     <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
                       <MapPin className="h-4 w-4" />
-                      {warehouse.location}
+                      {[warehouse.district, warehouse.sector, warehouse.cell].filter(Boolean).join(", ")}
                     </div>
                   </div>
 
@@ -216,13 +213,13 @@ export default function FarmerWarehousePage() {
                       <div>
                         <p className="text-muted-foreground">Total Capacity</p>
                         <p className="font-medium text-foreground">
-                          {warehouse.totalCapacity?.toLocaleString()} m³
+                          {warehouse.capacity?.toLocaleString()} m³
                         </p>
                       </div>
                       <div>
                         <p className="text-muted-foreground">Available</p>
                         <p className="font-medium text-foreground">
-                          {(warehouse.totalCapacity - warehouse.usedCapacity).toLocaleString()} m³
+                          {warehouse.availableSpace?.toLocaleString()} m³
                         </p>
                       </div>
                     </div>
@@ -231,30 +228,24 @@ export default function FarmerWarehousePage() {
                     <div className="flex items-center gap-2 rounded-lg bg-surface/50 p-2">
                       <DollarSign className="h-4 w-4 text-muted-foreground" />
                       <span className="text-sm text-muted-foreground">
-                        From
-                      </span>
-                      <span className="font-semibold text-foreground">
-                        RWF {warehouse.pricePerUnit?.toLocaleString() || "N/A"}
-                      </span>
-                      <span className="text-sm text-muted-foreground">
-                        /m³/month
+                        Contact for pricing
                       </span>
                     </div>
 
-                    {/* Features */}
-                    {warehouse.features && warehouse.features.length > 0 && (
+                    {/* Conditions */}
+                    {warehouse.conditions && warehouse.conditions.length > 0 && (
                       <div className="flex flex-wrap gap-2">
-                        {warehouse.features.slice(0, 3).map((feature, index) => (
+                        {warehouse.conditions.slice(0, 3).map((condition, index) => (
                           <span
                             key={index}
                             className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary"
                           >
-                            {feature}
+                            {condition}
                           </span>
                         ))}
-                        {warehouse.features.length > 3 && (
+                        {warehouse.conditions.length > 3 && (
                           <span className="inline-flex items-center rounded-full bg-surface px-2 py-0.5 text-xs font-medium text-muted-foreground">
-                            +{warehouse.features.length - 3} more
+                            +{warehouse.conditions.length - 3} more
                           </span>
                         )}
                       </div>

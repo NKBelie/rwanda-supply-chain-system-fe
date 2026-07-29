@@ -157,7 +157,7 @@ export default function AdminBusinesses() {
               {types.map((type) => (
                 <Button
                   key={type}
-                  variant={selectedType === type ? "default" : "outline"}
+                  variant={selectedType === type ? "primary" : "outline"}
                   size="sm"
                   onClick={() => setSelectedType(type)}
                 >
@@ -172,7 +172,7 @@ export default function AdminBusinesses() {
               {statuses.map((status) => (
                 <Button
                   key={status}
-                  variant={selectedStatus === status ? "default" : "outline"}
+                  variant={selectedStatus === status ? "primary" : "outline"}
                   size="sm"
                   onClick={() => setSelectedStatus(status)}
                 >
@@ -186,7 +186,7 @@ export default function AdminBusinesses() {
 
       {/* Business List */}
       {filteredBusinesses.length === 0 ? (
-        <EmptyState icon={Building} title="No businesses found" description="Try adjusting your search" />
+        <EmptyState icon={<Building className="h-10 w-10" />} title="No businesses found" description="Try adjusting your search" />
       ) : (
         <div className="grid gap-4">
           {filteredBusinesses.map((business) => (
@@ -196,7 +196,7 @@ export default function AdminBusinesses() {
                   <div className="flex items-center gap-3">
                     <h3 className="font-semibold">{business.name}</h3>
                     <StatusBadge status={business.status} />
-                    <Badge variant="outline">{business.type}</Badge>
+                    <Badge>{business.type}</Badge>
                     {business.verified && (
                       <Badge className="bg-blue-100 text-blue-700 dark:bg-blue-900">
                         <Shield className="mr-1 h-3 w-3" />

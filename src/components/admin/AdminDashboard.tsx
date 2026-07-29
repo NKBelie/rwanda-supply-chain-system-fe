@@ -10,7 +10,12 @@ import { PageHeader, PageBody } from "@/components/app/PageChrome";
 import { StatusBadge, EmptyState } from "@/components/common/ui";
 import { userService } from "@/services/data.service";
 import { useSession } from "@/lib/auth/session";
-import type { User } from "@/lib/storage";
+import type { RegisteredUser } from "@/lib/storage";
+
+// Extended user type for admin dashboard with status
+interface User extends RegisteredUser {
+  status: "Active" | "Pending" | "Suspended";
+}
 
 // Mock data for admin operations
 interface PendingApproval {
@@ -52,8 +57,11 @@ export default function AdminDashboardPage() {
   const [selectedTab, setSelectedTab] = useState<"approvals" | "users" | "alerts" | "logs">("approvals");
 
   useEffect(() => {
-    // Get all users
-    const allUsers = userService.getAll();
+    // Get all users and add status property for admin dashboard
+    const allUsers = userService.getAll().map(user => ({
+      ...user,
+      status: user.verified ? "Active" : "Pending" as "Active" | "Pending" | "Suspended"
+    }));
     setUsers(allUsers);
     
     // Mock pending approvals
@@ -296,7 +304,7 @@ export default function AdminDashboardPage() {
                       }`} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-foreground">{user.name}</p>
+                      <p className="font-medium text-foreground">{user.firstName} {user.lastName}</p>
                       <p className="text-xs text-muted-foreground">{user.email} · {user.role}</p>
                     </div>
                     <StatusBadge status={user.status} />

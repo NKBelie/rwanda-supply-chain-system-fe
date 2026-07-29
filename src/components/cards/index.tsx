@@ -1,7 +1,7 @@
 import { ReactNode, type ComponentType, type SVGProps } from "react";
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { cn } from "@/utils";
-import { Card, CardBody } from "@/components/ui";
+import { Card, CardContent } from "@/components/ui";
 
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -12,7 +12,7 @@ export function StatCard({ label, value, delta, up, icon: Icon, accent = "#16653
 }) {
   return (
     <Card>
-      <CardBody>
+      <CardContent>
         <div className="flex items-center justify-between">
           <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{label}</div>
           <div className="grid h-8 w-8 place-items-center rounded-lg"
@@ -27,7 +27,7 @@ export function StatCard({ label, value, delta, up, icon: Icon, accent = "#16653
             {delta}
           </div>
         )}
-      </CardBody>
+      </CardContent>
     </Card>
   );
 }
@@ -79,7 +79,7 @@ export function ActivityCard({ items }: {
 }) {
   return (
     <Card>
-      <CardBody>
+      <CardContent>
         <div className="mb-3 text-sm font-semibold">Recent activity</div>
         <ul className="divide-y divide-border">
           {items.map((a, i) => (
@@ -92,7 +92,7 @@ export function ActivityCard({ items }: {
             </li>
           ))}
         </ul>
-      </CardBody>
+      </CardContent>
     </Card>
   );
 }
@@ -117,7 +117,7 @@ export function SummaryCard({ title, items }: {
 }) {
   return (
     <Card>
-      <CardBody>
+      <CardContent>
         <div className="mb-3 text-sm font-semibold">{title}</div>
         <ul className="space-y-2">
           {items.map((it) => (
@@ -129,7 +129,7 @@ export function SummaryCard({ title, items }: {
             </li>
           ))}
         </ul>
-      </CardBody>
+      </CardContent>
     </Card>
   );
 }

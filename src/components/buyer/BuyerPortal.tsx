@@ -26,6 +26,13 @@ export function BuyerPortal() {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [selectedTab, setSelectedTab] = useState<"All" | "Pending" | "Processing" | "Shipping" | "Completed" | "Cancelled">("All");
 
+  // Mock notifications
+  const notifications = [
+    { id: "1", title: "Order shipped", message: "Your order has been shipped", time: "2h ago", read: false },
+    { id: "2", title: "New product available", message: "Check out the latest products", time: "1d ago", read: true },
+    { id: "3", title: "Order delivered", message: "Your order has been delivered", time: "3d ago", read: true }
+  ];
+
   useEffect(() => {
     // Load products from marketplace
     setProducts(productService.getAll());
@@ -237,7 +244,7 @@ export function BuyerPortal() {
                       <span className="font-medium text-foreground">{item.title}</span>
                       {!item.read ? <span className="h-2.5 w-2.5 rounded-full bg-primary" /> : null}
                     </div>
-                    <p className="mt-1 text-muted-foreground">{item.detail}</p>
+                    <p className="mt-1 text-muted-foreground">{item.message}</p>
                   </div>
                 ))}
                 <Link href="/buyer/notifications" className="inline-flex text-sm font-medium text-primary">View all notifications</Link>
@@ -284,6 +291,7 @@ export function BuyerPortal() {
         {/* Order Detail Modal */}
         {selectedOrder && (
           <Modal
+            open={true}
             size="lg"
             title={`Order #${selectedOrder.id}`}
             onClose={() => setSelectedOrder(null)}

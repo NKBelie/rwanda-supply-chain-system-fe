@@ -53,8 +53,8 @@ export function ConfirmModal({ open, onClose, onConfirm, title, message, loading
         <h3 className="font-semibold">{title} </h3>
         <p className="mt-2 text-sm text-muted-foreground">{message}</p>
         <div className="mt-5 flex gap-2">
-          <Button variant="outline" fullWidth onClick={onClose}>{t("form.cancel")}</Button>
-          <Button variant="primary" fullWidth loading={loading} onClick={onConfirm}>{t("form.confirm")}</Button>
+          <Button variant="outline" className="flex-1" onClick={onClose}>{t("form.cancel")}</Button>
+          <Button variant="primary" className="flex-1" loading={loading} onClick={onConfirm}>{t("form.confirm")}</Button>
         </div>
       </div>
     </Modal>
@@ -76,8 +76,8 @@ export function DeleteModal({ open, onClose, onDelete, label, loading }: {
         <h3 className="font-semibold">{t("form.delete")} {label}?</h3>
         <p className="mt-2 text-sm text-muted-foreground">{t("common.deleteConfirm")}</p>
         <div className="mt-5 flex gap-2">
-          <Button variant="outline" fullWidth onClick={onClose}>{t("form.cancel")}</Button>
-          <Button variant="danger" fullWidth loading={loading} onClick={onDelete}>{t("form.delete")}</Button>
+          <Button variant="outline" className="flex-1" onClick={onClose}>{t("form.cancel")}</Button>
+          <Button variant="danger" className="flex-1" loading={loading} onClick={onDelete}>{t("form.delete")}</Button>
         </div>
       </div>
     </Modal>
@@ -97,7 +97,7 @@ export function SuccessModal({ open, onClose, title, message }: {
         </div>
         <h3 className="font-semibold">{title}</h3>
         {message && <p className="mt-2 text-sm text-muted-foreground">{message}</p>}
-        <Button className="mt-5" fullWidth onClick={onClose}>{t("common.close")}</Button>
+        <Button className="mt-5 w-full" onClick={onClose}>{t("common.close")}</Button>
       </div>
     </Modal>
   );
@@ -116,7 +116,7 @@ export function ErrorModal({ open, onClose, title, message }: {
         </div>
         <h3 className="font-semibold">{title}</h3>
         {message && <p className="mt-2 text-sm text-muted-foreground">{message}</p>}
-        <Button variant="outline" className="mt-5" fullWidth onClick={onClose}>{t("common.close")}</Button>
+        <Button variant="outline" className="mt-5 w-full" onClick={onClose}>{t("common.close")}</Button>
       </div>
     </Modal>
   );
@@ -131,7 +131,7 @@ export function InfoModal({ open, onClose, title, children }: {
     <Modal open={open} onClose={onClose} title={title}>
       <div className="p-5">{children}</div>
       <div className="border-t border-border p-4">
-        <Button variant="outline" fullWidth onClick={onClose}>{t("common.close")}</Button>
+        <Button variant="outline" className="w-full" onClick={onClose}>{t("common.close")}</Button>
       </div>
     </Modal>
   );

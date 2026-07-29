@@ -208,7 +208,7 @@ export default function CooperativeMembers() {
           {statuses.map((status) => (
             <Button
               key={status}
-              variant={selectedStatus === status ? "default" : "outline"}
+              variant={selectedStatus === status ? "primary" : "outline"}
               size="sm"
               onClick={() => setSelectedStatus(status)}
             >
@@ -221,7 +221,7 @@ export default function CooperativeMembers() {
       {/* Members List */}
       {filteredMembers.length === 0 ? (
         <EmptyState
-          icon={Users}
+          icon={<Users className="h-10 w-10" />}
           title="No members found"
           description="Try adjusting your search or filters"
         />
@@ -234,7 +234,7 @@ export default function CooperativeMembers() {
                   <div className="flex items-center gap-3">
                     <h3 className="font-semibold">{member.name}</h3>
                     <StatusBadge status={member.status} />
-                    <Badge variant="outline">{member.id}</Badge>
+                    <Badge>{member.id}</Badge>
                     {member.role && (
                       <Badge className="bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300">
                         {member.role}

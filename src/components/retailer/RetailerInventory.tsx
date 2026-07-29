@@ -182,7 +182,7 @@ export default function RetailerInventory() {
           {categories.map((category) => (
             <Button
               key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
+              variant={selectedCategory === category ? "primary" : "outline"}
               size="sm"
               onClick={() => setSelectedCategory(category)}
             >
@@ -195,7 +195,7 @@ export default function RetailerInventory() {
       {/* Inventory List */}
       {filteredInventory.length === 0 ? (
         <EmptyState
-          icon={Package}
+          icon={<Package className="h-10 w-10" />}
           title="No inventory items found"
           description="Try adjusting your search or filters"
         />
@@ -208,9 +208,9 @@ export default function RetailerInventory() {
                   <div className="flex items-center gap-3">
                     <h3 className="font-semibold">{item.name}</h3>
                     <StatusBadge status={item.status} />
-                    <Badge variant="outline">{item.category}</Badge>
+                    <Badge>{item.category}</Badge>
                     {item.expiryDate && (
-                      <Badge variant="destructive" className="gap-1">
+                      <Badge className="gap-1 bg-red-100 text-red-700">
                         <AlertTriangle className="h-3 w-3" />
                         Expires {item.expiryDate}
                       </Badge>

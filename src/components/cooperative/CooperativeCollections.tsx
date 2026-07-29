@@ -186,7 +186,7 @@ export default function CooperativeCollections() {
           {statuses.map((status) => (
             <Button
               key={status}
-              variant={selectedStatus === status ? "default" : "outline"}
+              variant={selectedStatus === status ? "primary" : "outline"}
               size="sm"
               onClick={() => setSelectedStatus(status)}
             >
@@ -199,7 +199,7 @@ export default function CooperativeCollections() {
       {/* Collections List */}
       {filteredCollections.length === 0 ? (
         <EmptyState
-          icon={Package}
+          icon={<Package className="h-10 w-10" />}
           title="No collections found"
           description="Try adjusting your search or filters"
         />

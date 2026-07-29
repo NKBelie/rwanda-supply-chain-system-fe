@@ -210,7 +210,7 @@ export default function GovernmentWarehousesPage() {
           <EmptyState
             title="No warehouses found"
             description="No warehouses match your search criteria."
-            icon={Warehouse}
+            icon={<Warehouse className="h-10 w-10" />}
           />
         )}
       </PageBody>
