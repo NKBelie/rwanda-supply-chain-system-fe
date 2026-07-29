@@ -124,7 +124,7 @@ export default function GovernmentFarmersPage() {
           </div>
           <DistrictSelector
             value={districtFilter}
-            onChange={setDistrictFilter}
+            onChange={(value) => setDistrictFilter(value || "")}
             placeholder="All Districts"
           />
         </div>
@@ -198,7 +198,7 @@ export default function GovernmentFarmersPage() {
           <EmptyState
             title="No farmers found"
             description="No farmers match your search criteria."
-            icon={Users}
+            icon={<Users className="h-10 w-10" />}
           />
         )}
       </PageBody>

@@ -178,7 +178,7 @@ export default function AdminUsers() {
               {roles.map((role) => (
                 <Button
                   key={role}
-                  variant={selectedRole === role ? "default" : "outline"}
+                  variant={selectedRole === role ? "primary" : "outline"}
                   size="sm"
                   onClick={() => setSelectedRole(role)}
                 >
@@ -193,7 +193,7 @@ export default function AdminUsers() {
               {statuses.map((status) => (
                 <Button
                   key={status}
-                  variant={selectedStatus === status ? "default" : "outline"}
+                  variant={selectedStatus === status ? "primary" : "outline"}
                   size="sm"
                   onClick={() => setSelectedStatus(status)}
                 >
@@ -207,7 +207,7 @@ export default function AdminUsers() {
 
       {/* Users List */}
       {filteredUsers.length === 0 ? (
-        <EmptyState icon={Users} title="No users found" description="Try adjusting your search or filters" />
+        <EmptyState icon={<Users className="h-10 w-10" />} title="No users found" description="Try adjusting your search or filters" />
       ) : (
         <div className="grid gap-4">
           {filteredUsers.map((user) => (
@@ -217,7 +217,7 @@ export default function AdminUsers() {
                   <div className="flex items-center gap-3">
                     <h3 className="font-semibold">{user.name}</h3>
                     <StatusBadge status={user.status} />
-                    <Badge variant="outline">{user.role}</Badge>
+                    <Badge>{user.role}</Badge>
                     {user.verified && (
                       <Badge className="bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
                         Verified
@@ -255,7 +255,7 @@ export default function AdminUsers() {
                     Edit
                   </Button>
                   {user.status !== "suspended" && (
-                    <Button variant="destructive" size="sm">
+                    <Button variant="danger" size="sm">
                       Suspend
                     </Button>
                   )}

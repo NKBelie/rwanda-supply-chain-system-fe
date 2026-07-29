@@ -202,7 +202,7 @@ export default function TransportAssignmentsPage() {
           <EmptyState
             title="No assignments found"
             description="No assignments match your search criteria."
-            icon={UserCheck}
+            icon={<UserCheck className="h-10 w-10" />}
           />
         )}
       </PageBody>

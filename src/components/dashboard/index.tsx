@@ -5,7 +5,7 @@ import {
   XAxis, YAxis, Tooltip, CartesianGrid, Legend, ResponsiveContainer,
 } from "recharts";
 import { StatCard, ActivityCard, SummaryCard } from "@/components/cards";
-import { Card, CardBody } from "@/components/ui";
+import { Card, CardContent } from "@/components/ui";
 
 // ─── DashboardStats ───────────────────────────────────────────────────────────
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
@@ -31,7 +31,7 @@ export type ChartSpec = {
 export function DashboardChart({ spec, color }: { spec: ChartSpec; color: string }) {
   return (
     <Card className="lg:col-span-2">
-      <CardBody>
+      <CardContent>
         <div className="mb-2 flex items-center justify-between">
           <div className="text-sm font-semibold">{spec.title}</div>
           <span className="text-xs text-muted-foreground">Last 30 days</span>
@@ -39,7 +39,7 @@ export function DashboardChart({ spec, color }: { spec: ChartSpec; color: string
         <div className="h-64 w-full">
           <ResponsiveContainer>{renderChart(spec, color)}</ResponsiveContainer>
         </div>
-      </CardBody>
+      </CardContent>
     </Card>
   );
 }

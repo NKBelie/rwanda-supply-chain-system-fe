@@ -38,8 +38,8 @@ export default function FarmerDashboardPage() {
 
   // Additional statistics
   const completedOrders = orders.filter(o => o.status === "Completed").length;
-  const pendingOrders = orders.filter(o => o.status === "Pending").length;
-  const inProgressOrders = orders.filter(o => o.status === "Processing" || o.status === "Packed").length;
+  const pendingOrders = orders.filter(o => o.status === "Request").length;
+  const inProgressOrders = orders.filter(o => o.status === "Processing" || o.status === "Accepted").length;
   
   // Revenue by period
   const thisMonthRevenue = orders

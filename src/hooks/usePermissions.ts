@@ -5,11 +5,9 @@ import { useAuth } from "@/hooks/useAuth";
 import { hasPermission } from "@/lib/permissions";
 
 export function usePermissions() {
-  const { currentUser } = useAuth();
+  const { session, can } = useAuth();
 
   return {
-    can(permission: Permission) {
-      return hasPermission(currentUser?.role, permission);
-    },
+    can,
   };
 }

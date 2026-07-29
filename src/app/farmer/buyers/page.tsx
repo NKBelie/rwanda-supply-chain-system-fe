@@ -28,15 +28,17 @@ export default function FarmerBuyersPage() {
     const buyerMap = new Map<string, Buyer>();
 
     orders.forEach(order => {
-      const buyerId = order.buyerName.toLowerCase().replace(/\s+/g, '-');
+      const buyerId = order.buyerId;
       
       if (!buyerMap.has(buyerId)) {
+        // Generate mock buyer details from ID
+        const buyerNumber = buyerId.split('-').pop() || '001';
         buyerMap.set(buyerId, {
           id: buyerId,
-          name: order.buyerName,
-          email: order.buyerEmail || `${buyerId}@example.com`,
-          phone: order.buyerPhone,
-          location: order.deliveryDistrict,
+          name: `Buyer ${buyerNumber}`,
+          email: `buyer${buyerNumber}@example.com`,
+          phone: `+250 788 ${buyerNumber.padStart(6, '0')}`,
+          location: "Kigali", // Default location
           totalOrders: 0,
           totalSpent: 0,
           lastOrderDate: order.createdAt,
@@ -46,7 +48,7 @@ export default function FarmerBuyersPage() {
 
       const buyer = buyerMap.get(buyerId)!;
       buyer.totalOrders += 1;
-      buyer.totalSpent += order.totalAmount || 0;
+      buyer.totalSpent += order.totalPrice || 0;
       
       // Update last order date if this order is more recent
       if (new Date(order.createdAt) > new Date(buyer.lastOrderDate)) {
@@ -237,7 +239,7 @@ export default function FarmerBuyersPage() {
           <EmptyState
             title="No buyers found"
             description="No buyers match your search criteria. Try adjusting your filters."
-            icon={Users}
+            icon={<Users className="h-10 w-10" />}
           />
         )}
       </PageBody>

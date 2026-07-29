@@ -6,7 +6,7 @@ import {
   Fuel, AlertCircle, Phone, FileText, Camera, TrendingUp 
 } from "lucide-react";
 import { PageHeader, PageBody } from "@/components/app/PageChrome";
-import { StatusBadge, EmptyState } from "@/components/common/ui";
+import { StatusBadge, EmptyState } from "@/components/common";
 import { transportService, productService, userService } from "@/services/data.service";
 import { useSession } from "@/lib/auth/session";
 import type { TransportRequest } from "@/lib/storage";

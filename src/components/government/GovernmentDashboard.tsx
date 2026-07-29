@@ -160,12 +160,12 @@ export default function GovernmentDashboardPage() {
             
             <div className="space-y-3">
               {Object.entries(entityDistribution).map(([role, count]) => {
-                const percentage = (count / totalEntities * 100).toFixed(1);
+                const percentage = ((count as number) / totalEntities * 100).toFixed(1);
                 return (
                   <div key={role}>
                     <div className="flex items-center justify-between text-sm mb-1">
                       <span className="font-medium text-foreground capitalize">{role}</span>
-                      <span className="text-muted-foreground">{count} ({percentage}%)</span>
+                      <span className="text-muted-foreground">{count as number} ({percentage}%)</span>
                     </div>
                     <div className="h-2 rounded-full bg-surface overflow-hidden">
                       <div 

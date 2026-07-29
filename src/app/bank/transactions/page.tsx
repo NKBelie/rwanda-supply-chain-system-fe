@@ -221,7 +221,7 @@ export default function BankTransactionsPage() {
           <EmptyState
             title="No transactions found"
             description="No transactions match your search criteria."
-            icon={DollarSign}
+            icon={<DollarSign className="h-10 w-10" />}
           />
         )}
       </PageBody>

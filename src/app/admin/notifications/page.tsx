@@ -2,5 +2,5 @@
 import { RoleNotificationsPage } from "@/components/app/modules/NotificationsPage";
 
 export default function AdminNotifications() {
-  return <RoleNotificationsPage role="admin" />;
+  return <RoleNotificationsPage role="super_admin" />;
 }

@@ -201,7 +201,7 @@ export default function GovernmentManufacturersPage() {
           <EmptyState
             title="No manufacturers found"
             description="No manufacturers match your search criteria."
-            icon={Building2}
+            icon={<Building2 className="h-10 w-10" />}
           />
         )}
       </PageBody>

@@ -20,12 +20,12 @@ export default function FarmerAnalyticsPage() {
   // Calculate analytics
   const totalRevenue = useMemo(() => {
     return orders
-      .filter(o => o.status === "completed")
-      .reduce((sum, order) => sum + (order.totalAmount || 0), 0);
+      .filter(o => o.status === "Completed")
+      .reduce((sum, order) => sum + (order.totalPrice || 0), 0);
   }, [orders]);
 
   const totalOrders = orders.length;
-  const completedOrders = orders.filter(o => o.status === "completed").length;
+  const completedOrders = orders.filter(o => o.status === "Completed").length;
   const averageOrderValue = completedOrders > 0 ? totalRevenue / completedOrders : 0;
 
   // Top products by revenue
@@ -33,20 +33,18 @@ export default function FarmerAnalyticsPage() {
     const productRevenue: Record<string, { name: string; revenue: number; orders: number }> = {};
 
     orders
-      .filter(o => o.status === "completed")
+      .filter(o => o.status === "Completed")
       .forEach(order => {
-        order.items.forEach(item => {
-          if (!productRevenue[item.productId]) {
-            const product = products.find(p => p.id === item.productId);
-            productRevenue[item.productId] = {
-              name: product?.name || "Unknown Product",
-              revenue: 0,
-              orders: 0
-            };
-          }
-          productRevenue[item.productId].revenue += item.quantity * item.price;
-          productRevenue[item.productId].orders += 1;
-        });
+        if (!productRevenue[order.productId]) {
+          const product = products.find(p => p.id === order.productId);
+          productRevenue[order.productId] = {
+            name: product?.name || "Unknown Product",
+            revenue: 0,
+            orders: 0
+          };
+        }
+        productRevenue[order.productId].revenue += order.totalPrice;
+        productRevenue[order.productId].orders += 1;
       });
 
     return Object.entries(productRevenue)
@@ -60,13 +58,11 @@ export default function FarmerAnalyticsPage() {
     const categoryRevenue: Record<string, number> = {};
 
     orders
-      .filter(o => o.status === "completed")
+      .filter(o => o.status === "Completed")
       .forEach(order => {
-        order.items.forEach(item => {
-          const product = products.find(p => p.id === item.productId);
-          const category = product?.category || "Other";
-          categoryRevenue[category] = (categoryRevenue[category] || 0) + (item.quantity * item.price);
-        });
+        const product = products.find(p => p.id === order.productId);
+        const category = product?.category || "Other";
+        categoryRevenue[category] = (categoryRevenue[category] || 0) + order.totalPrice;
       });
 
     return Object.entries(categoryRevenue)
@@ -161,7 +157,7 @@ export default function FarmerAnalyticsPage() {
             <div className="mt-2">
               <p className="text-2xl font-bold">{products.length}</p>
               <p className="mt-1 text-sm text-muted-foreground">
-                {products.filter(p => p.status === "available").length} available
+                {products.filter(p => p.status === "Available").length} available
               </p>
             </div>
           </div>

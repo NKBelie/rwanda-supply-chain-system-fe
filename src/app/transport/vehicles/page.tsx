@@ -112,11 +112,15 @@ export default function TransportVehiclesPage() {
       <PageHeader
         title="Vehicles"
         description="Manage your vehicle fleet"
-        action={{
-          label: "Add Vehicle",
-          onClick: handleAddVehicle,
-          icon: Plus
-        }}
+        actions={
+          <button
+            onClick={handleAddVehicle}
+            className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+          >
+            <Plus className="h-4 w-4" />
+            Add Vehicle
+          </button>
+        }
       />
       <PageBody>
         {/* Stats */}
@@ -242,7 +246,7 @@ export default function TransportVehiclesPage() {
           <EmptyState
             title="No vehicles found"
             description="No vehicles match your search criteria."
-            icon={Truck}
+            icon={<Truck className="h-10 w-10" />}
           />
         )}
       </PageBody>

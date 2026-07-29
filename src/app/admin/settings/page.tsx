@@ -2,5 +2,5 @@
 import { RoleSettingsPage } from "@/components/app/modules/SettingsPage";
 
 export default function AdminSettings() {
-  return <RoleSettingsPage role="admin" />;
+  return <RoleSettingsPage role="super_admin" />;
 }

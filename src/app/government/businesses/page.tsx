@@ -197,7 +197,7 @@ export default function GovernmentBusinessesPage() {
           <EmptyState
             title="No businesses found"
             description="No businesses match your search criteria."
-            icon={Building2}
+            icon={<Building2 className="h-10 w-10" />}
           />
         )}
       </PageBody>

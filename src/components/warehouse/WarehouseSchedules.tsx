@@ -189,7 +189,7 @@ export default function WarehouseSchedules() {
           {types.map((type) => (
             <Button
               key={type}
-              variant={selectedType === type ? "default" : "outline"}
+              variant={selectedType === type ? "primary" : "outline"}
               size="sm"
               onClick={() => setSelectedType(type)}
             >
@@ -202,7 +202,7 @@ export default function WarehouseSchedules() {
       {/* Schedules by Date */}
       {Object.keys(groupedByDate).length === 0 ? (
         <EmptyState
-          icon={Calendar}
+          icon={<Calendar className="h-10 w-10" />}
           title="No schedules found"
           description="No scheduled activities for the selected criteria"
         />
@@ -230,7 +230,7 @@ export default function WarehouseSchedules() {
                             <h3 className="font-semibold">{schedule.title}</h3>
                             <StatusBadge status={schedule.status} />
                             {schedule.priority === "high" && (
-                              <Badge variant="destructive">High Priority</Badge>
+                              <Badge className="bg-red-100 text-red-700">High Priority</Badge>
                             )}
                           </div>
                           <div className="grid gap-2 text-sm text-muted-foreground md:grid-cols-3">

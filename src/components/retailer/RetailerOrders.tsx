@@ -114,7 +114,7 @@ export default function RetailerOrders() {
           {statuses.map((status) => (
             <Button
               key={status}
-              variant={selectedStatus === status ? "default" : "outline"}
+              variant={selectedStatus === status ? "primary" : "outline"}
               size="sm"
               onClick={() => setSelectedStatus(status)}
             >
@@ -126,7 +126,7 @@ export default function RetailerOrders() {
 
       {/* Orders List */}
       {filteredOrders.length === 0 ? (
-        <EmptyState icon={Package} title="No orders found" description="Try adjusting your search" />
+        <EmptyState icon={<Package className="h-10 w-10" />} title="No orders found" description="Try adjusting your search" />
       ) : (
         <div className="grid gap-4">
           {filteredOrders.map((order) => (

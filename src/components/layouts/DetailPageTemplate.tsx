@@ -102,61 +102,63 @@ export function DetailPageTemplate({
 
   return (
     <>
-      <PageHeader
-        title={
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleBack}
-              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              {backLabel}
-            </button>
-            <span className="text-muted-foreground">/</span>
-            <span>{title}</span>
+      <div className="border-b border-border bg-background">
+        <div className="px-4 py-4 md:px-6">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="min-w-0">
+              <div className="flex items-center gap-3 mb-1">
+                <button
+                  onClick={handleBack}
+                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  {backLabel}
+                </button>
+                <span className="text-muted-foreground">/</span>
+                <h1 className="text-xl font-semibold tracking-tight">{title}</h1>
+              </div>
+              {subtitle && <p className="mt-0.5 text-sm text-muted-foreground">{subtitle}</p>}
+            </div>
+            <div className="flex items-center gap-2">
+              {status && (
+                <StatusBadge status={status} tone={statusTone} size="md" />
+              )}
+              
+              {onEdit && (
+                <button
+                  onClick={onEdit}
+                  className={getActionButtonClass("secondary")}
+                >
+                  <Edit2 className="h-4 w-4" />
+                  Edit
+                </button>
+              )}
+              
+              {customActions.map((action, index) => (
+                <button
+                  key={index}
+                  onClick={action.onClick}
+                  disabled={action.disabled}
+                  className={getActionButtonClass(action.variant)}
+                >
+                  {action.icon}
+                  {action.label}
+                </button>
+              ))}
+              
+              {onDelete && (
+                <button
+                  onClick={onDelete}
+                  className={getActionButtonClass("danger")}
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Delete
+                </button>
+              )}
+            </div>
           </div>
-        }
-        description={subtitle}
-        actions={
-          <div className="flex items-center gap-2">
-            {status && (
-              <StatusBadge status={status} tone={statusTone} size="md" />
-            )}
-            
-            {onEdit && (
-              <button
-                onClick={onEdit}
-                className={getActionButtonClass("secondary")}
-              >
-                <Edit2 className="h-4 w-4" />
-                Edit
-              </button>
-            )}
-            
-            {customActions.map((action, index) => (
-              <button
-                key={index}
-                onClick={action.onClick}
-                disabled={action.disabled}
-                className={getActionButtonClass(action.variant)}
-              >
-                {action.icon}
-                {action.label}
-              </button>
-            ))}
-            
-            {onDelete && (
-              <button
-                onClick={onDelete}
-                className={getActionButtonClass("danger")}
-              >
-                <Trash2 className="h-4 w-4" />
-                Delete
-              </button>
-            )}
-          </div>
-        }
-      />
+        </div>
+      </div>
       
       <PageBody>
         {isLoading && (

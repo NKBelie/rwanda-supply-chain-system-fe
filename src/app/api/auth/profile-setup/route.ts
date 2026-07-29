@@ -133,20 +133,20 @@ function normalizeFields(value: unknown) {
 
 function normalizeDocuments(value: unknown): SubmittedDocument[] {
   if (!Array.isArray(value)) return [];
-  return value
-    .map((item) => {
-      const file = item && typeof item === "object" ? item as Record<string, unknown> : null;
-      if (!file) return null;
-      return {
-        key: String(file.key ?? "").trim(),
-        label: String(file.label ?? "").trim(),
-        name: String(file.name ?? "").trim(),
-        size: Number(file.size ?? 0),
-        type: String(file.type ?? "").trim(),
-        progress: Number(file.progress ?? 0),
-      } satisfies SubmittedDocument;
-    })
-    .filter((file): file is SubmittedDocument => Boolean(file?.key && file.name && Number.isFinite(file.size)));
+  const mapped = value.map((item) => {
+    const file = item && typeof item === "object" ? item as Record<string, unknown> : null;
+    if (!file) return null;
+    return {
+      key: String(file.key ?? "").trim(),
+      label: String(file.label ?? "").trim(),
+      name: String(file.name ?? "").trim(),
+      size: Number(file.size ?? 0),
+      type: String(file.type ?? "").trim(),
+      progress: Number(file.progress ?? 0),
+    } satisfies SubmittedDocument;
+  });
+  const filtered = mapped.filter((file) => file !== null && Boolean(file.key && file.name && Number.isFinite(file.size)));
+  return filtered as SubmittedDocument[];
 }
 
 function fail(error: string, status: number) {

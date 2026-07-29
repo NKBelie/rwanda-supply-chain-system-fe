@@ -91,11 +91,15 @@ export default function TransportRoutesPage() {
       <PageHeader
         title="Routes"
         description="Manage transportation routes"
-        action={{
-          label: "Add Route",
-          onClick: handleAddRoute,
-          icon: Plus
-        }}
+        actions={
+          <button
+            onClick={handleAddRoute}
+            className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+          >
+            <Plus className="h-4 w-4" />
+            Add Route
+          </button>
+        }
       />
       <PageBody>
         {/* Stats */}
@@ -213,7 +217,7 @@ export default function TransportRoutesPage() {
           <EmptyState
             title="No routes found"
             description="No routes match your search criteria."
-            icon={Navigation}
+            icon={<Navigation className="h-10 w-10" />}
           />
         )}
       </PageBody>

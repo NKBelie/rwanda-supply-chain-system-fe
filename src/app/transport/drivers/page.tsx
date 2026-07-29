@@ -110,11 +110,15 @@ export default function TransportDriversPage() {
       <PageHeader
         title="Drivers"
         description="Manage your driver fleet"
-        action={{
-          label: "Add Driver",
-          onClick: handleAddDriver,
-          icon: Plus
-        }}
+        actions={
+          <button
+            onClick={handleAddDriver}
+            className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+          >
+            <Plus className="h-4 w-4" />
+            Add Driver
+          </button>
+        }
       />
       <PageBody>
         {/* Stats */}
@@ -236,7 +240,7 @@ export default function TransportDriversPage() {
           <EmptyState
             title="No drivers found"
             description="No drivers match your search criteria."
-            icon={User}
+            icon={<User className="h-10 w-10" />}
           />
         )}
       </PageBody>

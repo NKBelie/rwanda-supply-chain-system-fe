@@ -17,7 +17,7 @@ export default function SupplierProductsPage() {
     return allProducts.filter(product => {
       const matchesSearch = searchQuery === "" ||
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchQuery.toLowerCase());
+        product.description?.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = categoryFilter === "" || product.category === categoryFilter;
       const matchesStatus = statusFilter === "" || product.status === statusFilter;
       return matchesSearch && matchesCategory && matchesStatus;
@@ -26,8 +26,8 @@ export default function SupplierProductsPage() {
 
   const categories = Array.from(new Set(allProducts.map(p => p.category)));
   const totalProducts = allProducts.length;
-  const availableProducts = allProducts.filter(p => p.status === "available").length;
-  const totalValue = allProducts.reduce((sum, p) => sum + (p.price * (p.stock || 100)), 0);
+  const availableProducts = allProducts.filter(p => p.status === "Available").length;
+  const totalValue = allProducts.reduce((sum, p) => sum + (p.price * (p.quantity || 100)), 0);
 
   const handleAddProduct = () => {
     window.location.href = "/supplier/products/add";
@@ -38,11 +38,15 @@ export default function SupplierProductsPage() {
       <PageHeader
         title="Products"
         description="Manage your product inventory"
-        action={{
-          label: "Add Product",
-          onClick: handleAddProduct,
-          icon: Plus
-        }}
+        actions={
+          <button
+            onClick={handleAddProduct}
+            className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+          >
+            <Plus className="h-4 w-4" />
+            Add Product
+          </button>
+        }
       />
       <PageBody>
         {/* Stats */}
@@ -143,9 +147,9 @@ export default function SupplierProductsPage() {
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm text-muted-foreground">Stock</p>
+                    <p className="text-sm text-muted-foreground">Quantity</p>
                     <p className="text-lg font-bold">
-                      {product.stock || 0} {product.unit}
+                      {product.quantity || 0} {product.unit}
                     </p>
                   </div>
                 </div>
@@ -156,7 +160,7 @@ export default function SupplierProductsPage() {
           <EmptyState
             title="No products found"
             description="No products match your search criteria."
-            icon={Package}
+            icon={<Package className="h-10 w-10" />}
           />
         )}
       </PageBody>

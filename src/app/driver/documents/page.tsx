@@ -201,7 +201,7 @@ export default function DriverDocumentsPage() {
           <EmptyState
             title="No documents uploaded"
             description="Upload your driver and vehicle documents to get started."
-            icon={FileText}
+            icon={<FileText className="h-10 w-10" />}
           />
         )}
 

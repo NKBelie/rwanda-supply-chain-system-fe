@@ -238,7 +238,7 @@ export default function TransportRequestsPage() {
           <EmptyState
             title="No transport requests found"
             description="No requests match your current filters."
-            icon={Truck}
+            icon={<Truck className="h-10 w-10" />}
           />
         )}
       </PageBody>

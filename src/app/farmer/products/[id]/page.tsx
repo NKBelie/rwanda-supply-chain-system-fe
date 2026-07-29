@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { Package, MapPin, Calendar, DollarSign, Layers, Star } from "lucide-react";
 import { DetailPageTemplate } from "@/components/layouts";
 import { productService, userService } from "@/services/data.service";
-import { getFullLocationHierarchy, formatLocation } from "@/constants/locations";
 
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -26,11 +25,13 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   }
 
   const farmer = userService.getUserName(product.farmerId);
-  const locationHierarchy = getFullLocationHierarchy(
-    undefined,
-    product.districtId,
-    undefined
-  );
+  
+  // Product interface doesn't have location properties
+  // const locationHierarchy = getFullLocationHierarchy(
+  //   undefined,
+  //   product.districtId,
+  //   undefined
+  // );
 
   const handleEdit = () => {
     router.push(`/farmer/products/${id}/edit`);
@@ -105,42 +106,24 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 <div>
                   <p className="text-sm font-medium text-foreground">Location</p>
                   <p className="text-sm text-muted-foreground">
-                    {formatLocation(locationHierarchy, "en")}
+                    Location information not available
                   </p>
                 </div>
               </div>
 
-              {product.harvestDate && (
-                <div className="flex items-start gap-3">
-                  <Calendar className="mt-0.5 h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Harvest Date</p>
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(product.harvestDate).toLocaleDateString("en-RW", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </p>
-                  </div>
+              <div className="flex items-start gap-3">
+                <Calendar className="mt-0.5 h-5 w-5 text-muted-foreground" />
+                <div>
+                  <p className="text-sm font-medium text-foreground">Created</p>
+                  <p className="text-sm text-muted-foreground">
+                    {new Date(product.createdAt).toLocaleDateString("en-RW", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </p>
                 </div>
-              )}
-
-              {product.expiryDate && (
-                <div className="flex items-start gap-3">
-                  <Calendar className="mt-0.5 h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Expiry Date</p>
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(product.expiryDate).toLocaleDateString("en-RW", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </p>
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
           ),
         },

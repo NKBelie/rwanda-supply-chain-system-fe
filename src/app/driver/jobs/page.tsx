@@ -362,7 +362,7 @@ export default function DriverJobsPage() {
           <EmptyState
             title="No jobs found"
             description="No jobs match your current filters. Try adjusting your search criteria."
-            icon={Truck}
+            icon={<Truck className="h-10 w-10" />}
           />
         )}
       </PageBody>
