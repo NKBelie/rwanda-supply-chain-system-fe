@@ -13,7 +13,7 @@ export default function VerifyOtpPage() {
   const email = searchParams.get("email") ?? "";
   const initialDevOtp = searchParams.get("devOtp") ?? "";
   const t = useT();
-  const [digits, setDigits] = useState(Array(6).fill(""));
+  const [digits, setDigits] = useState<string[]>(Array(6).fill(""));
   const [cooldown, setCooldown] = useState(300); // 5 minutes
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
@@ -28,10 +28,37 @@ export default function VerifyOtpPage() {
     return () => clearInterval(timer);
   }, [cooldown]);
 
+  // 🛠️ FIX 1: Allow character overwrites by accepting the full raw string values
   function setDigit(index: number, value: string) {
     const digit = value.replace(/\D/g, "").slice(-1);
-    setDigits((c) => c.map((item, i) => (i === index ? digit : item)));
-    if (digit && index < 5) inputs.current[index + 1]?.focus();
+    
+    setDigits((c) => {
+      const updated = c.map((item, i) => (i === index ? digit : item));
+      return updated;
+    });
+
+    // Only shift focus forward if a number was typed
+    if (digit && index < 5) {
+      setTimeout(() => inputs.current[index + 1]?.focus(), 10);
+    }
+  }
+
+  // 🛠️ FIX 2: Optimized Backspace management using standard KeyDown detection
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>, index: number) {
+    if (e.key === "Backspace") {
+      if (!digits[index] && index > 0) {
+        // If the box is empty, instantly wipe out the preceding index item and slide back
+        const updatedDigits = [...digits];
+        updatedDigits[index - 1] = "";
+        setDigits(updatedDigits);
+        inputs.current[index - 1]?.focus();
+      } else {
+        // If the box contains a number, clear it out instantly
+        const updatedDigits = [...digits];
+        updatedDigits[index] = "";
+        setDigits(updatedDigits);
+      }
+    }
   }
 
   function paste(value: string) {
@@ -79,21 +106,17 @@ export default function VerifyOtpPage() {
 
   return (
     <AuthShell title={t("auth.otp.title")} description={`${t("auth.otp.description")} ${email || "your email address"}.`}>
-      {/* <div className="rounded-lg border border-border bg-surface px-3 py-2 text-xs text-muted-foreground">
-        Enter the 6-digit code: <span className="font-mono font-semibold">123456</span>
-      </div> */}
-
       <div className="flex justify-between gap-2" onPaste={(e) => { e.preventDefault(); paste(e.clipboardData.getData("text")); }}>
         {digits.map((digit, i) => (
           <input
             key={i}
             ref={(node) => { inputs.current[i] = node; }}
             value={digit}
-            maxLength={1}
+            // 🛠️ FIX 3: Removed strict maxLength={1} string block to allow single-tap typing overrides
             inputMode="numeric"
             autoComplete={i === 0 ? "one-time-code" : undefined}
             onChange={(e) => setDigit(i, e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Backspace" && !digits[i] && i > 0) inputs.current[i - 1]?.focus(); }}
+            onKeyDown={(e) => handleKeyDown(e, i)}
             className="h-14 w-full max-w-[52px] rounded-lg border border-border bg-background text-center text-lg font-semibold outline-none focus:ring-2 focus:ring-ring"
             aria-label={`OTP digit ${i + 1}`}
           />
